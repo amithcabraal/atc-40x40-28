@@ -249,7 +249,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
     );
   }
 
-  // Landscape mode layout
+  // Landscape mode layout with vertical controls on the right
   return (
     <div className={`flex flex-col h-screen ${
       workout.isResting 
@@ -275,7 +275,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
         </div>
         
         <div className="flex justify-center">
-          {/* Use the Timer component here instead of static display */}
           <Timer onComplete={handleStop} isLandscape={true} />
         </div>
         
@@ -290,11 +289,11 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
         </div>
       </div>
 
-      {/* Main content area */}
+      {/* Main content area with vertical controls on the right */}
       <div className="flex-1 relative">
+        {/* Video background */}
         {workout.isResting ? (
           <>
-            {/* Video background */}
             {nextExerciseData?.media && nextExerciseData.media.length > 0 && (
               <div className="absolute inset-0 z-0">
                 <MediaGallery 
@@ -317,7 +316,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             
             {/* Target areas and shuffle button */}
             {nextExerciseData?.body_part_focus && (
-              <div className="absolute bottom-2 right-2 z-10 flex items-center gap-2">
+              <div className="absolute bottom-2 left-2 z-10 flex items-center gap-2">
                 <BodyPartIcons 
                   bodyParts={nextExerciseData.body_part_focus} 
                   theme="green"
@@ -335,7 +334,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
           </>
         ) : (
           <>
-            {/* Video background */}
             {currentExercise?.media && currentExercise.media.length > 0 && (
               <div className="absolute inset-0 z-0">
                 <MediaGallery 
@@ -358,7 +356,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             
             {/* Target areas */}
             {currentExercise?.body_part_focus && (
-              <div className="absolute bottom-2 right-2 z-10">
+              <div className="absolute bottom-2 left-2 z-10">
                 <BodyPartIcons 
                   bodyParts={currentExercise.body_part_focus} 
                   theme="blue"
@@ -368,40 +366,41 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             )}
           </>
         )}
-      </div>
 
-      {/* Control buttons */}
-      <div className={`w-full ${
-        workout.isResting
-          ? 'bg-green-100 dark:bg-green-900'
-          : 'bg-blue-100 dark:bg-blue-900'
-      } p-2 transition-colors duration-300`}>
-        <div className="flex justify-center space-x-6">
+        {/* Vertical control buttons on the right edge */}
+        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-3">
           {workout.isPaused ? (
             <button
               onClick={resumeWorkout}
-              className="p-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-transform hover:scale-105"
+              className={`p-3 rounded-full shadow-lg hover:scale-105 transition-transform ${
+                workout.isResting
+                  ? 'bg-green-500 hover:bg-green-600'
+                  : 'bg-green-500 hover:bg-green-600'
+              } text-white`}
+              title="Resume"
             >
               <Play size={20} />
             </button>
           ) : (
             <button
               onClick={pauseWorkout}
-              className="p-3 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 transition-transform hover:scale-105"
+              className="p-3 bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 hover:scale-105 transition-transform"
+              title="Pause"
             >
               <Pause size={20} />
             </button>
           )}
           <button
             onClick={handleSkip}
-            className="p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-transform hover:scale-105"
+            className="p-3 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 hover:scale-105 transition-transform"
             title="Skip to next"
           >
             <SkipForward size={20} />
           </button>
           <button
             onClick={handleStop}
-            className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-transform hover:scale-105"
+            className="p-3 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:scale-105 transition-transform"
+            title="Stop workout"
           >
             <Square size={20} />
           </button>
