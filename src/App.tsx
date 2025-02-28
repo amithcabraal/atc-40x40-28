@@ -5,6 +5,7 @@ import { ExerciseDisplay } from './components/ExerciseDisplay';
 import { WorkoutHistory } from './components/WorkoutHistory';
 import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop } from 'lucide-react';
 import exerciseData from './data/exercises.json';
+import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 
 function App() {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -12,7 +13,8 @@ function App() {
   const [theme, setTheme] = useState<Theme>('system');
   const [showMenu, setShowMenu] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const { workout, startWorkout } = useWorkoutStore();
+  const [showResumeModal, setShowResumeModal] = useState(false);
+  const { workout, startWorkout, resumeSavedWorkout } = useWorkoutStore();
 
   useEffect(() => {
     const welcomeShown = localStorage.getItem('welcomeShown');
@@ -31,6 +33,19 @@ function App() {
     const savedSessions = localStorage.getItem('workout-sessions');
     if (savedSessions) {
       setSessions(JSON.parse(savedSessions));
+    }
+
+    // Check if there's a saved workout
+    const savedWorkout = localStorage.getItem('workoutState');
+    if (savedWorkout) {
+      try {
+        const parsedWorkout = JSON.parse(savedWorkout);
+        if (parsedWorkout.isActive && parsedWorkout.exercises.length > 0) {
+          setShowResumeModal(true);
+        }
+      } catch (error) {
+        console.error('Error parsing saved workout:', error);
+      }
     }
   }, []);
 
@@ -63,6 +78,9 @@ function App() {
   };
 
   const startNewWorkout = () => {
+    // Close resume modal if it's open
+    setShowResumeModal(false);
+    
     const categorizedExercises = exerciseData.exercises.reduce((acc, exercise) => {
       const category = exercise.categories[0];
       if (!acc[category]) {
@@ -91,6 +109,11 @@ function App() {
 
     const finalSelection = selectedExercises.sort(() => Math.random() - 0.5);
     startWorkout(finalSelection);
+  };
+
+  const handleResumeWorkout = () => {
+    setShowResumeModal(false);
+    resumeSavedWorkout();
   };
 
   const dismissWelcome = () => {
@@ -158,6 +181,15 @@ function App() {
             </button>
           </div>
         </div>
+      )}
+
+      {/* Resume Workout Modal */}
+      {showResumeModal && (
+        <ResumeWorkoutModal 
+          onResume={handleResumeWorkout}
+          onStartNew={startNewWorkout}
+          onClose={() => setShowResumeModal(false)}
+        />
       )}
 
       {/* Settings Modal */}
