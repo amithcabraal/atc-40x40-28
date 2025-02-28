@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useWorkoutStore } from '../store/workoutStore';
 import { Timer } from './Timer';
-import { Play, Pause, Square, Star, SkipForward, Shuffle } from 'lucide-react';
+import { Play, Pause, Square, Star, SkipForward, Shuffle, Info } from 'lucide-react';
 import { Exercise } from '../types';
 import { MediaGallery } from './MediaGallery';
 import { IntroView } from './IntroView';
@@ -27,6 +27,8 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   const [notes, setNotes] = useState<string>('');
   const [showRating, setShowRating] = useState(false);
   const [isLandscape, setIsLandscape] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
+  const overlayTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   const currentExercise = workout.exercises[workout.currentExercise];
   const nextExerciseData = workout.exercises[workout.currentExercise + 1];
@@ -45,6 +47,34 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
       window.removeEventListener('resize', checkOrientation);
     };
   }, []);
+
+  // Set up the overlay fade timer
+  useEffect(() => {
+    // Reset overlay visibility when exercise changes
+    setShowOverlay(true);
+    
+    // Clear any existing timer
+    if (overlayTimerRef.current) {
+      clearTimeout(overlayTimerRef.current);
+    }
+    
+    // Only set fade timer if there's media to show
+    const hasMedia = workout.isResting 
+      ? nextExerciseData?.media && nextExerciseData.media.length > 0
+      : currentExercise?.media && currentExercise.media.length > 0;
+    
+    if (hasMedia) {
+      overlayTimerRef.current = setTimeout(() => {
+        setShowOverlay(false);
+      }, 5000);
+    }
+    
+    return () => {
+      if (overlayTimerRef.current) {
+        clearTimeout(overlayTimerRef.current);
+      }
+    };
+  }, [workout.currentExercise, workout.isResting, currentExercise, nextExerciseData]);
 
   const handleComplete = () => {
     onComplete(workout.exercises, rating, notes);
@@ -66,6 +96,23 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
   const handleStop = () => {
     setShowRating(true);
+  };
+
+  const toggleOverlay = () => {
+    setShowOverlay(!showOverlay);
+    
+    // Clear any existing timer
+    if (overlayTimerRef.current) {
+      clearTimeout(overlayTimerRef.current);
+      overlayTimerRef.current = null;
+    }
+    
+    // If we're showing the overlay, set a timer to hide it again
+    if (!showOverlay) {
+      overlayTimerRef.current = setTimeout(() => {
+        setShowOverlay(false);
+      }, 5000);
+    }
   };
 
   if (workout.isIntro) {
@@ -142,68 +189,112 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
         <Timer onComplete={handleSkip} />
 
-        <div className="flex-1 flex flex-col px-4 py-2 overflow-hidden">
+        <div className="flex-1 flex flex-col px-4 py-2 overflow-hidden relative">
           {workout.isResting ? (
-            <div className="space-y-2 border-2 border-green-300 dark:border-green-700 rounded-lg p-4 bg-green-100/50 dark:bg-green-900/50 h-full flex flex-col">
-              <h3 className="text-responsive font-bold text-green-800 dark:text-green-200 text-balance">
-                Next: {nextExerciseData?.title}
-              </h3>
-              
-              <p className="text-lg text-green-700 dark:text-green-300 flex-shrink-0">
-                {nextExerciseData?.instructions}
-              </p>
-              
-              {nextExerciseData?.media && (
-                <div className="flex-grow">
+            <div className="relative h-full">
+              {/* Video background */}
+              {nextExerciseData?.media && nextExerciseData.media.length > 0 && (
+                <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
                   <MediaGallery 
                     media={nextExerciseData.media} 
                     theme="green"
+                    hideControls={!showOverlay}
                   />
                 </div>
               )}
               
-              {nextExerciseData?.body_part_focus && (
-                <div className="flex justify-between items-center flex-shrink-0 mt-2">
-                  <BodyPartIcons 
-                    bodyParts={nextExerciseData.body_part_focus} 
-                    theme="green"
-                  />
-                  <button
-                    onClick={shuffleNextExercise}
-                    className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-transform hover:scale-105 flex-shrink-0"
-                    title="Shuffle next exercise"
-                  >
-                    <Shuffle size={20} />
-                  </button>
-                </div>
+              {/* Text overlay */}
+              <div 
+                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-green-100/90 to-green-100/70 dark:from-green-900/90 dark:to-green-900/70 rounded-lg transition-opacity duration-500 flex flex-col ${
+                  showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+              >
+                <h3 className="text-3xl md:text-4xl font-bold text-green-800 dark:text-green-200 text-balance mb-4">
+                  Next: {nextExerciseData?.title}
+                </h3>
+                
+                <p className="text-xl md:text-2xl text-green-700 dark:text-green-300 flex-shrink-0 mb-4">
+                  {nextExerciseData?.instructions}
+                </p>
+                
+                {nextExerciseData?.body_part_focus && (
+                  <div className="mt-auto flex justify-between items-center flex-shrink-0">
+                    <BodyPartIcons 
+                      bodyParts={nextExerciseData.body_part_focus} 
+                      theme="green"
+                    />
+                    <button
+                      onClick={shuffleNextExercise}
+                      className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-transform hover:scale-105 flex-shrink-0"
+                      title="Shuffle next exercise"
+                    >
+                      <Shuffle size={20} />
+                    </button>
+                  </div>
+                )}
+              </div>
+              
+              {/* Info button to toggle overlay */}
+              {nextExerciseData?.media && nextExerciseData.media.length > 0 && (
+                <button
+                  onClick={toggleOverlay}
+                  className={`absolute top-2 right-2 z-20 p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-transform hover:scale-105 ${
+                    showOverlay ? 'opacity-50' : 'opacity-90'
+                  }`}
+                  title={showOverlay ? "Hide details" : "Show details"}
+                >
+                  <Info size={20} />
+                </button>
               )}
             </div>
           ) : (
-            <div className="space-y-2 border-2 border-blue-300 dark:border-blue-700 rounded-lg p-4 bg-blue-100/50 dark:bg-blue-900/50 h-full flex flex-col">
-              <h1 className="text-responsive font-bold text-blue-800 dark:text-blue-200 text-balance">
-                {currentExercise.title}
-              </h1>
-              
-              <p className="text-xl text-blue-700 dark:text-blue-300 flex-shrink-0">
-                {currentExercise.instructions}
-              </p>
-              
-              {currentExercise?.media && (
-                <div className="flex-grow">
+            <div className="relative h-full">
+              {/* Video background */}
+              {currentExercise?.media && currentExercise.media.length > 0 && (
+                <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
                   <MediaGallery 
                     media={currentExercise.media}
                     theme="blue"
+                    hideControls={!showOverlay}
                   />
                 </div>
               )}
               
-              {currentExercise?.body_part_focus && (
-                <div className="flex-shrink-0 mt-2">
-                  <BodyPartIcons 
-                    bodyParts={currentExercise.body_part_focus} 
-                    theme="blue"
-                  />
-                </div>
+              {/* Text overlay */}
+              <div 
+                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-blue-100/90 to-blue-100/70 dark:from-blue-900/90 dark:to-blue-900/70 rounded-lg transition-opacity duration-500 flex flex-col ${
+                  showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+              >
+                <h1 className="text-3xl md:text-4xl font-bold text-blue-800 dark:text-blue-200 text-balance mb-4">
+                  {currentExercise.title}
+                </h1>
+                
+                <p className="text-xl md:text-2xl text-blue-700 dark:text-blue-300 flex-shrink-0 mb-4">
+                  {currentExercise.instructions}
+                </p>
+                
+                {currentExercise?.body_part_focus && (
+                  <div className="mt-auto flex-shrink-0">
+                    <BodyPartIcons 
+                      bodyParts={currentExercise.body_part_focus} 
+                      theme="blue"
+                    />
+                  </div>
+                )}
+              </div>
+              
+              {/* Info button to toggle overlay */}
+              {currentExercise?.media && currentExercise.media.length > 0 && (
+                <button
+                  onClick={toggleOverlay}
+                  className={`absolute top-2 right-2 z-20 p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-transform hover:scale-105 ${
+                    showOverlay ? 'opacity-50' : 'opacity-90'
+                  }`}
+                  title={showOverlay ? "Hide details" : "Show details"}
+                >
+                  <Info size={20} />
+                </button>
               )}
             </div>
           )}
@@ -300,37 +391,94 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                   media={nextExerciseData.media} 
                   theme="green"
                   isLandscape={true}
+                  hideControls={!showOverlay}
                 />
               </div>
             )}
             
             {/* Overlay with exercise info */}
-            <div className="absolute top-0 left-0 z-10 max-w-[33%] p-3 bg-green-100/80 dark:bg-green-900/80 rounded-br-lg">
-              <h3 className="text-xl font-bold text-green-800 dark:text-green-200 line-clamp-2">
-                Next: {nextExerciseData?.title}
-              </h3>
-              <p className="text-sm text-green-700 dark:text-green-300 line-clamp-3">
-                {nextExerciseData?.instructions}
-              </p>
+            <div 
+              className={`absolute inset-0 z-10 flex flex-col justify-center transition-opacity duration-500 ${
+                showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
+            >
+              {/* Solid background panel for better readability */}
+              <div className="absolute left-0 top-0 bottom-0 w-full pr-16 bg-green-100/95 dark:bg-green-900/95 shadow-lg"></div>
+              
+              {/* Content */}
+              <div className="relative z-20 px-8 py-6 pr-20">
+                <h3 className="text-3xl md:text-4xl font-bold text-green-800 dark:text-green-200 mb-4">
+                  Next: {nextExerciseData?.title}
+                </h3>
+                <p className="text-xl md:text-2xl text-green-700 dark:text-green-300 mb-6">
+                  {nextExerciseData?.instructions}
+                </p>
+                
+                {/* Target areas and shuffle button */}
+                {nextExerciseData?.body_part_focus && (
+                  <div className="flex items-center gap-4 mt-auto">
+                    <BodyPartIcons 
+                      bodyParts={nextExerciseData.body_part_focus} 
+                      theme="green"
+                      isLandscape={true}
+                    />
+                    <button
+                      onClick={shuffleNextExercise}
+                      className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-transform hover:scale-105"
+                      title="Shuffle next exercise"
+                    >
+                      <Shuffle size={16} />
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
             
-            {/* Target areas and shuffle button */}
-            {nextExerciseData?.body_part_focus && (
-              <div className="absolute bottom-2 left-2 z-10 flex items-center gap-2">
-                <BodyPartIcons 
-                  bodyParts={nextExerciseData.body_part_focus} 
-                  theme="green"
-                  isLandscape={true}
-                />
+            {/* Vertical control buttons on the right edge */}
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-4">
+              {workout.isPaused ? (
                 <button
-                  onClick={shuffleNextExercise}
-                  className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-transform hover:scale-105"
-                  title="Shuffle next exercise"
+                  onClick={resumeWorkout}
+                  className="h-[8vh] w-[8vh] flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:scale-105 transition-transform"
+                  title="Resume"
                 >
-                  <Shuffle size={16} />
+                  <Play className="w-[3vh] h-[3vh]" />
                 </button>
-              </div>
-            )}
+              ) : (
+                <button
+                  onClick={pauseWorkout}
+                  className="h-[8vh] w-[8vh] flex items-center justify-center bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 hover:scale-105 transition-transform"
+                  title="Pause"
+                >
+                  <Pause className="w-[3vh] h-[3vh]" />
+                </button>
+              )}
+              <button
+                onClick={handleSkip}
+                className="h-[8vh] w-[8vh] flex items-center justify-center bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 hover:scale-105 transition-transform"
+                title="Skip to next"
+              >
+                <SkipForward className="w-[3vh] h-[3vh]" />
+              </button>
+              <button
+                onClick={handleStop}
+                className="h-[8vh] w-[8vh] flex items-center justify-center bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:scale-105 transition-transform"
+                title="Stop workout"
+              >
+                <Square className="w-[3vh] h-[3vh]" />
+              </button>
+              <button
+                onClick={toggleOverlay}
+                className={`h-[8vh] w-[8vh] flex items-center justify-center ${
+                  showOverlay 
+                    ? 'bg-purple-500 hover:bg-purple-600' 
+                    : 'bg-purple-600 hover:bg-purple-700'
+                } text-white rounded-full shadow-lg hover:scale-105 transition-transform`}
+                title={showOverlay ? "Hide details" : "Show details"}
+              >
+                <Info className="w-[3vh] h-[3vh]" />
+              </button>
+            </div>
           </>
         ) : (
           <>
@@ -340,71 +488,89 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                   media={currentExercise.media} 
                   theme="blue"
                   isLandscape={true}
+                  hideControls={!showOverlay}
                 />
               </div>
             )}
             
             {/* Overlay with exercise info */}
-            <div className="absolute top-0 left-0 z-10 max-w-[33%] p-3 bg-blue-100/80 dark:bg-blue-900/80 rounded-br-lg">
-              <h1 className="text-xl font-bold text-blue-800 dark:text-blue-200 line-clamp-2">
-                {currentExercise.title}
-              </h1>
-              <p className="text-sm text-blue-700 dark:text-blue-300 line-clamp-3">
-                {currentExercise.instructions}
-              </p>
+            <div 
+              className={`absolute inset-0 z-10 flex flex-col justify-center transition-opacity duration-500 ${
+                showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
+            >
+              {/* Solid background panel for better readability */}
+              <div className="absolute left-0 top-0 bottom-0 w-full pr-16 bg-blue-100/95 dark:bg-blue-900/95 shadow-lg"></div>
+              
+              {/* Content */}
+              <div className="relative z-20 px-8 py-6 pr-20">
+                <h1 className="text-3xl md:text-4xl font-bold text-blue-800 dark:text-blue-200 mb-4">
+                  {currentExercise.title}
+                </h1>
+                <p className="text-xl md:text-2xl text-blue-700 dark:text-blue-300 mb-6">
+                  {currentExercise.instructions}
+                </p>
+                
+                {/* Target areas */}
+                {currentExercise?.body_part_focus && (
+                  <div className="mt-auto">
+                    <BodyPartIcons 
+                      bodyParts={currentExercise.body_part_focus} 
+                      theme="blue"
+                      isLandscape={true}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
             
-            {/* Target areas */}
-            {currentExercise?.body_part_focus && (
-              <div className="absolute bottom-2 left-2 z-10">
-                <BodyPartIcons 
-                  bodyParts={currentExercise.body_part_focus} 
-                  theme="blue"
-                  isLandscape={true}
-                />
-              </div>
-            )}
+            {/* Vertical control buttons on the right edge */}
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-4">
+              {workout.isPaused ? (
+                <button
+                  onClick={resumeWorkout}
+                  className="h-[8vh] w-[8vh] flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:scale-105 transition-transform"
+                  title="Resume"
+                >
+                  <Play className="w-[3vh] h-[3vh]" />
+                </button>
+              ) : (
+                <button
+                  onClick={pauseWorkout}
+                  className="h-[8vh] w-[8vh] flex items-center justify-center bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 hover:scale-105 transition-transform"
+                  title="Pause"
+                >
+                  <Pause className="w-[3vh] h-[3vh]" />
+                </button>
+              )}
+              <button
+                onClick={handleSkip}
+                className="h-[8vh] w-[8vh] flex items-center justify-center bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 hover:scale-105 transition-transform"
+                title="Skip to next"
+              >
+                <SkipForward className="w-[3vh] h-[3vh]" />
+              </button>
+              <button
+                onClick={handleStop}
+                className="h-[8vh] w-[8vh] flex items-center justify-center bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:scale-105 transition-transform"
+                title="Stop workout"
+              >
+                <Square className="w-[3vh] h-[3vh]" />
+              </button>
+              <button
+                onClick={toggleOverlay}
+                className={`h-[8vh] w-[8vh] flex items-center justify-center ${
+                  showOverlay 
+                    ? 'bg-purple-500 hover:bg-purple-600' 
+                    : 'bg-purple-600 hover:bg-purple-700'
+                } text-white rounded-full shadow-lg hover:scale-105 transition-transform`}
+                title={showOverlay ? "Hide details" : "Show details"}
+              >
+                <Info className="w-[3vh] h-[3vh]" />
+              </button>
+            </div>
           </>
         )}
-
-        {/* Vertical control buttons on the right edge */}
-        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-3">
-          {workout.isPaused ? (
-            <button
-              onClick={resumeWorkout}
-              className={`p-3 rounded-full shadow-lg hover:scale-105 transition-transform ${
-                workout.isResting
-                  ? 'bg-green-500 hover:bg-green-600'
-                  : 'bg-green-500 hover:bg-green-600'
-              } text-white`}
-              title="Resume"
-            >
-              <Play size={20} />
-            </button>
-          ) : (
-            <button
-              onClick={pauseWorkout}
-              className="p-3 bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 hover:scale-105 transition-transform"
-              title="Pause"
-            >
-              <Pause size={20} />
-            </button>
-          )}
-          <button
-            onClick={handleSkip}
-            className="p-3 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 hover:scale-105 transition-transform"
-            title="Skip to next"
-          >
-            <SkipForward size={20} />
-          </button>
-          <button
-            onClick={handleStop}
-            className="p-3 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:scale-105 transition-transform"
-            title="Stop workout"
-          >
-            <Square size={20} />
-          </button>
-        </div>
       </div>
     </div>
   );
