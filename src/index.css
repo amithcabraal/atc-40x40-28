@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .text-responsive {
+    font-size: clamp(1.25rem, 4vw, 2.25rem);
+    line-height: 1.2;
+    display: block;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    margin-bottom: 0.25rem;
+  }
+}
+
+/* Landscape mode specific styles */
+@media (orientation: landscape) {
+  .landscape-video-container {
+    height: calc(100vh - 80px);
+  }
+  
+  .landscape-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    max-width: 30%;
+  }
+}
