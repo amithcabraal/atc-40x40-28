@@ -9,26 +9,74 @@ const initialWorkoutState = {
   isActive: false,
   isPaused: false,
   isIntro: true,
+  isResuming: false,
+};
+
+// Try to restore workout state from localStorage
+const getSavedState = () => {
+  try {
+    const savedState = localStorage.getItem('workoutState');
+    if (savedState) {
+      const parsedState = JSON.parse(savedState);
+      // Only restore if the workout is active
+      if (parsedState.isActive) {
+        return parsedState;
+      }
+    }
+  } catch (error) {
+    console.error('Error restoring workout state:', error);
+  }
+  return initialWorkoutState;
 };
 
 export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
   workout: initialWorkoutState,
   startWorkout: (exercises: Exercise[]) => {
+    // Clear any existing workout state
+    localStorage.removeItem('workoutState');
+    
     const workoutState = { 
       ...initialWorkoutState, 
       exercises, 
       isActive: true,
       timeRemaining: 20, // Intro countdown
       isIntro: true,
+      isResuming: false,
     };
     set({ workout: workoutState });
     localStorage.setItem('workoutState', JSON.stringify(workoutState));
   },
+  resumeSavedWorkout: () => {
+    try {
+      const savedState = localStorage.getItem('workoutState');
+      if (savedState) {
+        const parsedState = JSON.parse(savedState);
+        if (parsedState.isActive) {
+          // Set isIntro to true to show the intro screen before resuming
+          const resumeState = {
+            ...parsedState,
+            isIntro: true,
+            timeRemaining: 20, // Reset to intro countdown
+            isPaused: false,
+            isResuming: true, // Flag to indicate we're resuming a workout
+          };
+          set({ workout: resumeState });
+          localStorage.setItem('workoutState', JSON.stringify(resumeState));
+        }
+      }
+    } catch (error) {
+      console.error('Error resuming workout:', error);
+    }
+  },
   completeIntro: () => {
+    const currentState = get().workout;
     const newState = {
-      ...get().workout,
+      ...currentState,
       isIntro: false,
-      timeRemaining: 40,
+      isResuming: false,
+      timeRemaining: currentState.isResuming 
+        ? (currentState.isResting ? 20 : 40) // Restore appropriate time based on rest state
+        : 40, // Normal first exercise time
     };
     set({ workout: newState });
     localStorage.setItem('workoutState', JSON.stringify(newState));
