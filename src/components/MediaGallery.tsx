@@ -6,9 +6,15 @@ interface Props {
   media: Media[];
   theme?: 'blue' | 'green';
   isLandscape?: boolean;
+  hideControls?: boolean;
 }
 
-export const MediaGallery: React.FC<Props> = ({ media, theme = 'blue', isLandscape = false }) => {
+export const MediaGallery: React.FC<Props> = ({ 
+  media, 
+  theme = 'blue', 
+  isLandscape = false,
+  hideControls = false
+}) => {
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
   const [thumbnails, setThumbnails] = useState<Record<string, string>>({});
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -131,6 +137,30 @@ export const MediaGallery: React.FC<Props> = ({ media, theme = 'blue', isLandsca
             onError={(e) => console.error('Error loading image:', e)}
           />
         )}
+        
+        {!hideControls && selectedMedia && (
+          <button
+            onClick={() => {
+              if (selectedMedia.type === 'video') {
+                const videoElement = videoRefs.current[selectedMedia.url];
+                if (videoElement) {
+                  enterFullscreen(videoElement);
+                }
+              } else if (selectedMedia.type === 'image') {
+                const img = containerRef.current?.querySelector('img');
+                if (img && img.requestFullscreen) {
+                  img.requestFullscreen().catch(err => {
+                    console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                  });
+                }
+              }
+            }}
+            className="absolute top-2 right-2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-70 transition-opacity z-10"
+            aria-label="Fullscreen"
+          >
+            <Maximize className="w-5 h-5" />
+          </button>
+        )}
       </div>
     );
   }
@@ -147,30 +177,32 @@ export const MediaGallery: React.FC<Props> = ({ media, theme = 'blue', isLandsca
                 ref={el => {
                   if (el) videoRefs.current[selectedMedia.url] = el;
                 }}
-                controls
+                controls={!hideControls}
                 autoPlay
                 muted
                 loop
                 className="w-full h-auto object-contain rounded-lg"
-                style={{ maxHeight: '20vh' }}
+                style={{ maxHeight: '100%', height: '100%' }}
                 src={selectedMedia.url}
                 poster={selectedMedia.thumbnail || thumbnails[selectedMedia.url]}
                 onError={(e) => console.error('Error playing video:', e)}
               >
                 Your browser does not support the video tag.
               </video>
-              <button
-                onClick={() => {
-                  const videoElement = videoRefs.current[selectedMedia.url];
-                  if (videoElement) {
-                    enterFullscreen(videoElement);
-                  }
-                }}
-                className="absolute top-2 right-2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-70 transition-opacity z-10"
-                aria-label="Fullscreen"
-              >
-                <Maximize className="w-5 h-5" />
-              </button>
+              {!hideControls && (
+                <button
+                  onClick={() => {
+                    const videoElement = videoRefs.current[selectedMedia.url];
+                    if (videoElement) {
+                      enterFullscreen(videoElement);
+                    }
+                  }}
+                  className="absolute top-2 right-2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-70 transition-opacity z-10"
+                  aria-label="Fullscreen"
+                >
+                  <Maximize className="w-5 h-5" />
+                </button>
+              )}
             </div>
           ) : (
             <div className="relative h-full flex items-center justify-center">
@@ -178,30 +210,32 @@ export const MediaGallery: React.FC<Props> = ({ media, theme = 'blue', isLandsca
                 src={selectedMedia.url}
                 alt={selectedMedia.title || 'Exercise demonstration'}
                 className="w-full h-auto object-contain rounded-lg"
-                style={{ maxHeight: '20vh' }}
+                style={{ maxHeight: '100%', height: '100%' }}
                 onError={(e) => console.error('Error loading image:', e)}
               />
-              <button
-                onClick={() => {
-                  const img = containerRef.current?.querySelector('img');
-                  if (img && img.requestFullscreen) {
-                    img.requestFullscreen().catch(err => {
-                      console.error(`Error attempting to enable fullscreen: ${err.message}`);
-                    });
-                  }
-                }}
-                className="absolute top-2 right-2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-70 transition-opacity z-10"
-                aria-label="Fullscreen"
-              >
-                <Maximize className="w-5 h-5" />
-              </button>
+              {!hideControls && (
+                <button
+                  onClick={() => {
+                    const img = containerRef.current?.querySelector('img');
+                    if (img && img.requestFullscreen) {
+                      img.requestFullscreen().catch(err => {
+                        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                      });
+                    }
+                  }}
+                  className="absolute top-2 right-2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-70 transition-opacity z-10"
+                  aria-label="Fullscreen"
+                >
+                  <Maximize className="w-5 h-5" />
+                </button>
+              )}
             </div>
           )}
         </div>
       )}
 
-      {/* Thumbnails row - only show if there are multiple media items */}
-      {media.length > 1 && (
+      {/* Thumbnails row - only show if there are multiple media items and controls aren't hidden */}
+      {media.length > 1 && !hideControls && (
         <div className="flex gap-2 overflow-x-auto py-1 flex-shrink-0">
           {media.map((item, index) => (
             <button
