@@ -30,11 +30,13 @@ export interface WorkoutState {
   isActive: boolean;
   isPaused: boolean;
   isIntro?: boolean;
+  isResuming?: boolean;
 }
 
 export interface WorkoutStore {
   workout: WorkoutState;
   startWorkout: (exercises: Exercise[]) => void;
+  resumeSavedWorkout: () => void;
   pauseWorkout: () => void;
   resumeWorkout: () => void;
   stopWorkout: () => void;
