@@ -35,7 +35,14 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
         
         animationFrameId = requestAnimationFrame(updateTimer);
       } else {
-        if (workout.isResting) {
+        // Timer reached zero
+        if (workout.isIntro && onComplete) {
+          // If we're in intro mode and timer reaches zero, call onComplete
+          onComplete();
+          lastUpdateRef.current = 0;
+          progressRef.current = 0;
+          return;
+        } else if (workout.isResting) {
           if (workout.currentExercise >= workout.exercises.length - 1) {
             if (onComplete) {
               onComplete();
@@ -58,22 +65,25 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [workout.timeRemaining, workout.isResting, workout.isActive, workout.isPaused]);
+  }, [workout.timeRemaining, workout.isResting, workout.isActive, workout.isPaused, workout.isIntro, onComplete]);
 
   const minutes = Math.floor(workout.timeRemaining / 60);
   const seconds = workout.timeRemaining % 60;
   
   // Calculate progress percentage for the bar
-  const totalTime = workout.isResting ? 20 : 40;
+  // Use the appropriate total time based on the current state
+  const totalTime = workout.isIntro ? 20 : (workout.isResting ? 20 : 40);
   const progress = (workout.timeRemaining / totalTime) * 100;
 
   // Landscape mode timer (compact)
   if (isLandscape) {
     return (
       <div className={`text-4xl font-bold tabular-nums ${
-        workout.isResting
-          ? 'text-green-700 dark:text-green-300'
-          : 'text-blue-700 dark:text-blue-300'
+        workout.isIntro
+          ? 'text-purple-700 dark:text-purple-300'
+          : workout.isResting
+            ? 'text-green-700 dark:text-green-300'
+            : 'text-blue-700 dark:text-blue-300'
       }`}>
         {minutes}:{seconds.toString().padStart(2, '0')}
       </div>
@@ -87,9 +97,11 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
       <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700">
         <div
           className={`h-full transition-all duration-100 ${
-            workout.isResting
-              ? 'bg-green-500/20 dark:bg-green-400/20 animate-pulse'
-              : 'bg-blue-500/20 dark:bg-blue-400/20'
+            workout.isIntro
+              ? 'bg-purple-500/20 dark:bg-purple-400/20 animate-pulse'
+              : workout.isResting
+                ? 'bg-green-500/20 dark:bg-green-400/20 animate-pulse'
+                : 'bg-blue-500/20 dark:bg-blue-400/20'
           }`}
           style={{ width: `${progress}%` }}
         />
@@ -98,9 +110,11 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
       {/* Timer text */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className={`text-[15vh] font-bold tabular-nums tracking-tight ${
-          workout.isResting
-            ? 'text-green-700 dark:text-green-300'
-            : 'text-blue-700 dark:text-blue-300'
+          workout.isIntro
+            ? 'text-purple-700 dark:text-purple-300'
+            : workout.isResting
+              ? 'text-green-700 dark:text-green-300'
+              : 'text-blue-700 dark:text-blue-300'
         }`}>
           {minutes}:{seconds.toString().padStart(2, '0')}
         </div>
