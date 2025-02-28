@@ -34,11 +34,7 @@
         "Abs"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/high-knees.jpg",
-          "thumbnail": "https://example.com/high-knees-thumb.jpg"
-        },
+   
         {
           "type": "video",
           "url": "/videos/high-knees.mp4",
@@ -57,11 +53,7 @@
         "Legs"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/butt-kicks.jpg",
-          "thumbnail": "https://example.com/butt-kicks-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/butt-kicks.mp4",
@@ -83,11 +75,7 @@
         "Legs"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/mountain-climbers.jpg",
-          "thumbnail": "https://example.com/mountain-climbers-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/mountain-climbers.mp4",
@@ -109,11 +97,7 @@
         "Core"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/burpees.jpg",
-          "thumbnail": "https://example.com/burpees-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/burpee-preview.mp4",
@@ -134,11 +118,7 @@
         "Core"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/skater-jumps.jpg",
-          "thumbnail": "https://example.com/skater-jumps-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/skater-jumps.mp4",
@@ -157,11 +137,7 @@
         "Legs"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/fast-feet.jpg",
-          "thumbnail": "https://example.com/fast-feet-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/fast-feet.mp4",
@@ -181,11 +157,7 @@
         "Legs"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/lateral-shuffles.jpg",
-          "thumbnail": "https://example.com/lateral-shuffles-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/lateral-shuffles.mp4",
@@ -203,14 +175,10 @@
         "Legs"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/spot-jogging.jpg",
-          "thumbnail": "https://example.com/spot-jogging-thumb.jpg"
-        },
+ 
         {
           "type": "video",
-
+  
           "url": "/videos/spot-jogging.mp4",
           "thumbnail": "https://example.com/spot-jogging-video-thumb.jpg"
         }
@@ -228,15 +196,11 @@
         "Arms"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/running-man.jpg",
-          "thumbnail": "https://example.com/running-man-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/running-man.mp4",
-
+  
           "thumbnail": "https://example.com/running-man-video-thumb.jpg"
         }
       ]
@@ -254,14 +218,9 @@
       ],
       "media": [
         {
-          "type": "image",
-          "url": "https://example.com/cross-jacks.jpg",
-          "thumbnail": "https://example.com/cross-jacks-thumb.jpg"
-        },
-        {
           "type": "video",
           "url": "/videos/cross-jacks.mp4",
-
+  
           "thumbnail": "https://example.com/cross-jacks-video-thumb.jpg"
         }
       ]
@@ -278,15 +237,11 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/star-jumps.jpg",
-          "thumbnail": "https://example.com/star-jumps-thumb.jpg"
-        },
+
         {
           "type": "video",
-          "url": "/videos/jumping-jacks.mp4",
-
+          "url": "/videos/jumping-jacks-preview.mp4",
+  
           "thumbnail": "https://example.com/star-jumps-video-thumb.jpg"
         }
       ]
@@ -304,11 +259,7 @@
         "Core"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/speed-skaters.jpg",
-          "thumbnail": "https://example.com/speed-skaters-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/skater-jumps.mp4",
@@ -326,11 +277,6 @@
         "Legs"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/boxer-shuffle.jpg",
-          "thumbnail": "https://example.com/boxer-shuffle-thumb.jpg"
-        },
         {
           "type": "video",
           "url": "/videos/boxer-shuffle.mp4",
@@ -350,11 +296,7 @@
         "Legs"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/split-jumps.jpg",
-          "thumbnail": "https://example.com/split-jumps-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/split-jumps.mp4",
@@ -372,11 +314,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/plank.jpg",
-          "thumbnail": "https://example.com/plank-thumb.jpg"
-        },
+   
         {
           "type": "video",
           "url": "/videos/plank-preview.mp4",
@@ -394,14 +332,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/side-plank.jpg",
-          "thumbnail": "https://example.com/side-plank-thumb.jpg"
-        },
+
         {
           "type": "video",
-          "url": "/videos/side-plank-preview.mp4",
+          "url": "/videos/side-plank-twist-preview.mp4",
           "thumbnail": "https://example.com/side-plank-video-thumb.jpg"
         }
       ]
@@ -416,11 +350,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/bicycle-crunches.jpg",
-          "thumbnail": "https://example.com/bicycle-crunches-thumb.jpg"
-        },
+  
         {
           "type": "video",
           "url": "/videos/bicycle-crunches.mp4",
@@ -438,11 +368,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/russian-twists.jpg",
-          "thumbnail": "https://example.com/russian-twists-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/russian-twist.mp4",
@@ -460,11 +386,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/reverse-crunches.jpg",
-          "thumbnail": "https://example.com/reverse-crunches-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/reverse-crunches.mp4",
@@ -482,11 +404,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/flutter-kicks.jpg",
-          "thumbnail": "https://example.com/flutter-kicks-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/leg-flutter-preview.mp4",
@@ -504,14 +422,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/leg-raises.jpg",
-          "thumbnail": "https://example.com/leg-raises-thumb.jpg"
-        },
+
         {
           "type": "video",
-          "url": "https://example.com/leg-raises.mp4",
+          "url": "/videos/leg-raises.mp4",
           "thumbnail": "https://example.com/leg-raises-video-thumb.jpg"
         }
       ]
@@ -526,11 +440,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/v-ups.jpg",
-          "thumbnail": "https://example.com/v-ups-thumb.jpg"
-        },
+   
         {
           "type": "video",
           "url": "/videos/leg-raises-preview.mp4",
@@ -548,11 +458,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/dead-bug.jpg",
-          "thumbnail": "https://example.com/dead-bug-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/dead-bug.mp4",
@@ -570,11 +476,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/seated-knee-tucks.jpg",
-          "thumbnail": "https://example.com/seated-knee-tucks-thumb.jpg"
-        },
+  
         {
           "type": "video",
           "url": "/videos/knee-tuck.mp4",
@@ -584,7 +486,7 @@
     },
     {
       "title": "Plank Shoulder Taps",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Start in a high plank position, tap each shoulder with the opposite hand while maintaining a stable core and level hips.",
       "categories": [
         "Mixed"
       ],
@@ -592,11 +494,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/plank-shoulder-taps.jpg",
-          "thumbnail": "https://example.com/plank-shoulder-taps-thumb.jpg"
-        },
+  
         {
           "type": "video",
           "url": "/videos/shoulder-taps-preview.mp4",
@@ -606,7 +504,7 @@
     },
     {
       "title": "Hollow Body Hold",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Lie on your back, press lower back into floor, extend arms overhead and legs straight out while lifting shoulders and legs off the ground.",
       "categories": [
         "Mixed"
       ],
@@ -614,11 +512,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/hollow-body-hold.jpg",
-          "thumbnail": "https://example.com/hollow-body-hold-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/hollow-body-hold.mp4",
@@ -628,7 +522,7 @@
     },
     {
       "title": "Bird Dog",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Start on hands and knees, extend opposite arm and leg simultaneously while keeping your back flat and core engaged.",
       "categories": [
         "Mixed"
       ],
@@ -636,11 +530,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/bird-dog.jpg",
-          "thumbnail": "https://example.com/bird-dog-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/bird-dog-preview.mp4",
@@ -658,11 +548,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/superman-hold.jpg",
-          "thumbnail": "https://example.com/superman-hold-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/superman.mp4",
@@ -680,11 +566,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/push-ups.jpg",
-          "thumbnail": "https://example.com/push-ups-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/push-up.mp4",
@@ -702,11 +584,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/diamond-push-ups.jpg",
-          "thumbnail": "https://example.com/diamond-push-ups-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/diamond-push-up.mp4",
@@ -724,11 +602,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/triceps-dips.jpg",
-          "thumbnail": "https://example.com/triceps-dips-thumb.jpg"
-        },
+ 
         {
           "type": "video",
           "url": "/videos/tricep-dip.mp4",
@@ -738,7 +612,7 @@
     },
     {
       "title": "Wide Arm Push-Ups",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Place hands wider than shoulder-width apart, lower chest to floor while keeping elbows out to sides, then push back up.",
       "categories": [
         "Mixed"
       ],
@@ -746,14 +620,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/wide-arm-push-ups.jpg",
-          "thumbnail": "https://example.com/wide-arm-push-ups-thumb.jpg"
-        },
+ 
         {
           "type": "video",
-          "url": "/videos/boxer-shuffle.mp4",
+          "url": "/videos/wide-arm-push-up-hold.mp4",
           "thumbnail": "https://example.com/wide-arm-push-ups-video-thumb.jpg"
         }
       ]
@@ -768,11 +638,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/pike-push-ups.jpg",
-          "thumbnail": "https://example.com/pike-push-ups-thumb.jpg"
-        },
+  
         {
           "type": "video",
           "url": "/videos/pike-push-up.mp4",
@@ -780,10 +646,10 @@
         }
       ]
     },
-
+  
     {
       "title": "Super Slow Push-Ups",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Perform a push up as slow as possible ",
       "categories": [
         "Mixed"
       ],
@@ -791,11 +657,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/super-slow-push-ups.jpg",
-          "thumbnail": "https://example.com/super-slow-push-ups-thumb.jpg"
-        },
+
         {
           "type": "video",
           "url": "/videos/boxer-shuffle.mp4",
@@ -805,7 +667,7 @@
     },
     {
       "title": "Isometric Push-Up Hold",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Perform a standard push up and hold at the lowest point",
       "categories": [
         "Mixed"
       ],
@@ -813,14 +675,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/isometric-push-up-hold.jpg",
-          "thumbnail": "https://example.com/isometric-push-up-hold-thumb.jpg"
-        },
+
         {
           "type": "video",
-          "url": "https://example.com/isometric-push-up-hold.mp4",
+          "url": "/videos/isometric-push-up-hold.mp4",
           "thumbnail": "https://example.com/isometric-push-up-hold-video-thumb.jpg"
         }
       ]
@@ -835,11 +693,7 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/wall-sit.jpg",
-          "thumbnail": "https://example.com/wall-sit-thumb.jpg"
-        },
+
         {
           "type": "video", 
            "url": "/videos/wall-sit.mp4",
@@ -849,7 +703,7 @@
     },
     {
       "title": "Squat Hold",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Perform a squat and hold at the lowest point ",
       "categories": [
         "Mixed"
       ],
@@ -857,14 +711,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/squat-hold.jpg",
-          "thumbnail": "https://example.com/squat-hold-thumb.jpg"
-        },
+  
         {
           "type": "video",
-    
+      
           "url": "/videos/squats.mp4",
           "thumbnail": "https://example.com/squat-hold-video-thumb.jpg"
         }
@@ -872,7 +722,7 @@
     },
     {
       "title": "Lunge Hold",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Perform a lunge and hold",
       "categories": [
         "Mixed"
       ],
@@ -880,14 +730,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/lunge-hold.jpg",
-          "thumbnail": "https://example.com/lunge-hold-thumb.jpg"
-        },
+ 
         {
           "type": "video",
-
+  
           "url": "/videos/lunge-with-twist.mp4",
                     "thumbnail": "https://example.com/lunge-hold-video-thumb.jpg"
         }
@@ -895,7 +741,7 @@
     },
     {
       "title": "Calf Raises",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Stand still, raise up onto tiptoes, hold and lower.",
       "categories": [
         "Mixed"
       ],
@@ -903,14 +749,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/calf-raises.jpg",
-          "thumbnail": "https://example.com/calf-raises-thumb.jpg"
-        },
+
         {
           "type": "video",
-    
+      
           "url": "/videos/calf-raises.mp4",
           "thumbnail": "https://example.com/calf-raises-video-thumb.jpg"
         }
@@ -918,7 +760,7 @@
     },
     {
       "title": "Step Through Lunges",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Go from reverse to forward lunge",
       "categories": [
         "Mixed"
       ],
@@ -926,14 +768,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/step-through-lunges.jpg",
-          "thumbnail": "https://example.com/step-through-lunges-thumb.jpg"
-        },
+  
         {
           "type": "video",
-       
+         
           "url": "/videos/step-through-lunges.mp4",
           "thumbnail": "https://example.com/step-through-lunges-video-thumb.jpg"
         }
@@ -941,7 +779,7 @@
     },
     {
       "title": "Side Lunges",
-      "instructions": "Perform the exercise as per standard form.",
+      "instructions": "Stand with feet together, step one foot out to the side, bend that knee while keeping the other leg straight, then push back to starting position.",
       "categories": [
         "Mixed"
       ],
@@ -949,14 +787,10 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/side-lunges.jpg",
-          "thumbnail": "https://example.com/side-lunges-thumb.jpg"
-        },
+  
         {
           "type": "video",
-  
+    
           "url": "/videos/side-lunges.mp4",
           "thumbnail": "https://example.com/side-lunges-video-thumb.jpg"
         }
@@ -972,18 +806,226 @@
         "Full body"
       ],
       "media": [
-        {
-          "type": "image",
-          "url": "https://example.com/bodyweight-squats.jpg",
-          "thumbnail": "https://example.com/bodyweight-squats-thumb.jpg"
-        },
+ 
         {
           "type": "video",
-
+  
           "url": "/videos/squats.mp4",
           "thumbnail": "https://example.com/bodyweight-squats-video-thumb.jpg"
         }
       ]
+    },
+    {
+      "title": "Ab Crunch Twist",
+      "instructions": "Lie on your back, lift shoulders off the ground, and twist your torso to alternate sides while engaging your core.",
+      "categories": [
+        "Core",
+        "Strength"
+      ],
+      "body_part_focus": [
+        "Abs",
+        "Obliques"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/ab-crunch-twist-preview.mp4",
+          "thumbnail": "https://example.com/ab-crunch-twist-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Alternate Deadbug",
+      "instructions": "Lie on your back with arms extended upward and legs raised with knees bent. Extend one leg and the opposite arm simultaneously while keeping your lower back pressed into the floor.",
+      "categories": [
+        "Core",
+        "Stability"
+      ],
+      "body_part_focus": [
+        "Abs",
+        "Lower back"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/alternate-deadbug-preview.mp4",
+          "thumbnail": "https://example.com/alternate-deadbug-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Bird Dog 2",
+      "instructions": "Start on all fours, extend opposite arm and leg simultaneously while maintaining balance and core engagement, then return to starting position and repeat with other side.",
+      "categories": [
+        "Core",
+        "Balance",
+        "Stability"
+      ],
+      "body_part_focus": [
+        "Back",
+        "Abs",
+        "Glutes"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/bird-dog-2-preview.mp4",
+          "thumbnail": "https://example.com/bird-dog-2-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Flow Yoga",
+      "instructions": "Move through a sequence of yoga poses with fluid transitions, focusing on breath coordination and mindful movement.",
+      "categories": [
+        "Flexibility",
+        "Balance",
+        "Mobility"
+      ],
+      "body_part_focus": [
+        "Full body",
+        "Core"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/flow-yoga-preview.mp4",
+          "thumbnail": "https://example.com/flow-yoga-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Plank Climbers",
+      "instructions": "Start in a high plank position, bring one knee toward your chest, then quickly switch legs in a climbing motion while maintaining a stable core.",
+      "categories": [
+        "Cardio",
+        "Core",
+        "Upper body"
+      ],
+      "body_part_focus": [
+        "Abs",
+        "Shoulders",
+        "Legs"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/plank-climbers-preview.mp4",
+          "thumbnail": "https://example.com/plank-climbers-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Up Down Plank",
+      "instructions": "Start in a forearm plank, push up to a high plank one arm at a time, then lower back down to forearm plank one arm at a time. Repeat the sequence with control.",
+      "categories": [
+        "Strength",
+        "Core",
+        "Upper body"
+      ],
+      "body_part_focus": [
+        "Arms",
+        "Shoulders",
+        "Core"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/up-down-plank-preview.mp4",
+          "thumbnail": "https://example.com/up-down-plank-thumb.jpg"
+        }
+      ]
+    },
+        {
+      "title": "Hindu Push-Ups",
+      "instructions": "Start in a downward dog position, lower your chest forward and down into a cobra position, then push back up into downward dog.",
+      "categories": ["Upper body", "Strength"],
+      "body_part_focus": ["Chest", "Shoulders", "Triceps"],
+      "media": []
+    },
+    {
+      "title": "Archer Push-Ups",
+      "instructions": "Begin in a wide push-up stance, lower your chest toward one arm while keeping the other extended, then push back up and switch sides.",
+      "categories": ["Upper body", "Strength"],
+      "body_part_focus": ["Chest", "Arms", "Core"],
+      "media": []
+    },
+    {
+      "title": "Step-Back Lunges",
+      "instructions": "Step one foot backward into a deep lunge, keeping the front knee at 90 degrees, then push back up to the starting position and repeat on the other leg.",
+      "categories": ["Lower body", "Strength"],
+      "body_part_focus": ["Legs", "Glutes"],
+      "media": []
+    },
+    {
+      "title": "Cossack Squats",
+      "instructions": "Stand with feet wide apart, lower your body to one side while keeping the opposite leg extended, then push back up and switch sides.",
+      "categories": ["Lower body", "Mobility"],
+      "body_part_focus": ["Legs", "Glutes", "Inner Thighs"],
+      "media": []
+    },
+    {
+      "title": "Broad Jumps",
+      "instructions": "Squat down and explode forward into a jump, landing softly with bent knees to absorb impact.",
+      "categories": ["Full body", "Cardio"],
+      "body_part_focus": ["Legs", "Core"],
+      "media": []
+    },
+    {
+      "title": "Bear Crawl",
+      "instructions": "Start on all fours with knees slightly lifted, crawl forward by moving opposite hand and foot together.",
+      "categories": ["Full body", "Coordination"],
+      "body_part_focus": ["Core", "Shoulders", "Legs"],
+      "media": []
+    },
+    {
+      "title": "Seal Jacks",
+      "instructions": "Jump while opening and closing your arms and legs simultaneously, keeping arms parallel to the ground.",
+      "categories": ["Cardio", "Aerobic"],
+      "body_part_focus": ["Legs", "Arms", "Core"],
+      "media": []
+    },
+    {
+      "title": "Reverse Plank",
+      "instructions": "Sit on the floor, place hands behind you, lift hips up, keeping body straight from head to heels.",
+      "categories": ["Core", "Upper body"],
+      "body_part_focus": ["Core", "Glutes", "Shoulders"],
+      "media": []
+    },
+    {
+      "title": "Standing Side Crunches",
+      "instructions": "Stand tall, raise one knee while bringing the same-side elbow down to meet it, then return to the starting position and repeat on the other side.",
+      "categories": ["Core", "Balance"],
+      "body_part_focus": ["Obliques", "Legs"],
+      "media": []
+    },
+    {
+      "title": "Windshield Wipers",
+      "instructions": "Lie on your back, lift legs straight up, slowly rotate them side to side while keeping your core engaged.",
+      "categories": ["Core", "Mobility"],
+      "body_part_focus": ["Abs", "Lower Back"],
+      "media": []
+    },
+    {
+      "title": "Lateral Bounds",
+      "instructions": "Jump sideways from one foot to another, landing softly while maintaining balance.",
+      "categories": ["Cardio", "Balance"],
+      "body_part_focus": ["Legs", "Core"],
+      "media": []
+    },
+    {
+      "title": "Quadruped Rocking",
+      "instructions": "Start on all fours, rock back and forth to improve hip mobility and core stability.",
+      "categories": ["Mobility", "Core"],
+      "body_part_focus": ["Hips", "Core"],
+      "media": []
+    },
+    {
+      "title": "Jefferson Curls",
+      "instructions": "Stand tall, slowly curl your spine downward, reaching toward your toes while keeping legs straight, then return to standing.",
+      "categories": ["Flexibility", "Mobility"],
+      "body_part_focus": ["Hamstrings", "Lower Back"],
+      "media": []
     }
   ]
 }
