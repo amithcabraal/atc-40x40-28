@@ -24,13 +24,15 @@ export const IntroView: React.FC<Props> = ({ onComplete }) => {
             <li>• Have water nearby</li>
             <li>• Take a deep breath</li>
           </ul>
-          <button
-            onClick={onComplete}
-            className="mt-8 px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xl font-semibold flex items-center justify-center gap-2 transition-transform hover:scale-105"
-          >
-            <Play className="w-6 h-6" />
-            Start Now
-          </button>
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={onComplete}
+              className="px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xl font-semibold flex items-center justify-center gap-2 transition-transform hover:scale-105"
+            >
+              <Play className="w-6 h-6" />
+              Start Now
+            </button>
+          </div>
         </div>
       </div>
     </div>

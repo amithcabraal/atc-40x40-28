@@ -1,6 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
-import { Star } from 'lucide-react';
+import { Star, RotateCw } from 'lucide-react';
 import { Session } from '../types';
 
 interface Props {
@@ -25,7 +25,7 @@ export const WorkoutHistory: React.FC<Props> = ({ sessions, onRepeat }) => {
                 </p>
               </div>
               <div className="flex items-center space-x-4">
-                {session.rating && (
+                {session.rating && session.rating > 0 && (
                   <div className="flex">
                     {[...Array(session.rating)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -34,9 +34,10 @@ export const WorkoutHistory: React.FC<Props> = ({ sessions, onRepeat }) => {
                 )}
                 <button
                   onClick={() => onRepeat(session)}
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                  className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                  title="Repeat workout"
                 >
-                  Repeat
+                  <RotateCw className="w-5 h-5" />
                 </button>
               </div>
             </div>

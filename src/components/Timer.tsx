@@ -3,9 +3,10 @@ import { useWorkoutStore } from '../store/workoutStore';
 
 interface Props {
   onComplete?: () => void;
+  isLandscape?: boolean;
 }
 
-export const Timer: React.FC<Props> = ({ onComplete }) => {
+export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
   const { workout, setTimeRemaining, toggleRest, nextExercise } = useWorkoutStore();
   const progressRef = useRef<number>(0);
   const lastUpdateRef = useRef<number>(0);
@@ -66,14 +67,28 @@ export const Timer: React.FC<Props> = ({ onComplete }) => {
   const totalTime = workout.isResting ? 20 : 40;
   const progress = (workout.timeRemaining / totalTime) * 100;
 
+  // Landscape mode timer (compact)
+  if (isLandscape) {
+    return (
+      <div className={`text-4xl font-bold tabular-nums ${
+        workout.isResting
+          ? 'text-green-700 dark:text-green-300'
+          : 'text-blue-700 dark:text-blue-300'
+      }`}>
+        {minutes}:{seconds.toString().padStart(2, '0')}
+      </div>
+    );
+  }
+
+  // Portrait mode timer (with progress bar)
   return (
-    <div className="w-full h-[25vh] relative">
+    <div className="w-full h-[20vh] relative">
       {/* Progress bar background */}
       <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700">
         <div
           className={`h-full transition-all duration-100 ${
             workout.isResting
-              ? 'bg-green-500/20 dark:bg-green-400/20'
+              ? 'bg-green-500/20 dark:bg-green-400/20 animate-pulse'
               : 'bg-blue-500/20 dark:bg-blue-400/20'
           }`}
           style={{ width: `${progress}%` }}
