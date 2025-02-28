@@ -4,25 +4,38 @@ import { Play } from 'lucide-react';
 
 interface Props {
   onComplete: () => void;
+  isResuming?: boolean;
 }
 
-export const IntroView: React.FC<Props> = ({ onComplete }) => {
+export const IntroView: React.FC<Props> = ({ onComplete, isResuming = false }) => {
   return (
     <div className="flex flex-col h-screen bg-purple-50 dark:bg-purple-950">
       <Timer onComplete={onComplete} />
       
       <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
         <h1 className="text-4xl font-bold text-purple-800 dark:text-purple-200 mb-8">
-          Get Ready!
+          {isResuming ? 'Resume Workout' : 'Get Ready!'}
         </h1>
         <div className="space-y-6 max-w-2xl">
           <p className="text-2xl text-purple-700 dark:text-purple-300">
-            Find a comfortable space and get into position.
+            {isResuming 
+              ? 'Picking up where you left off...' 
+              : 'Find a comfortable space and get into position.'}
           </p>
           <ul className="text-xl text-purple-600 dark:text-purple-400 space-y-4">
-            <li>• Clear your workout area</li>
-            <li>• Have water nearby</li>
-            <li>• Take a deep breath</li>
+            {isResuming ? (
+              <>
+                <li>• Take a deep breath</li>
+                <li>• Get back into position</li>
+                <li>• Prepare to continue your workout</li>
+              </>
+            ) : (
+              <>
+                <li>• Clear your workout area</li>
+                <li>• Have water nearby</li>
+                <li>• Take a deep breath</li>
+              </>
+            )}
           </ul>
           <div className="flex justify-center mt-8">
             <button
@@ -30,7 +43,7 @@ export const IntroView: React.FC<Props> = ({ onComplete }) => {
               className="px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xl font-semibold flex items-center justify-center gap-2 transition-transform hover:scale-105"
             >
               <Play className="w-6 h-6" />
-              Start Now
+              {isResuming ? 'Resume Now' : 'Start Now'}
             </button>
           </div>
         </div>
