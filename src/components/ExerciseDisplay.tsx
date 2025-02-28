@@ -69,7 +69,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   };
 
   if (workout.isIntro) {
-    return <IntroView onComplete={completeIntro} />;
+    return <IntroView onComplete={completeIntro} isResuming={workout.isResuming} />;
   }
 
   if (showRating) {
@@ -140,7 +140,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
           </p>
         </div>
 
-        <Timer onComplete={handleStop} />
+        <Timer onComplete={handleSkip} />
 
         <div className="flex-1 flex flex-col px-4 py-2 overflow-hidden">
           {workout.isResting ? (
@@ -275,7 +275,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
         </div>
         
         <div className="flex justify-center">
-          <Timer onComplete={handleStop} isLandscape={true} />
+          <Timer onComplete={handleSkip} isLandscape={true} />
         </div>
         
         <div className="flex justify-end">
