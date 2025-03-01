@@ -14,6 +14,15 @@ export default {
         'exercise-gradient-dark': 'linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%)',
       },
     },
+    // Add container query breakpoints
+    containers: {
+      'sm': '320px',
+      'md': '480px',
+      'lg': '640px',
+      'xl': '800px',
+    },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/container-queries'),
+  ],
 };
