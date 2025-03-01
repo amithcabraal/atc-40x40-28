@@ -480,31 +480,6 @@
           ]
         }
       ]
-    }
-,
-    {
-      "id": "bulgarian-split-squats",
-      "title": "Bulgarian Split Squats",
-      "instructions": "Stand with one foot elevated behind you on a bench, lower into a lunge position",
-      "categories": ["Strength", "Lower body"],
-      "body_part_focus": ["Legs", "Glutes"],
-      "media": [
-        {
-          "type": "video",
-          "url": "/videos/bulgarian-split-squats.mp4",
-          "external_video": null,
-          "thumbnail": "/images/bulgarian-split-squats-video-thumb.jpg"
-        },
-        {
-          "type": "images",
-          "images": [
-            { "alt": "Image 1 of Bulgarian Split Squats", "url": "/images/bulgarian-split-squats-1.jpg" },
-            { "alt": "Image 2 of Bulgarian Split Squats", "url": "/images/bulgarian-split-squats-2.jpg" },
-            { "alt": "Image 3 of Bulgarian Split Squats", "url": "/images/bulgarian-split-squats-3.jpg" },
-            { "alt": "Image 4 of Bulgarian Split Squats", "url": "/images/bulgarian-split-squats-4.jpg" }
-          ]
-        }
-      ]
     },
     {
       "id": "flutter-kicks",
