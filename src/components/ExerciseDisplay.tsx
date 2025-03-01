@@ -155,6 +155,9 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
   if (!workout.isActive) return null;
 
+  // Define button opacity based on overlay visibility
+  const buttonOpacity = showOverlay ? 'opacity-100' : 'opacity-40 hover:opacity-100';
+
   // Portrait mode layout
   if (!isLandscape) {
     return (
@@ -211,12 +214,12 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               >
                 <div className="@container">
                   <h3 className="text-green-800 dark:text-green-200 text-balance font-bold mb-4 vertical-align-top
-                    @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
+                    @sm:text-2xl @md:text-3xl @lg:text-4xl @xl:text-5xl">
                     Next: {nextExerciseData?.title}
                   </h3>
                   
                   <p className="text-green-700 dark:text-green-300 flex-shrink-0 mb-4
-                    @sm:text-base @md:text-lg @lg:text-xl @xl:text-2xl">
+                    @sm:text-lg @md:text-xl @lg:text-2xl @xl:text-3xl">
                     {nextExerciseData?.instructions}
                   </p>
                 </div>
@@ -252,12 +255,12 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               >
                 <div className="@container">
                   <h1 className="text-blue-800 dark:text-blue-200 text-balance font-bold mb-4 vertical-align-top
-                    @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
+                    @sm:text-2xl @md:text-3xl @lg:text-4xl @xl:text-5xl">
                     {currentExercise.title}
                   </h1>
                   
                   <p className="text-blue-700 dark:text-blue-300 flex-shrink-0 mb-4
-                    @sm:text-base @md:text-lg @lg:text-xl @xl:text-2xl">
+                    @sm:text-lg @md:text-xl @lg:text-2xl @xl:text-3xl">
                     {currentExercise.instructions}
                   </p>
                 </div>
@@ -284,28 +287,28 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             {workout.isPaused ? (
               <button
                 onClick={resumeWorkout}
-                className="p-4 bg-green-500 text-white rounded-full hover:bg-green-600 transition-transform hover:scale-105"
+                className={`p-4 bg-green-500 text-white rounded-full hover:bg-green-600 transition-transform hover:scale-105 ${buttonOpacity}`}
               >
                 <Play size={24} />
               </button>
             ) : (
               <button
                 onClick={pauseWorkout}
-                className="p-4 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 transition-transform hover:scale-105"
+                className={`p-4 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 transition-transform hover:scale-105 ${buttonOpacity}`}
               >
                 <Pause size={24} />
               </button>
             )}
             <button
               onClick={handleSkip}
-              className="p-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-transform hover:scale-105"
+              className={`p-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-transform hover:scale-105 ${buttonOpacity}`}
               title="Skip to next"
             >
               <SkipForward size={24} />
             </button>
             <button
               onClick={handleStop}
-              className="p-4 bg-red-500 text-white rounded-full hover:bg-red-600 transition-transform hover:scale-105"
+              className={`p-4 bg-red-500 text-white rounded-full hover:bg-red-600 transition-transform hover:scale-105 ${buttonOpacity}`}
             >
               <Square size={24} />
             </button>
@@ -315,7 +318,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                 showOverlay 
                   ? 'bg-purple-500 hover:bg-purple-600' 
                   : 'bg-purple-600 hover:bg-purple-700'
-              } text-white rounded-full transition-transform hover:scale-105`}
+              } text-white rounded-full transition-transform hover:scale-105 ${buttonOpacity}`}
               title={showOverlay ? "Hide details" : "Show details"}
             >
               <Info size={24} />
@@ -327,7 +330,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                 workout.isResting
                   ? 'bg-green-500 text-white hover:bg-green-600'
                   : 'bg-gray-400 text-gray-200 cursor-not-allowed'
-              } rounded-full transition-transform ${workout.isResting ? 'hover:scale-105' : ''}`}
+              } rounded-full transition-transform ${workout.isResting ? 'hover:scale-105' : ''} ${buttonOpacity}`}
               title={workout.isResting ? "Shuffle next exercise" : "Can only shuffle during rest"}
             >
               <Shuffle size={24} />
@@ -401,10 +404,10 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               }`}
             >
               {/* Solid background panel for better readability */}
-              <div className="absolute left-0 top-0 bottom-0 w-full pr-16 bg-green-100/95 dark:bg-green-900/95 shadow-lg"></div>
+              <div className="absolute left-0 top-0 bottom-0 w-full pr-28 bg-green-100/95 dark:bg-green-900/95 shadow-lg"></div>
               
               {/* Content */}
-              <div className="relative z-20 px-8 py-6 pr-20 @container">
+              <div className="relative z-20 px-8 py-6 pr-28 @container">
                 <h3 className="text-green-800 dark:text-green-200 font-bold mb-4 vertical-align-top
                   @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
                   Next: {nextExerciseData?.title}
@@ -428,60 +431,60 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             </div>
             
             {/* Vertical control buttons on the right edge */}
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-4">
+            <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-3">
               {workout.isPaused ? (
                 <button
                   onClick={resumeWorkout}
-                  className="h-[8vh] w-[8vh] flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:scale-105 transition-transform"
+                  className={`h-14 w-14 flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:scale-105 transition-transform ${buttonOpacity}`}
                   title="Resume"
                 >
-                  <Play className="w-[3vh] h-[3vh]" />
+                  <Play className="w-6 h-6" />
                 </button>
               ) : (
                 <button
                   onClick={pauseWorkout}
-                  className="h-[8vh] w-[8vh] flex items-center justify-center bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 hover:scale-105 transition-transform"
+                  className={`h-14 w-14 flex items-center justify-center bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 hover:scale-105 transition-transform ${buttonOpacity}`}
                   title="Pause"
                 >
-                  <Pause className="w-[3vh] h-[3vh]" />
+                  <Pause className="w-6 h-6" />
                 </button>
               )}
               <button
                 onClick={handleSkip}
-                className="h-[8vh] w-[8vh] flex items-center justify-center bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 hover:scale-105 transition-transform"
+                className={`h-14 w-14 flex items-center justify-center bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 hover:scale-105 transition-transform ${buttonOpacity}`}
                 title="Skip to next"
               >
-                <SkipForward className="w-[3vh] h-[3vh]" />
+                <SkipForward className="w-6 h-6" />
               </button>
               <button
                 onClick={handleStop}
-                className="h-[8vh] w-[8vh] flex items-center justify-center bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:scale-105 transition-transform"
+                className={`h-14 w-14 flex items-center justify-center bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:scale-105 transition-transform ${buttonOpacity}`}
                 title="Stop workout"
               >
-                <Square className="w-[3vh] h-[3vh]" />
+                <Square className="w-6 h-6" />
               </button>
               <button
                 onClick={toggleOverlay}
-                className={`h-[8vh] w-[8vh] flex items-center justify-center ${
+                className={`h-14 w-14 flex items-center justify-center ${
                   showOverlay 
                     ? 'bg-purple-500 hover:bg-purple-600' 
                     : 'bg-purple-600 hover:bg-purple-700'
-                } text-white rounded-full shadow-lg hover:scale-105 transition-transform`}
+                } text-white rounded-full shadow-lg hover:scale-105 transition-transform ${buttonOpacity}`}
                 title={showOverlay ? "Hide details" : "Show details"}
               >
-                <Info className="w-[3vh] h-[3vh]" />
+                <Info className="w-6 h-6" />
               </button>
               <button
                 onClick={shuffleNextExercise}
                 disabled={!workout.isResting}
-                className={`h-[8vh] w-[8vh] flex items-center justify-center ${
+                className={`h-14 w-14 flex items-center justify-center ${
                   workout.isResting
                     ? 'bg-green-500 text-white shadow-lg hover:bg-green-600 hover:scale-105'
                     : 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                } rounded-full transition-transform`}
+                } rounded-full transition-transform ${buttonOpacity}`}
                 title={workout.isResting ? "Shuffle next exercise" : "Can only shuffle during rest"}
               >
-                <Shuffle className="w-[3vh] h-[3vh]" />
+                <Shuffle className="w-6 h-6" />
               </button>
             </div>
           </>
@@ -505,10 +508,10 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               }`}
             >
               {/* Solid background panel for better readability */}
-              <div className="absolute left-0 top-0 bottom-0 w-full pr-16 bg-blue-100/95 dark:bg-blue-900/95 shadow-lg"></div>
+              <div className="absolute left-0 top-0 bottom-0 w-full pr-28 bg-blue-100/95 dark:bg-blue-900/95 shadow-lg"></div>
               
               {/* Content */}
-              <div className="relative z-20 px-8 py-6 pr-20 @container">
+              <div className="relative z-20 px-8 py-6 pr-28 @container">
                 <h1 className="text-blue-800 dark:text-blue-200 font-bold mb-4 vertical-align-top
                   @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
                   {currentExercise.title}
@@ -532,59 +535,59 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             </div>
             
             {/* Vertical control buttons on the right edge */}
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-4">
+            <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-3">
               {workout.isPaused ? (
                 <button
                   onClick={resumeWorkout}
-                  className="h-[8vh] w-[8vh] flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:scale-105 transition-transform"
+                  className={`h-14 w-14 flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:scale-105 transition-transform ${buttonOpacity}`}
                   title="Resume"
                 >
-                  <Play className="w-[3vh] h-[3vh]" />
+                  <Play className="w-6 h-6" />
                 </button>
               ) : (
                 <button
                   onClick={pauseWorkout}
-                  className="h-[8vh] w-[8vh] flex items-center justify-center bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 hover:scale-105 transition-transform"
+                  className={`h-14 w-14 flex items-center justify-center bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 hover:scale-105 transition-transform ${buttonOpacity}`}
                   title="Pause"
                 >
-                  <Pause className="w-[3vh] h-[3vh]" />
+                  <Pause className="w-6 h-6" />
                 </button>
               )}
               <button
                 onClick={handleSkip}
-                className="h-[8vh] w-[8vh] flex items-center justify-center bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 hover:scale-105 transition-transform"
+                className={`h-14 w-14 flex items-center justify-center bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 hover:scale-105 transition-transform ${buttonOpacity}`}
                 title="Skip to next"
               >
-                <SkipForward className="w-[3vh] h-[3vh]" />
+                <SkipForward className="w-6 h-6" />
               </button>
               <button
                 onClick={handleStop}
-                className="h-[8vh] w-[8vh] flex items-center justify-center bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:scale-105 transition-transform"
+                className={`h-14 w-14 flex items-center justify-center bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:scale-105 transition-transform ${buttonOpacity}`}
                 title="Stop workout"
               >
-                <Square className="w-[3vh] h-[3vh]" />
+                <Square className="w-6 h-6" />
               </button>
               <button
                 onClick={toggleOverlay}
-                className={`h-[8vh] w-[8vh] flex items-center justify-center ${
+                className={`h-14 w-14 flex items-center justify-center ${
                   showOverlay 
                     ? 'bg-purple-500 hover:bg-purple-600' 
                     : 'bg-purple-600 hover:bg-purple-700'
-                } text-white rounded-full shadow-lg hover:scale-105 transition-transform`}
+                } text-white rounded-full shadow-lg hover:scale-105 transition-transform ${buttonOpacity}`}
                 title={showOverlay ? "Hide details" : "Show details"}
               >
-                <Info className="w-[3vh] h-[3vh]" />
+                <Info className="w-6 h-6" />
               </button>
               <button
                 disabled={!workout.isResting}
-                className={`h-[8vh] w-[8vh] flex items-center justify-center ${
+                className={`h-14 w-14 flex items-center justify-center ${
                   workout.isResting
                     ? 'bg-green-500 text-white shadow-lg hover:bg-green-600 hover:scale-105'
                     : 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                } rounded-full transition-transform`}
+                } rounded-full transition-transform ${buttonOpacity}`}
                 title="Can only shuffle during rest"
               >
-                <Shuffle className="w-[3vh] h-[3vh]" />
+                <Shuffle className="w-6 h-6" />
               </button>
             </div>
           </>
