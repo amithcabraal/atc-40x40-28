@@ -555,30 +555,6 @@
       ]
     },
     {
-      "id": "dragon-flags",
-      "title": "Dragon Flags",
-      "instructions": "Lie on bench, grip something behind your head, lift legs and torso as one unit",
-      "categories": ["Strength", "Core"],
-      "body_part_focus": ["Core", "Abs"],
-      "media": [
-        {
-          "type": "video",
-          "url": "/videos/dragon-flags.mp4",
-          "external_video": null,
-          "thumbnail": "/images/dragon-flags-video-thumb.jpg"
-        },
-        {
-          "type": "images",
-          "images": [
-            { "alt": "Image 1 of Dragon Flags", "url": "/images/dragon-flags-1.jpg" },
-            { "alt": "Image 2 of Dragon Flags", "url": "/images/dragon-flags-2.jpg" },
-            { "alt": "Image 3 of Dragon Flags", "url": "/images/dragon-flags-3.jpg" },
-            { "alt": "Image 4 of Dragon Flags", "url": "/images/dragon-flags-4.jpg" }
-          ]
-        }
-      ]
-    },
-    {
       "id": "archer-push-ups",
       "title": "Archer Push-Ups",
       "instructions": "Perform a push-up with one arm extended to the side, alternating arms",
