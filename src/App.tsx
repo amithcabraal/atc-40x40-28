@@ -4,7 +4,7 @@ import { useWorkoutStore } from './store/workoutStore';
 import { ExerciseDisplay } from './components/ExerciseDisplay';
 import { WorkoutHistory } from './components/WorkoutHistory';
 import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop } from 'lucide-react';
-import exerciseData from './data/exercises.json';
+import exerciseData from './data/100-exercises.json';
 import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 
 // Helper function to check if an exercise is a duplicate
