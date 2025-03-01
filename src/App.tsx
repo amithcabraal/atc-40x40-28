@@ -7,6 +7,11 @@ import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop }
 import exerciseData from './data/exercises.json';
 import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 
+// Helper function to check if an exercise is a duplicate
+const isDuplicateExercise = (exercise: Exercise, selectedExercises: Exercise[]): boolean => {
+  return selectedExercises.some(selected => selected.title === exercise.title);
+};
+
 function App() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [showWelcome, setShowWelcome] = useState(true);
@@ -97,14 +102,43 @@ function App() {
     categories.forEach(category => {
       const exercises = categorizedExercises[category];
       const shuffled = [...exercises].sort(() => Math.random() - 0.5);
-      selectedExercises.push(...shuffled.slice(0, exercisesPerCategory));
+      
+      // Add exercises from this category, ensuring no duplicates
+      let added = 0;
+      for (const exercise of shuffled) {
+        if (added >= exercisesPerCategory) break;
+        
+        // Only add if not already in the selected exercises
+        if (!isDuplicateExercise(exercise, selectedExercises)) {
+          selectedExercises.push(exercise);
+          added++;
+        }
+      }
     });
 
+    // If we need more exercises to reach 40
     const remaining = 40 - selectedExercises.length;
     if (remaining > 0) {
-      const allRemaining = exerciseData.exercises.filter(ex => !selectedExercises.includes(ex));
-      const shuffled = [...allRemaining].sort(() => Math.random() - 0.5);
-      selectedExercises.push(...shuffled.slice(0, remaining));
+      // Get all exercises that aren't already selected
+      const allRemaining = exerciseData.exercises.filter(ex => 
+        !isDuplicateExercise(ex, selectedExercises)
+      );
+      
+      if (allRemaining.length > 0) {
+        const shuffled = [...allRemaining].sort(() => Math.random() - 0.5);
+        // Add as many unique exercises as possible
+        selectedExercises.push(...shuffled.slice(0, Math.min(remaining, shuffled.length)));
+      }
+      
+      // If we still need more (not enough unique exercises), allow duplicates
+      const stillRemaining = 40 - selectedExercises.length;
+      if (stillRemaining > 0) {
+        const allExercises = exerciseData.exercises.filter(ex => 
+          !isDuplicateExercise(ex, selectedExercises)
+        );
+        const shuffled = [...allExercises].sort(() => Math.random() - 0.5);
+        selectedExercises.push(...shuffled.slice(0, stillRemaining));
+      }
     }
 
     const finalSelection = selectedExercises.sort(() => Math.random() - 0.5);
