@@ -13,6 +13,14 @@
   }
 }
 
+/* Vertical alignment for consistent title positioning */
+.vertical-align-top {
+  vertical-align: top;
+  margin-top: 0;
+  padding-top: 0;
+  line-height: 1.2;
+}
+
 /* Landscape mode specific styles */
 @media (orientation: landscape) {
   .landscape-video-container {
@@ -69,4 +77,14 @@
 
 .fade-out {
   animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+/* Image slideshow transitions */
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.duration-1000 {
+  transition-duration: 1000ms;
 }
