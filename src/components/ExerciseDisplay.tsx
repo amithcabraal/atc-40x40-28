@@ -34,6 +34,9 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   const nextExerciseData = workout.exercises[workout.currentExercise + 1];
   const progress = ((workout.currentExercise + 1) / workout.exercises.length) * 100;
 
+  // Define button opacity based on overlay visibility
+  const buttonOpacity = showOverlay ? 'opacity-100' : 'opacity-40 hover:opacity-100';
+
   // Check if the device is in landscape mode
   useEffect(() => {
     const checkOrientation = () => {
@@ -154,9 +157,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   }
 
   if (!workout.isActive) return null;
-
-  // Define button opacity based on overlay visibility
-  const buttonOpacity = showOverlay ? 'opacity-100' : 'opacity-40 hover:opacity-100';
 
   // Portrait mode layout
   if (!isLandscape) {
