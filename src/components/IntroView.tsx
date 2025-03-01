@@ -22,21 +22,7 @@ export const IntroView: React.FC<Props> = ({ onComplete, isResuming = false }) =
               ? 'Picking up where you left off...' 
               : 'Find a comfortable space and get into position.'}
           </p>
-          <ul className="text-xl text-purple-600 dark:text-purple-400 space-y-4">
-            {isResuming ? (
-              <>
-                <li>• Take a deep breath</li>
-                <li>• Get back into position</li>
-                <li>• Prepare to continue your workout</li>
-              </>
-            ) : (
-              <>
-                <li>• Clear your workout area</li>
-                <li>• Have water nearby</li>
-                <li>• Take a deep breath</li>
-              </>
-            )}
-          </ul>
+
           <div className="flex justify-center mt-8">
             <button
               onClick={onComplete}

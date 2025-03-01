@@ -8,8 +8,12 @@ interface BodyPartIconsProps {
 }
 
 export const BodyPartIcons: React.FC<BodyPartIconsProps> = ({ bodyParts, theme = 'blue', isLandscape = false }) => {
+  // Limit to first 4 body parts to ensure consistent layout
+  const displayBodyParts = bodyParts.slice(0, 4);
+  
   const getIconForBodyPart = (bodyPart: string) => {
-    const iconSize = isLandscape ? 14 : 18;
+    // Scale icon size based on available space
+    const iconSize = isLandscape ? 14 : 16;
     const iconClassName = `${
       theme === 'green' 
         ? 'text-green-700 dark:text-green-300' 
@@ -71,7 +75,7 @@ export const BodyPartIcons: React.FC<BodyPartIconsProps> = ({ bodyParts, theme =
           Target:
         </span>
         <div className="flex flex-wrap gap-1">
-          {bodyParts.map((part, index) => (
+          {displayBodyParts.map((part, index) => (
             <div 
               key={index}
               className={`flex items-center ${
@@ -89,28 +93,33 @@ export const BodyPartIcons: React.FC<BodyPartIconsProps> = ({ bodyParts, theme =
     );
   }
 
-  // Regular portrait mode layout
+  // Regular portrait mode layout with 5-slot grid system
   return (
-    <div className="flex items-center gap-2">
-      <span className={`text-sm font-medium ${
+    <div className="flex items-center">
+      <span className={`text-sm font-medium mr-2 ${
         theme === 'green' 
           ? 'text-green-800 dark:text-green-200' 
           : 'text-blue-800 dark:text-blue-200'
       }`}>
-        Target Areas:
+        Target:
       </span>
-      <div className="flex flex-wrap gap-2">
-        {bodyParts.map((part, index) => (
+      <div className="grid grid-cols-5 gap-x-3 w-full max-w-xs">
+        {displayBodyParts.map((part, index) => (
           <div 
             key={index}
-            className={`flex items-center gap-1 ${
+            className={`flex items-center ${
               theme === 'green'
                 ? 'text-green-800 dark:text-green-200'
                 : 'text-blue-800 dark:text-blue-200'
             }`}
+            title={part}
           >
             {getIconForBodyPart(part)}
           </div>
+        ))}
+        {/* Add empty placeholders to maintain grid structure */}
+        {Array(5 - displayBodyParts.length).fill(0).map((_, i) => (
+          <div key={`empty-${i}`} className="w-4 h-4"></div>
         ))}
       </div>
     </div>

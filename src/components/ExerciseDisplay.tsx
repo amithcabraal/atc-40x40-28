@@ -209,13 +209,17 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                   showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
               >
-                <h3 className="text-3xl md:text-4xl font-bold text-green-800 dark:text-green-200 text-balance mb-4">
-                  Next: {nextExerciseData?.title}
-                </h3>
-                
-                <p className="text-xl md:text-2xl text-green-700 dark:text-green-300 flex-shrink-0 mb-4">
-                  {nextExerciseData?.instructions}
-                </p>
+                <div className="@container">
+                  <h3 className="text-green-800 dark:text-green-200 text-balance font-bold mb-4 vertical-align-top
+                    @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
+                    Next: {nextExerciseData?.title}
+                  </h3>
+                  
+                  <p className="text-green-700 dark:text-green-300 flex-shrink-0 mb-4
+                    @sm:text-base @md:text-lg @lg:text-xl @xl:text-2xl">
+                    {nextExerciseData?.instructions}
+                  </p>
+                </div>
                 
                 {nextExerciseData?.body_part_focus && (
                   <div className="mt-auto flex justify-between items-center flex-shrink-0">
@@ -223,29 +227,9 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                       bodyParts={nextExerciseData.body_part_focus} 
                       theme="green"
                     />
-                    <button
-                      onClick={shuffleNextExercise}
-                      className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-transform hover:scale-105 flex-shrink-0"
-                      title="Shuffle next exercise"
-                    >
-                      <Shuffle size={20} />
-                    </button>
                   </div>
                 )}
               </div>
-              
-              {/* Info button to toggle overlay */}
-              {nextExerciseData?.media && nextExerciseData.media.length > 0 && (
-                <button
-                  onClick={toggleOverlay}
-                  className={`absolute top-2 right-2 z-20 p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-transform hover:scale-105 ${
-                    showOverlay ? 'opacity-50' : 'opacity-90'
-                  }`}
-                  title={showOverlay ? "Hide details" : "Show details"}
-                >
-                  <Info size={20} />
-                </button>
-              )}
             </div>
           ) : (
             <div className="relative h-full">
@@ -266,13 +250,17 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                   showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
               >
-                <h1 className="text-3xl md:text-4xl font-bold text-blue-800 dark:text-blue-200 text-balance mb-4">
-                  {currentExercise.title}
-                </h1>
-                
-                <p className="text-xl md:text-2xl text-blue-700 dark:text-blue-300 flex-shrink-0 mb-4">
-                  {currentExercise.instructions}
-                </p>
+                <div className="@container">
+                  <h1 className="text-blue-800 dark:text-blue-200 text-balance font-bold mb-4 vertical-align-top
+                    @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
+                    {currentExercise.title}
+                  </h1>
+                  
+                  <p className="text-blue-700 dark:text-blue-300 flex-shrink-0 mb-4
+                    @sm:text-base @md:text-lg @lg:text-xl @xl:text-2xl">
+                    {currentExercise.instructions}
+                  </p>
+                </div>
                 
                 {currentExercise?.body_part_focus && (
                   <div className="mt-auto flex-shrink-0">
@@ -283,19 +271,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                   </div>
                 )}
               </div>
-              
-              {/* Info button to toggle overlay */}
-              {currentExercise?.media && currentExercise.media.length > 0 && (
-                <button
-                  onClick={toggleOverlay}
-                  className={`absolute top-2 right-2 z-20 p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-transform hover:scale-105 ${
-                    showOverlay ? 'opacity-50' : 'opacity-90'
-                  }`}
-                  title={showOverlay ? "Hide details" : "Show details"}
-                >
-                  <Info size={20} />
-                </button>
-              )}
             </div>
           )}
         </div>
@@ -305,7 +280,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             ? 'bg-green-100 dark:bg-green-900'
             : 'bg-blue-100 dark:bg-blue-900'
         } p-4 transition-colors duration-300`}>
-          <div className="flex justify-center space-x-6">
+          <div className="flex justify-center space-x-4">
             {workout.isPaused ? (
               <button
                 onClick={resumeWorkout}
@@ -333,6 +308,29 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               className="p-4 bg-red-500 text-white rounded-full hover:bg-red-600 transition-transform hover:scale-105"
             >
               <Square size={24} />
+            </button>
+            <button
+              onClick={toggleOverlay}
+              className={`p-4 ${
+                showOverlay 
+                  ? 'bg-purple-500 hover:bg-purple-600' 
+                  : 'bg-purple-600 hover:bg-purple-700'
+              } text-white rounded-full transition-transform hover:scale-105`}
+              title={showOverlay ? "Hide details" : "Show details"}
+            >
+              <Info size={24} />
+            </button>
+            <button
+              onClick={shuffleNextExercise}
+              disabled={!workout.isResting}
+              className={`p-4 ${
+                workout.isResting
+                  ? 'bg-green-500 text-white hover:bg-green-600'
+                  : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+              } rounded-full transition-transform ${workout.isResting ? 'hover:scale-105' : ''}`}
+              title={workout.isResting ? "Shuffle next exercise" : "Can only shuffle during rest"}
+            >
+              <Shuffle size={24} />
             </button>
           </div>
         </div>
@@ -406,11 +404,13 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               <div className="absolute left-0 top-0 bottom-0 w-full pr-16 bg-green-100/95 dark:bg-green-900/95 shadow-lg"></div>
               
               {/* Content */}
-              <div className="relative z-20 px-8 py-6 pr-20">
-                <h3 className="text-3xl md:text-4xl font-bold text-green-800 dark:text-green-200 mb-4">
+              <div className="relative z-20 px-8 py-6 pr-20 @container">
+                <h3 className="text-green-800 dark:text-green-200 font-bold mb-4 vertical-align-top
+                  @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
                   Next: {nextExerciseData?.title}
                 </h3>
-                <p className="text-xl md:text-2xl text-green-700 dark:text-green-300 mb-6">
+                <p className="text-green-700 dark:text-green-300 mb-6
+                  @sm:text-base @md:text-lg @lg:text-xl @xl:text-2xl">
                   {nextExerciseData?.instructions}
                 </p>
                 
@@ -422,13 +422,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                       theme="green"
                       isLandscape={true}
                     />
-                    <button
-                      onClick={shuffleNextExercise}
-                      className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-transform hover:scale-105"
-                      title="Shuffle next exercise"
-                    >
-                      <Shuffle size={16} />
-                    </button>
                   </div>
                 )}
               </div>
@@ -478,6 +471,18 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               >
                 <Info className="w-[3vh] h-[3vh]" />
               </button>
+              <button
+                onClick={shuffleNextExercise}
+                disabled={!workout.isResting}
+                className={`h-[8vh] w-[8vh] flex items-center justify-center ${
+                  workout.isResting
+                    ? 'bg-green-500 text-white shadow-lg hover:bg-green-600 hover:scale-105'
+                    : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                } rounded-full transition-transform`}
+                title={workout.isResting ? "Shuffle next exercise" : "Can only shuffle during rest"}
+              >
+                <Shuffle className="w-[3vh] h-[3vh]" />
+              </button>
             </div>
           </>
         ) : (
@@ -503,11 +508,13 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               <div className="absolute left-0 top-0 bottom-0 w-full pr-16 bg-blue-100/95 dark:bg-blue-900/95 shadow-lg"></div>
               
               {/* Content */}
-              <div className="relative z-20 px-8 py-6 pr-20">
-                <h1 className="text-3xl md:text-4xl font-bold text-blue-800 dark:text-blue-200 mb-4">
+              <div className="relative z-20 px-8 py-6 pr-20 @container">
+                <h1 className="text-blue-800 dark:text-blue-200 font-bold mb-4 vertical-align-top
+                  @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
                   {currentExercise.title}
                 </h1>
-                <p className="text-xl md:text-2xl text-blue-700 dark:text-blue-300 mb-6">
+                <p className="text-blue-700 dark:text-blue-300 mb-6
+                  @sm:text-base @md:text-lg @lg:text-xl @xl:text-2xl">
                   {currentExercise.instructions}
                 </p>
                 
@@ -567,6 +574,17 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                 title={showOverlay ? "Hide details" : "Show details"}
               >
                 <Info className="w-[3vh] h-[3vh]" />
+              </button>
+              <button
+                disabled={!workout.isResting}
+                className={`h-[8vh] w-[8vh] flex items-center justify-center ${
+                  workout.isResting
+                    ? 'bg-green-500 text-white shadow-lg hover:bg-green-600 hover:scale-105'
+                    : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                } rounded-full transition-transform`}
+                title="Can only shuffle during rest"
+              >
+                <Shuffle className="w-[3vh] h-[3vh]" />
               </button>
             </div>
           </>
