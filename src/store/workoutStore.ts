@@ -29,6 +29,11 @@ const getSavedState = () => {
   return initialWorkoutState;
 };
 
+// Helper function to check if an exercise is a duplicate
+const isDuplicateExercise = (exercise: Exercise, selectedExercises: Exercise[]): boolean => {
+  return selectedExercises.some(selected => selected.title === exercise.title);
+};
+
 export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
   workout: initialWorkoutState,
   startWorkout: (exercises: Exercise[]) => {
@@ -124,16 +129,40 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
     const currentExercises = [...workout.exercises];
     const nextExerciseIndex = workout.currentExercise + 1;
     
-    // Get all exercises except the current and next one
+    // Get all exercises except the current one
     const availableExercises = currentExercises.filter((_, index) => 
-      index !== workout.currentExercise && index !== nextExerciseIndex
+      index !== workout.currentExercise
     );
     
-    // Pick a random exercise from the available ones
-    const randomIndex = Math.floor(Math.random() * availableExercises.length);
-    const newExercise = availableExercises[randomIndex];
+    // Get the current exercise set (all exercises that have been or will be performed)
+    const currentExerciseSet = new Set(currentExercises.map(ex => ex.title));
     
-    // Replace the next exercise with the randomly selected one
+    // Try to find a new exercise that hasn't been used in this workout yet
+    let newExercise = null;
+    let attempts = 0;
+    const maxAttempts = 10; // Prevent infinite loops
+    
+    while (!newExercise && attempts < maxAttempts) {
+      // Pick a random exercise from the available ones
+      const randomIndex = Math.floor(Math.random() * availableExercises.length);
+      const candidateExercise = availableExercises[randomIndex];
+      
+      // Check if this exercise is already in the workout
+      if (!currentExerciseSet.has(candidateExercise.title) || attempts > 5) {
+        // After 5 attempts, we'll accept a duplicate if we can't find a unique one
+        newExercise = candidateExercise;
+      }
+      
+      attempts++;
+    }
+    
+    // If we couldn't find a new exercise, just use a random one
+    if (!newExercise) {
+      const randomIndex = Math.floor(Math.random() * availableExercises.length);
+      newExercise = availableExercises[randomIndex];
+    }
+    
+    // Replace the next exercise with the selected one
     currentExercises[nextExerciseIndex] = newExercise;
     
     const newState = {
