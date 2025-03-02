@@ -3,9 +3,10 @@ import { Exercise, Session, Theme } from './types';
 import { useWorkoutStore } from './store/workoutStore';
 import { ExerciseDisplay } from './components/ExerciseDisplay';
 import { WorkoutHistory } from './components/WorkoutHistory';
-import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop } from 'lucide-react';
+import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop, BookOpen } from 'lucide-react';
 import exerciseData from './data/100-exercises.json';
 import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
+import { ExerciseLibrary } from './components/ExerciseLibrary';
 
 // Helper function to check if an exercise is a duplicate
 const isDuplicateExercise = (exercise: Exercise, selectedExercises: Exercise[]): boolean => {
@@ -19,6 +20,7 @@ function App() {
   const [showMenu, setShowMenu] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showResumeModal, setShowResumeModal] = useState(false);
+  const [showExerciseLibrary, setShowExerciseLibrary] = useState(false);
   const { workout, startWorkout, resumeSavedWorkout } = useWorkoutStore();
 
   useEffect(() => {
@@ -182,13 +184,13 @@ function App() {
               onClick={() => setShowSettings(true)}
               className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
             >
-              <Settings className="w-6 h-6" />
+              <Settings className="w-6 h-6 dark:text-white" />
             </button>
             <button
               onClick={() => setShowMenu(!showMenu)}
               className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-6 h-6 dark:text-white" />
             </button>
           </div>
         </div>
@@ -281,6 +283,14 @@ function App() {
         </div>
       )}
 
+      {/* Exercise Library */}
+      {showExerciseLibrary && (
+        <ExerciseLibrary 
+          exercises={exerciseData.exercises} 
+          onClose={() => setShowExerciseLibrary(false)} 
+        />
+      )}
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -306,6 +316,16 @@ function App() {
       {showMenu && (
         <div className="fixed inset-y-0 right-0 w-64 bg-white dark:bg-gray-800 shadow-lg p-4 z-50">
           <div className="space-y-4">
+            <button 
+              onClick={() => {
+                setShowExerciseLibrary(true);
+                setShowMenu(false);
+              }}
+              className="w-full flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded dark:text-white"
+            >
+              <BookOpen className="w-5 h-5" />
+              <span>Exercise Library</span>
+            </button>
             <button 
               onClick={() => window.open('/help', '_blank')}
               className="w-full flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded dark:text-white"
