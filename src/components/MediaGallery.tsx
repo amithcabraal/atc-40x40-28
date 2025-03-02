@@ -7,13 +7,15 @@ interface Props {
   theme?: 'blue' | 'green';
   isLandscape?: boolean;
   hideControls?: boolean;
+  autoplay?: boolean;
 }
 
 export const MediaGallery: React.FC<Props> = ({ 
   media, 
   theme = 'blue', 
   isLandscape = false,
-  hideControls = false
+  hideControls = false,
+  autoplay = true
 }) => {
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
   const [thumbnails, setThumbnails] = useState<Record<string, string>>({});
@@ -95,7 +97,7 @@ export const MediaGallery: React.FC<Props> = ({
 
   // Effect to autoplay the selected video when it changes
   useEffect(() => {
-    if (selectedMedia?.type === 'video' && !videoErrors[selectedMedia.url]) {
+    if (selectedMedia?.type === 'video' && !videoErrors[selectedMedia.url] && autoplay) {
       const videoElement = videoRefs.current[selectedMedia.url];
       if (videoElement) {
         videoElement.play().catch(err => {
@@ -107,7 +109,7 @@ export const MediaGallery: React.FC<Props> = ({
         });
       }
     }
-  }, [selectedMedia, videoErrors]);
+  }, [selectedMedia, videoErrors, autoplay]);
 
   // Effect to handle image slideshow when video is not available
   useEffect(() => {
@@ -203,7 +205,7 @@ export const MediaGallery: React.FC<Props> = ({
             ref={el => {
               if (el) videoRefs.current[selectedMedia.url] = el;
             }}
-            autoPlay
+            autoPlay={autoplay}
             muted
             loop
             className="w-full h-full object-cover"
@@ -263,7 +265,7 @@ export const MediaGallery: React.FC<Props> = ({
                   if (el) videoRefs.current[selectedMedia.url] = el;
                 }}
                 controls={!hideControls}
-                autoPlay
+                autoPlay={autoplay}
                 muted
                 loop
                 className="w-full h-auto object-contain rounded-lg"
