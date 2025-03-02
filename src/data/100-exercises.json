@@ -1,6 +1,225 @@
 {
   "exercises": [
     {
+      "id": "ab-crunch-twist-preview",
+      "title": "Ab Crunch Twist",
+      "instructions": "Lie on your back, lift shoulders off the ground, and twist your torso to alternate sides while engaging your core.",
+      "categories": [
+        "Core",
+        "Strength"
+      ],
+      "body_part_focus": [
+        "Abs",
+        "Obliques"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/ab-crunch-twist-preview.mp4",
+          "external_video": null,
+          "thumbnail": "/images/ab-crunch-twist-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "alternate-deadbug-preview",
+      "title": "Alternate Deadbug",
+      "instructions": "Lie on your back with arms extended upward and legs raised with knees bent. Extend one leg and the opposite arm simultaneously while keeping your lower back pressed into the floor.",
+      "categories": [
+        "Core",
+        "Stability"
+      ],
+      "body_part_focus": [
+        "Abs",
+        "Lower back"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/alternate-deadbug-preview.mp4",
+          "external_video": null,
+          "thumbnail": "/images/alternate-deadbug-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "bicycle-crunches",
+      "title": "Bicycle Crunches",
+      "instructions": "Lie on your back, hands behind head, bring opposite elbow to opposite knee in a pedaling motion.",
+      "categories": [
+        "Mixed"
+      ],
+      "body_part_focus": [
+        "Full body"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/bicycle-crunches.mp4",
+          "external_video": null,
+          "thumbnail": "/images/bicycle-crunches-video-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "cross-jacks",
+      "title": "Cross Jacks",
+      "instructions": "Perform jumping jacks while crossing arms and legs alternately.",
+      "categories": [
+        "Aerobic",
+        "Full body"
+      ],
+      "body_part_focus": [
+        "Arms",
+        "Legs"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/cross-jacks.mp4",
+          "external_video": null,
+          "thumbnail": "/images/cross-jacks-video-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "downward-dog-toe-taps-preview",
+      "title": "Downward-dog Toe Taps",
+      "instructions": "Start in a downward-facing dog position, then alternate tapping each hand with the opposite foot, keeping your core engaged.",
+      "categories": [
+        "Core",
+        "Balance",
+        "Flexibility"
+      ],
+      "body_part_focus": [
+        "Shoulders",
+        "Hamstrings",
+        "Calves"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/downward-dog-toe-taps-preview.mp4",
+          "external_video": null,
+          "thumbnail": "/images/downward-dog-toe-taps-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "fast-feet",
+      "title": "Fast Feet",
+      "instructions": "Run in place quickly with small, rapid steps.",
+      "categories": [
+        "Aerobic",
+        "Lower body"
+      ],
+      "body_part_focus": [
+        "Legs"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/fast-feet.mp4",
+          "external_video": null,
+          "thumbnail": "/images/fast-feet-video-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "hand-stand-pushups",
+      "title": "Handstand Pushups",
+      "instructions": "Perform a push-up while in a handstand position against a wall.",
+      "categories": [
+        "Strength",
+        "Upper body"
+      ],
+      "body_part_focus": [
+        "Shoulders",
+        "Arms",
+        "Core"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/hand-stand-pushups.mp4",
+          "external_video": null,
+          "thumbnail": "/images/hand-stand-pushups-video-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "high-knees",
+      "title": "High Knees",
+      "instructions": "Run in place while lifting your knees as high as possible, engaging your core.",
+      "categories": [
+        "Aerobic",
+        "Core",
+        "Lower body"
+      ],
+      "body_part_focus": [
+        "Legs",
+        "Abs"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/high-knees.mp4",
+          "external_video": null,
+          "thumbnail": "/images/high-knees-video-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "horse-stand-holds",
+      "title": "Horse Stance Holds",
+      "instructions": "Stand with feet shoulder-width apart, toes pointing slightly outward, and lower your hips into a squat position. Hold this position for a set amount of time.",
+      "categories": [
+        "Strength",
+        "Lower body",
+        "Flexibility"
+      ],
+      "body_part_focus": [
+        "Legs",
+        "Glutes",
+        "Groin"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/horse-stand-holds.mp4",
+          "external_video": null,
+          "thumbnail": "/images/horse-stand-holds-video-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "jumping-jacks-preview",
+      "title": "Jumping Jacks",
+      "instructions": "Stand with feet together, jump while spreading arms and legs, then return to start position. Repeat.",
+      "categories": [
+        "Aerobic",
+        "Lower body",
+        "Upper body"
+      ],
+      "body_part_focus": [
+        "Legs",
+        "Arms",
+        "Full body"
+      ],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/jumping-jacks-preview.mp4",
+          "external_video": null,
+          "thumbnail": "/images/jumping-jacks-video-thumb.jpg"
+        }
+      ]
+    },
+
+
+
+    
+    {
       "id": "push-up-jacks",
       "title": "Push Up Jacks",
       "instructions": "Perform a push-up, then jump your feet out to the sides and back in, similar to a jumping jack.",
