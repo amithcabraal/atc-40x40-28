@@ -24,6 +24,61 @@
           ]
         }
       ]
-    }
+    },
+
+
+        {
+      "id": "donkey-kicks",
+      "title": "Donkey Kicks",
+      "instructions": "On hands and knees, kick one leg back and up while keeping knee bent, focusing on using glute muscles.",
+      "categories": ["Strength", "Lower body", "Core"],
+      "body_part_focus": ["Glutes", "Hamstrings", "Core"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/donkey-kicks.mp4",
+          "external_video": null,
+          "thumbnail": "/images/donkey-kicks-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of Donkey Kicks", "url": "/images/donkey-kicks-1.jpg" },
+            { "alt": "Image 2 of Donkey Kicks", "url": "/images/donkey-kicks-2.jpg" },
+            { "alt": "Image 3 of Donkey Kicks", "url": "/images/donkey-kicks-3.jpg" },
+            { "alt": "Image 4 of Donkey Kicks", "url": "/images/donkey-kicks-4.jpg" }
+          ]
+        }
+      ]
+    },
+
+     {
+      "id": "superman-hold",
+      "title": "Superman Hold",
+      "instructions": "Lie face down and simultaneously raise arms, chest, and legs off the ground.",
+      "categories": ["Strength", "Core", "Back"],
+      "body_part_focus": ["Back", "Glutes", "Core"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/superman-hold.mp4",
+          "external_video": null,
+          "thumbnail": "/images/superman-hold-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of Superman Hold", "url": "/images/superman-hold-1.jpg" },
+            { "alt": "Image 2 of Superman Hold", "url": "/images/superman-hold-2.jpg" },
+            { "alt": "Image 3 of Superman Hold", "url": "/images/superman-hold-3.jpg" },
+            { "alt": "Image 4 of Superman Hold", "url": "/images/superman-hold-4.jpg" }
+          ]
+        }
+      ]
+    },
+  
+
+      
+    
   ]
 }
