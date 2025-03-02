@@ -77,7 +77,201 @@
       ]
     }
   
+,
 
+       {
+      "id": "pistol-squats",
+      "title": "Pistol Squats",
+      "instructions": "Single-leg squats that require balance, flexibility, and strength.",
+      "categories": ["Strength", "Lower body", "Balance"],
+      "body_part_focus": ["Legs", "Glutes", "Core"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/pistol-squats.mp4",
+          "external_video": null,
+          "thumbnail": "/images/pistol-sqfuats-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of Pistol Squats", "url": "/images/pistol-squats-1.jpg" },
+            { "alt": "Image 2 of Pistol Squats", "url": "/images/pistol-squats-2.jpg" },
+            { "alt": "Image 3 of Pistol Squats", "url": "/images/pistol-squats-3.jpg" },
+            { "alt": "Image 4 of Pistol Squats", "url": "/images/pistol-squats-4.jpg" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tricep-dips",
+      "title": "Tricep Dips",
+      "instructions": "Using a chair or bench, lower body by bending elbows and then push back up.",
+      "categories": ["Strength", "Upper body"],
+      "body_part_focus": ["Triceps", "Shoulders", "Chest"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/tricep-dips.mp4",
+          "external_video": null,
+          "thumbnail": "/images/tricep-dips-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of Tricep Dips", "url": "/images/tricep-dips-1.jpg" },
+            { "alt": "Image 2 of Tricep Dips", "url": "/images/tricep-dips-2.jpg" },
+            { "alt": "Image 3 of Tricep Dips", "url": "/images/tricep-dips-3.jpg" },
+            { "alt": "Image 4 of Tricep Dips", "url": "/images/tricep-dips-4.jpg" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hollow-body-hold",
+      "title": "Hollow Body Hold",
+      "instructions": "Lie on back, arms extended overhead, legs straight, lift shoulders and legs off floor.",
+      "categories": ["Strength", "Core"],
+      "body_part_focus": ["Core", "Abs"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/hollow-body-hold.mp4",
+          "external_video": null,
+          "thumbnail": "/images/hollow-body-hold-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of Hollow Body Hold", "url": "/images/hollow-body-hold-1.jpg" },
+            { "alt": "Image 2 of Hollow Body Hold", "url": "/images/hollow-body-hold-2.jpg" },
+            { "alt": "Image 3 of Hollow Body Hold", "url": "/images/hollow-body-hold-3.jpg" },
+            { "alt": "Image 4 of Hollow Body Hold", "url": "/images/hollow-body-hold-4.jpg" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pike-push-ups",
+      "title": "Pike Push-Ups",
+      "instructions": "Downward dog position push-ups that target shoulders more than standard push-ups.",
+      "categories": ["Strength", "Upper body", "Core"],
+      "body_part_focus": ["Shoulders", "Triceps", "Core"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/pike-push-ups.mp4",
+          "external_video": null,
+          "thumbnail": "/images/pike-push-ups-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of Pike Push-Ups", "url": "/images/pike-push-ups-1.jpg" },
+            { "alt": "Image 2 of Pike Push-Ups", "url": "/images/pike-push-ups-2.jpg" },
+            { "alt": "Image 3 of Pike Push-Ups", "url": "/images/pike-push-ups-3.jpg" },
+            { "alt": "Image 4 of Pike Push-Ups", "url": "/images/pike-push-ups-4.jpg" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bear-crawls",
+      "title": "Bear Crawls",
+      "instructions": "Move forward, backward, or sideways while keeping knees hovering just above the ground.",
+      "categories": ["Strength", "Core", "Full body"],
+      "body_part_focus": ["Full body", "Core"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/bear-crawls.mp4",
+          "external_video": null,
+          "thumbnail": "/images/bear-crawls-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of Bear Crawls", "url": "/images/bear-crawls-1.jpg" },
+            { "alt": "Image 2 of Bear Crawls", "url": "/images/bear-crawls-2.jpg" },
+            { "alt": "Image 3 of Bear Crawls", "url": "/images/bear-crawls-3.jpg" },
+            { "alt": "Image 4 of Bear Crawls", "url": "/images/bear-crawls-4.jpg" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flutter-kicks",
+      "title": "Flutter Kicks",
+      "instructions": "Lie on your back with legs extended, lift them slightly and alternate small up and down kicks",
+      "categories": ["Strength", "Core"],
+      "body_part_focus": ["Abs", "Legs"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/flutter-kicks.mp4",
+          "external_video": null,
+          "thumbnail": "/images/flutter-kicks-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of Flutter Kicks", "url": "/images/flutter-kicks-1.jpg" },
+            { "alt": "Image 2 of Flutter Kicks", "url": "/images/flutter-kicks-2.jpg" },
+            { "alt": "Image 3 of Flutter Kicks", "url": "/images/flutter-kicks-3.jpg" },
+            { "alt": "Image 4 of Flutter Kicks", "url": "/images/flutter-kicks-4.jpg" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "l-sits",
+      "title": "L-Sits",
+      "instructions": "Support yourself on hands with legs extended straight in front of you parallel to the ground",
+      "categories": ["Strength", "Core"],
+      "body_part_focus": ["Core", "Arms", "Shoulders"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/l-sits.mp4",
+          "external_video": null,
+          "thumbnail": "/images/l-sits-video-thumb.jpg"
+        },
+        {
+          "type": "images",
+          "images": [
+            { "alt": "Image 1 of L-Sits", "url": "/images/l-sits-1.jpg" },
+            { "alt": "Image 2 of L-Sits", "url": "/images/l-sits-2.jpg" },
+            { "alt": "Image 3 of L-Sits", "url": "/images/l-sits-3.jpg" },
+            { "alt": "Image 4 of L-Sits", "url": "/images/l-sits-4.jpg" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "handstand-push-ups",
+      "title": "Handstand Push-Ups",
+      "instructions": "Advanced move where you perform push-ups while in a handstand position",
+      "categories": ["Strength", "Upper body", "Core"],
+      "body_part_focus": ["Shoulders", "Arms", "Core"],
+      "media": [
+        {
+          "type": "video",
+          "url": "/videos/handstand-push-ups.mp4",
+          "external_video": null,
+          "thumbnail": "/images/handstand-push-ups-video-thumb.jpg"
+        },
+        {
+
+         "type": "images",
+          "images": [
+            { "alt": "Image 1 of Handstand Push-Ups", "url": "/images/handstand-push-ups-1.jpg" },
+            { "alt": "Image 2 of Handstand Push-Ups", "url": "/images/handstand-push-ups-2.jpg" },
+            { "alt": "Image 3 of Handstand Push-Ups", "url": "/images/handstand-push-ups-3.jpg" },
+            { "alt": "Image 4 of Handstand Push-Ups", "url": "/images/handstand-push-ups-4.jpg" }
+          ]
+        }
+      ]
+    }
       
     
   ]
