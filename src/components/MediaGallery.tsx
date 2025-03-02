@@ -18,7 +18,7 @@ export const MediaGallery: React.FC<Props> = ({
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
   const [thumbnails, setThumbnails] = useState<Record<string, string>>({});
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [videoError, setVideoError] = useState(false);
+  const [videoErrors, setVideoErrors] = useState<Record<string, boolean>>({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fadeDirection, setFadeDirection] = useState<'in' | 'out'>('in');
   const videoRefs = useRef<Record<string, HTMLVideoElement>>({});
@@ -30,6 +30,9 @@ export const MediaGallery: React.FC<Props> = ({
   const images = media.filter(item => item.type === 'image');
 
   useEffect(() => {
+    // Reset video errors when media changes
+    setVideoErrors({});
+    
     // Auto-select the first video when component mounts
     if (media && media.length > 0) {
       // Find the first video in the media array
@@ -68,6 +71,10 @@ export const MediaGallery: React.FC<Props> = ({
         });
         video.addEventListener('error', (e) => {
           console.error('Error loading video:', e);
+          setVideoErrors(prev => ({
+            ...prev,
+            [item.url]: true
+          }));
         });
       }
     });
@@ -88,21 +95,27 @@ export const MediaGallery: React.FC<Props> = ({
 
   // Effect to autoplay the selected video when it changes
   useEffect(() => {
-    if (selectedMedia?.type === 'video') {
+    if (selectedMedia?.type === 'video' && !videoErrors[selectedMedia.url]) {
       const videoElement = videoRefs.current[selectedMedia.url];
       if (videoElement) {
         videoElement.play().catch(err => {
           console.error('Error autoplaying video:', err);
-          setVideoError(true);
+          setVideoErrors(prev => ({
+            ...prev,
+            [selectedMedia.url]: true
+          }));
         });
       }
     }
-  }, [selectedMedia]);
+  }, [selectedMedia, videoErrors]);
 
   // Effect to handle image slideshow when video is not available
   useEffect(() => {
-    // Only start the image slideshow if there are images and either no videos or video error
-    if (images.length > 0 && (videos.length === 0 || videoError)) {
+    // Only start the image slideshow if there are images and either no videos or all videos have errors
+    const allVideosHaveErrors = videos.length > 0 && 
+      videos.every(video => videoErrors[video.url]);
+    
+    if (images.length > 0 && (videos.length === 0 || allVideosHaveErrors)) {
       // Clear any existing interval
       if (imageIntervalRef.current) {
         clearInterval(imageIntervalRef.current);
@@ -126,11 +139,10 @@ export const MediaGallery: React.FC<Props> = ({
         clearInterval(imageIntervalRef.current);
       }
     };
-  }, [images, videos, videoError]);
+  }, [images, videos, videoErrors]);
 
   const handleMediaSelect = (item: Media) => {
     setSelectedMedia(item);
-    setVideoError(false);
     
     // If it's a video, pause any currently playing videos first
     if (item.type === 'video') {
@@ -151,9 +163,12 @@ export const MediaGallery: React.FC<Props> = ({
     }
   };
 
-  const handleVideoError = () => {
-    console.error('Video playback error');
-    setVideoError(true);
+  const handleVideoError = (url: string) => {
+    console.error('Video playback error:', url);
+    setVideoErrors(prev => ({
+      ...prev,
+      [url]: true
+    }));
   };
 
   if (!media?.length) return null;
@@ -176,11 +191,14 @@ export const MediaGallery: React.FC<Props> = ({
     );
   };
 
+  // Check if the selected video has an error
+  const hasSelectedVideoError = selectedMedia?.type === 'video' && videoErrors[selectedMedia.url];
+
   // Landscape mode layout for the video
   if (isLandscape) {
     return (
       <div className="w-full h-full" ref={containerRef}>
-        {selectedMedia && selectedMedia.type === 'video' && !videoError && (
+        {selectedMedia && selectedMedia.type === 'video' && !videoErrors[selectedMedia.url] && (
           <video
             ref={el => {
               if (el) videoRefs.current[selectedMedia.url] = el;
@@ -191,11 +209,11 @@ export const MediaGallery: React.FC<Props> = ({
             className="w-full h-full object-cover"
             src={selectedMedia.url}
             poster={selectedMedia.thumbnail || thumbnails[selectedMedia.url]}
-            onError={handleVideoError}
+            onError={() => handleVideoError(selectedMedia.url)}
           />
         )}
-        {(selectedMedia && selectedMedia.type === 'image') || videoError ? (
-          videos.length > 0 && videoError ? renderImageSlideshow() : (
+        {(selectedMedia && selectedMedia.type === 'image') || hasSelectedVideoError ? (
+          videos.length > 0 && videos.every(video => videoErrors[video.url]) ? renderImageSlideshow() : (
             <img
               src={selectedMedia?.url || images[0]?.url}
               alt={selectedMedia?.title || 'Exercise demonstration'}
@@ -208,12 +226,12 @@ export const MediaGallery: React.FC<Props> = ({
         {!hideControls && selectedMedia && (
           <button
             onClick={() => {
-              if (selectedMedia.type === 'video' && !videoError) {
+              if (selectedMedia.type === 'video' && !videoErrors[selectedMedia.url]) {
                 const videoElement = videoRefs.current[selectedMedia.url];
                 if (videoElement) {
                   enterFullscreen(videoElement);
                 }
-              } else if (selectedMedia.type === 'image' || videoError) {
+              } else if (selectedMedia.type === 'image' || hasSelectedVideoError) {
                 const img = containerRef.current?.querySelector('img');
                 if (img && img.requestFullscreen) {
                   img.requestFullscreen().catch(err => {
@@ -238,7 +256,7 @@ export const MediaGallery: React.FC<Props> = ({
       {/* Selected media display */}
       {selectedMedia && (
         <div className="rounded-lg overflow-hidden mb-2 relative flex-grow">
-          {selectedMedia.type === 'video' && !videoError ? (
+          {selectedMedia.type === 'video' && !videoErrors[selectedMedia.url] ? (
             <div className="relative h-full flex items-center justify-center">
               <video
                 ref={el => {
@@ -252,7 +270,7 @@ export const MediaGallery: React.FC<Props> = ({
                 style={{ maxHeight: '100%', height: '100%' }}
                 src={selectedMedia.url}
                 poster={selectedMedia.thumbnail || thumbnails[selectedMedia.url]}
-                onError={handleVideoError}
+                onError={() => handleVideoError(selectedMedia.url)}
               >
                 Your browser does not support the video tag.
               </video>
@@ -273,7 +291,7 @@ export const MediaGallery: React.FC<Props> = ({
             </div>
           ) : (
             <div className="relative h-full flex items-center justify-center">
-              {videoError && videos.length > 0 ? renderImageSlideshow() : (
+              {videos.length > 0 && videos.every(video => videoErrors[video.url]) ? renderImageSlideshow() : (
                 <img
                   src={selectedMedia.url}
                   alt={selectedMedia.title || 'Exercise demonstration'}
