@@ -7,11 +7,7 @@ import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop, 
 import exerciseData from './data/updated_100_exercises_with_intensity.json';
 import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 import { ExerciseLibrary } from './components/ExerciseLibrary';
-
-// Helper function to check if an exercise is a duplicate
-const isDuplicateExercise = (exercise: Exercise, selectedExercises: Exercise[]): boolean => {
-  return selectedExercises.some(selected => selected.title === exercise.title);
-};
+import { WorkoutSelection } from './components/WorkoutSelection';
 
 function App() {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -21,6 +17,7 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [showExerciseLibrary, setShowExerciseLibrary] = useState(false);
+  const [showWorkoutSelection, setShowWorkoutSelection] = useState(false);
   const { workout, startWorkout, resumeSavedWorkout } = useWorkoutStore();
 
   useEffect(() => {
@@ -87,64 +84,13 @@ function App() {
   const startNewWorkout = () => {
     // Close resume modal if it's open
     setShowResumeModal(false);
-    
-    const categorizedExercises = exerciseData.exercises.reduce((acc, exercise) => {
-      const category = exercise.categories[0];
-      if (!acc[category]) {
-        acc[category] = [];
-      }
-      acc[category].push(exercise);
-      return acc;
-    }, {} as Record<string, Exercise[]>);
+    // Show workout selection screen
+    setShowWorkoutSelection(true);
+  };
 
-    const selectedExercises: Exercise[] = [];
-    const categories = Object.keys(categorizedExercises);
-    
-    const exercisesPerCategory = Math.floor(40 / categories.length);
-    categories.forEach(category => {
-      const exercises = categorizedExercises[category];
-      const shuffled = [...exercises].sort(() => Math.random() - 0.5);
-      
-      // Add exercises from this category, ensuring no duplicates
-      let added = 0;
-      for (const exercise of shuffled) {
-        if (added >= exercisesPerCategory) break;
-        
-        // Only add if not already in the selected exercises
-        if (!isDuplicateExercise(exercise, selectedExercises)) {
-          selectedExercises.push(exercise);
-          added++;
-        }
-      }
-    });
-
-    // If we need more exercises to reach 40
-    const remaining = 40 - selectedExercises.length;
-    if (remaining > 0) {
-      // Get all exercises that aren't already selected
-      const allRemaining = exerciseData.exercises.filter(ex => 
-        !isDuplicateExercise(ex, selectedExercises)
-      );
-      
-      if (allRemaining.length > 0) {
-        const shuffled = [...allRemaining].sort(() => Math.random() - 0.5);
-        // Add as many unique exercises as possible
-        selectedExercises.push(...shuffled.slice(0, Math.min(remaining, shuffled.length)));
-      }
-      
-      // If we still need more (not enough unique exercises), allow duplicates
-      const stillRemaining = 40 - selectedExercises.length;
-      if (stillRemaining > 0) {
-        const allExercises = exerciseData.exercises.filter(ex => 
-          !isDuplicateExercise(ex, selectedExercises)
-        );
-        const shuffled = [...allExercises].sort(() => Math.random() - 0.5);
-        selectedExercises.push(...shuffled.slice(0, stillRemaining));
-      }
-    }
-
-    const finalSelection = selectedExercises.sort(() => Math.random() - 0.5);
-    startWorkout(finalSelection);
+  const handleStartWorkoutWithSelection = (selectedExercises: Exercise[], duration: number) => {
+    setShowWorkoutSelection(false);
+    startWorkout(selectedExercises);
   };
 
   const handleResumeWorkout = () => {
@@ -226,6 +172,18 @@ function App() {
           onStartNew={startNewWorkout}
           onClose={() => setShowResumeModal(false)}
         />
+      )}
+
+      {/* Workout Selection Screen */}
+      {showWorkoutSelection && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="max-w-md w-full mx-4">
+            <WorkoutSelection 
+              onStartWorkout={handleStartWorkoutWithSelection}
+              exercises={exerciseData.exercises}
+            />
+          </div>
+        </div>
       )}
 
       {/* Settings Modal */}
