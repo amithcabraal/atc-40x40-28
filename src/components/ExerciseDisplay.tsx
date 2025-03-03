@@ -178,41 +178,59 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
     ? (showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none') 
     : 'opacity-100'; // Always show if no media
 
+  // Enhanced border styles for better visual differentiation
+  const modeBorderStyle = workout.isResting
+    ? 'border-8 border-green-500 dark:border-green-400 animate-pulse-slow'
+    : 'border-8 border-blue-500 dark:border-blue-400';
+
+  // Status bar styles
+  const statusBarStyle = workout.isResting
+    ? 'bg-green-600 dark:bg-green-700 text-white'
+    : 'bg-blue-600 dark:bg-blue-700 text-white';
+
   // Portrait mode layout
   if (!isLandscape) {
     return (
       <div className={`flex flex-col h-screen ${
         workout.isResting 
-          ? 'bg-green-50 dark:bg-green-950 bg-gradient-to-b from-green-100 to-green-50 dark:from-green-900 dark:to-green-950' 
-          : 'bg-blue-50 dark:bg-blue-950 bg-gradient-to-b from-blue-100 to-blue-50 dark:from-blue-900 dark:to-blue-950'
+          ? 'bg-green-50 dark:bg-green-950 bg-gradient-to-b from-green-200 to-green-50 dark:from-green-900 dark:to-green-950' 
+          : 'bg-blue-50 dark:bg-blue-950 bg-gradient-to-b from-blue-200 to-blue-50 dark:from-blue-900 dark:to-blue-950'
       } transition-colors duration-300`}>
-        <div className="w-full h-2 bg-gray-200 dark:bg-gray-700">
-          <div 
-            className="h-full bg-blue-500 dark:bg-blue-400 transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-
-        <div className="px-4 py-2 flex justify-between items-center">
-          <div className={`px-3 py-1 rounded-md font-medium ${
-            workout.isResting
-              ? 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200'
-              : 'bg-blue-200 text-blue-800 dark:bg-blue-800 dark:text-blue-200'
-          }`}>
-            {workout.isResting ? 'REST' : 'EXERCISE'}
+        {/* Status Bar - NEW */}
+        <div className={`w-full py-2 px-4 ${statusBarStyle} flex justify-between items-center shadow-md z-20`}>
+          <div className="flex items-center">
+            <div className={`px-3 py-1 rounded-md font-bold ${
+              workout.isResting
+                ? 'bg-green-200 text-green-800'
+                : 'bg-blue-200 text-blue-800'
+            }`}>
+              {workout.isResting ? 'REST MODE' : 'EXERCISE MODE'}
+            </div>
           </div>
-          <p className={`text-lg font-medium ${
-            workout.isResting
-              ? 'text-green-600 dark:text-green-400'
-              : 'text-blue-600 dark:text-blue-400'
-          }`}>
+          
+          {/* App Title - NEW */}
+          <h1 className="text-lg font-bold text-white">Workout Timer</h1>
+          
+          <p className="font-medium">
             {workout.currentExercise + 1} / {workout.exercises.length}
           </p>
         </div>
 
+        <div className="w-full h-2 bg-gray-200 dark:bg-gray-700">
+          <div 
+            className={`h-full transition-all duration-300 ${
+              workout.isResting
+                ? 'bg-green-500 dark:bg-green-400'
+                : 'bg-blue-500 dark:bg-blue-400'
+            }`}
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        {/* Enhanced Timer with more visual distinction */}
         <Timer onComplete={handleSkip} />
 
-        <div className="flex-1 flex flex-col px-4 py-2 overflow-hidden relative">
+        <div className={`flex-1 flex flex-col px-4 py-2 overflow-hidden relative ${modeBorderStyle}`}>
           {workout.isResting ? (
             <div className="relative h-full">
               {/* Video background */}
@@ -226,9 +244,9 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                 </div>
               )}
               
-              {/* Text overlay */}
+              {/* Text overlay with enhanced gradient */}
               <div 
-                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-green-100/90 to-green-100/70 dark:from-green-900/90 dark:to-green-900/70 rounded-lg transition-opacity duration-500 flex flex-col ${overlayOpacityClass}`}
+                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-green-200/90 to-green-100/80 dark:from-green-900/90 dark:to-green-800/80 rounded-lg transition-opacity duration-500 flex flex-col ${overlayOpacityClass}`}
               >
                 <div className="@container">
                   <h3 className="text-green-800 dark:text-green-200 text-balance font-bold mb-4 vertical-align-top
@@ -265,9 +283,9 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                 </div>
               )}
               
-              {/* Text overlay */}
+              {/* Text overlay with enhanced gradient */}
               <div 
-                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-blue-100/90 to-blue-100/70 dark:from-blue-900/90 dark:to-blue-900/70 rounded-lg transition-opacity duration-500 flex flex-col ${overlayOpacityClass}`}
+                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-blue-200/90 to-blue-100/80 dark:from-blue-900/90 dark:to-blue-800/80 rounded-lg transition-opacity duration-500 flex flex-col ${overlayOpacityClass}`}
               >
                 <div className="@container">
                   <h1 className="text-blue-800 dark:text-blue-200 text-balance font-bold mb-4 vertical-align-top
@@ -296,8 +314,8 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
         <div className={`w-full ${
           workout.isResting
-            ? 'bg-green-100 dark:bg-green-900'
-            : 'bg-blue-100 dark:bg-blue-900'
+            ? 'bg-green-200 dark:bg-green-800'
+            : 'bg-blue-200 dark:bg-blue-800'
         } p-4 transition-colors duration-300`}>
           <div className="flex justify-center space-x-4">
             {workout.isPaused ? (
@@ -363,44 +381,46 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   return (
     <div className={`flex flex-col h-screen ${
       workout.isResting 
-        ? 'bg-green-50 dark:bg-green-950 bg-gradient-to-b from-green-100 to-green-50 dark:from-green-900 dark:to-green-950' 
-        : 'bg-blue-50 dark:bg-blue-950 bg-gradient-to-b from-blue-100 to-blue-50 dark:from-blue-900 dark:to-blue-950'
+        ? 'bg-green-50 dark:bg-green-950 bg-gradient-to-b from-green-200 to-green-50 dark:from-green-900 dark:to-green-950' 
+        : 'bg-blue-50 dark:bg-blue-950 bg-gradient-to-b from-blue-200 to-blue-50 dark:from-blue-900 dark:to-blue-950'
     } transition-colors duration-300`}>
-      {/* Progress bar */}
-      <div className="w-full h-1 bg-gray-200 dark:bg-gray-700">
-        <div 
-          className="h-full bg-blue-500 dark:bg-blue-400 transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-
-      {/* Header with mode and timer */}
-      <div className="grid grid-cols-3 items-center px-2 py-1">
-        <div className={`px-3 py-1 rounded-md font-medium text-sm ${
-          workout.isResting
-            ? 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200'
-            : 'bg-blue-200 text-blue-800 dark:bg-blue-800 dark:text-blue-200'
-        }`}>
-          {workout.isResting ? 'REST' : 'EXERCISE'}
-        </div>
-        
-        <div className="flex justify-center">
-          <Timer onComplete={handleSkip} isLandscape={true} />
-        </div>
-        
-        <div className="flex justify-end">
-          <p className={`text-sm font-medium ${
+      {/* Status Bar - NEW */}
+      <div className={`w-full py-1 px-4 ${statusBarStyle} flex justify-between items-center shadow-md z-20`}>
+        <div className="flex items-center">
+          <div className={`px-2 py-0.5 rounded-md text-sm font-bold ${
             workout.isResting
-              ? 'text-green-600 dark:text-green-400'
-              : 'text-blue-600 dark:text-blue-400'
+              ? 'bg-green-200 text-green-800'
+              : 'bg-blue-200 text-blue-800'
           }`}>
+            {workout.isResting ? 'REST MODE' : 'EXERCISE MODE'}
+          </div>
+        </div>
+        
+        {/* App Title - NEW */}
+        <h1 className="text-base font-bold text-white">Workout Timer</h1>
+        
+        <div className="flex items-center space-x-2">
+          <Timer onComplete={handleSkip} isLandscape={true} />
+          <p className="text-sm font-medium">
             {workout.currentExercise + 1} / {workout.exercises.length}
           </p>
         </div>
       </div>
 
+      {/* Progress bar */}
+      <div className="w-full h-1 bg-gray-200 dark:bg-gray-700">
+        <div 
+          className={`h-full transition-all duration-300 ${
+            workout.isResting
+              ? 'bg-green-500 dark:bg-green-400'
+              : 'bg-blue-500 dark:bg-blue-400'
+          }`}
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
       {/* Main content area with vertical controls on the right */}
-      <div className="flex-1 relative">
+      <div className={`flex-1 relative ${modeBorderStyle}`}>
         {/* Video background */}
         {workout.isResting ? (
           <>
@@ -415,12 +435,12 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               </div>
             )}
             
-            {/* Overlay with exercise info */}
+            {/* Overlay with exercise info - enhanced gradient */}
             <div 
               className={`absolute inset-0 z-10 flex flex-col justify-center transition-opacity duration-500 ${overlayOpacityClass}`}
             >
-              {/* Solid background panel for better readability */}
-              <div className="absolute left-0 top-0 bottom-0 w-full pr-28 bg-green-100/95 dark:bg-green-900/95 shadow-lg"></div>
+              {/* Solid background panel for better readability with enhanced gradient */}
+              <div className="absolute left-0 top-0 bottom-0 w-full pr-28 bg-gradient-to-r from-green-200/95 to-green-100/90 dark:from-green-900/95 dark:to-green-800/90 shadow-lg"></div>
               
               {/* Content */}
               <div className="relative z-20 px-8 py-6 pr-28 @container">
@@ -519,12 +539,12 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               </div>
             )}
             
-            {/* Overlay with exercise info */}
+            {/* Overlay with exercise info - enhanced gradient */}
             <div 
               className={`absolute inset-0 z-10 flex flex-col justify-center transition-opacity duration-500 ${overlayOpacityClass}`}
             >
-              {/* Solid background panel for better readability */}
-              <div className="absolute left-0 top-0 bottom-0 w-full pr-28 bg-blue-100/95 dark:bg-blue-900/95 shadow-lg"></div>
+              {/* Solid background panel for better readability with enhanced gradient */}
+              <div className="absolute left-0 top-0 bottom-0 w-full pr-28 bg-gradient-to-r from-blue-200/95 to-blue-100/90 dark:from-blue-900/95 dark:to-blue-800/90 shadow-lg"></div>
               
               {/* Content */}
               <div className="relative z-20 px-8 py-6 pr-28 @container">
