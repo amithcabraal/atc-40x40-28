@@ -88,3 +88,46 @@
 .duration-1000 {
   transition-duration: 1000ms;
 }
+
+/* Enhanced pulse animation for borders */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Mode-specific border styles */
+.exercise-border {
+  border: 8px solid;
+  border-color: theme('colors.blue.500');
+}
+
+.rest-border {
+  border: 8px solid;
+  border-color: theme('colors.green.500');
+  animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Enhanced gradient backgrounds */
+.bg-exercise-gradient {
+  background: linear-gradient(135deg, rgba(219, 234, 254, 0.9) 0%, rgba(191, 219, 254, 0.8) 100%);
+}
+
+.bg-rest-gradient {
+  background: linear-gradient(135deg, rgba(209, 250, 229, 0.9) 0%, rgba(167, 243, 208, 0.8) 100%);
+}
+
+.dark .bg-exercise-gradient {
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.9) 0%, rgba(29, 78, 216, 0.8) 100%);
+}
+
+.dark .bg-rest-gradient {
+  background: linear-gradient(135deg, rgba(6, 95, 70, 0.9) 0%, rgba(4, 120, 87, 0.8) 100%);
+}
