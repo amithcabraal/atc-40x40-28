@@ -90,9 +90,9 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
     );
   }
 
-  // Portrait mode timer (with progress bar)
+  // Portrait mode timer (with progress bar) - height reduced by 1/3
   return (
-    <div className="w-full h-[20vh] relative">
+    <div className="w-full h-[13.33vh] relative">
       {/* Progress bar background */}
       <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700">
         <div
@@ -109,7 +109,7 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
       
       {/* Timer text */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className={`text-[15vh] font-bold tabular-nums tracking-tight ${
+        <div className={`text-[10vh] font-bold tabular-nums tracking-tight ${
           workout.isIntro
             ? 'text-purple-700 dark:text-purple-300'
             : workout.isResting
