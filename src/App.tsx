@@ -4,7 +4,7 @@ import { useWorkoutStore } from './store/workoutStore';
 import { ExerciseDisplay } from './components/ExerciseDisplay';
 import { WorkoutHistory } from './components/WorkoutHistory';
 import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop, BookOpen } from 'lucide-react';
-import exerciseData from './data/100-exercises.json';
+import exerciseData from './data/updated_100_exercises_with_intensity.json';
 import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 import { ExerciseLibrary } from './components/ExerciseLibrary';
 
