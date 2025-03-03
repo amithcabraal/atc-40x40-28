@@ -66,6 +66,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
       ? nextExerciseData?.media && nextExerciseData.media.length > 0
       : currentExercise?.media && currentExercise.media.length > 0;
     
+    // Only set the fade timer if there's media to show
     if (hasMedia) {
       overlayTimerRef.current = setTimeout(() => {
         setShowOverlay(false);
@@ -112,9 +113,16 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
     
     // If we're showing the overlay, set a timer to hide it again
     if (!showOverlay) {
-      overlayTimerRef.current = setTimeout(() => {
-        setShowOverlay(false);
-      }, 5000);
+      // Only set the fade timer if there's media to show
+      const hasMedia = workout.isResting 
+        ? nextExerciseData?.media && nextExerciseData.media.length > 0
+        : currentExercise?.media && currentExercise.media.length > 0;
+      
+      if (hasMedia) {
+        overlayTimerRef.current = setTimeout(() => {
+          setShowOverlay(false);
+        }, 5000);
+      }
     }
   };
 
@@ -158,6 +166,18 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
   if (!workout.isActive) return null;
 
+  // Check if current exercise or next exercise has media
+  const currentExerciseHasMedia = currentExercise?.media && currentExercise.media.length > 0;
+  const nextExerciseHasMedia = nextExerciseData?.media && nextExerciseData.media.length > 0;
+  
+  // Determine if overlay should be able to fade out
+  const shouldAllowOverlayFade = workout.isResting ? nextExerciseHasMedia : currentExerciseHasMedia;
+  
+  // Determine overlay opacity class
+  const overlayOpacityClass = shouldAllowOverlayFade 
+    ? (showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none') 
+    : 'opacity-100'; // Always show if no media
+
   // Portrait mode layout
   if (!isLandscape) {
     return (
@@ -196,7 +216,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
           {workout.isResting ? (
             <div className="relative h-full">
               {/* Video background */}
-              {nextExerciseData?.media && nextExerciseData.media.length > 0 && (
+              {nextExerciseHasMedia && (
                 <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
                   <MediaGallery 
                     media={nextExerciseData.media} 
@@ -208,9 +228,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               
               {/* Text overlay */}
               <div 
-                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-green-100/90 to-green-100/70 dark:from-green-900/90 dark:to-green-900/70 rounded-lg transition-opacity duration-500 flex flex-col ${
-                  showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
+                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-green-100/90 to-green-100/70 dark:from-green-900/90 dark:to-green-900/70 rounded-lg transition-opacity duration-500 flex flex-col ${overlayOpacityClass}`}
               >
                 <div className="@container">
                   <h3 className="text-green-800 dark:text-green-200 text-balance font-bold mb-4 vertical-align-top
@@ -237,7 +255,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
           ) : (
             <div className="relative h-full">
               {/* Video background */}
-              {currentExercise?.media && currentExercise.media.length > 0 && (
+              {currentExerciseHasMedia && (
                 <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
                   <MediaGallery 
                     media={currentExercise.media}
@@ -249,9 +267,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               
               {/* Text overlay */}
               <div 
-                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-blue-100/90 to-blue-100/70 dark:from-blue-900/90 dark:to-blue-900/70 rounded-lg transition-opacity duration-500 flex flex-col ${
-                  showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
+                className={`absolute inset-0 z-10 p-4 bg-gradient-to-b from-blue-100/90 to-blue-100/70 dark:from-blue-900/90 dark:to-blue-900/70 rounded-lg transition-opacity duration-500 flex flex-col ${overlayOpacityClass}`}
               >
                 <div className="@container">
                   <h1 className="text-blue-800 dark:text-blue-200 text-balance font-bold mb-4 vertical-align-top
@@ -320,6 +336,8 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                   : 'bg-purple-600 hover:bg-purple-700'
               } text-white rounded-full transition-transform hover:scale-105 ${buttonOpacity}`}
               title={showOverlay ? "Hide details" : "Show details"}
+              disabled={!shouldAllowOverlayFade}
+              style={{ opacity: shouldAllowOverlayFade ? 1 : 0.5, cursor: shouldAllowOverlayFade ? 'pointer' : 'not-allowed' }}
             >
               <Info size={24} />
             </button>
@@ -386,7 +404,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
         {/* Video background */}
         {workout.isResting ? (
           <>
-            {nextExerciseData?.media && nextExerciseData.media.length > 0 && (
+            {nextExerciseHasMedia && (
               <div className="absolute inset-0 z-0">
                 <MediaGallery 
                   media={nextExerciseData.media} 
@@ -399,9 +417,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             
             {/* Overlay with exercise info */}
             <div 
-              className={`absolute inset-0 z-10 flex flex-col justify-center transition-opacity duration-500 ${
-                showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
-              }`}
+              className={`absolute inset-0 z-10 flex flex-col justify-center transition-opacity duration-500 ${overlayOpacityClass}`}
             >
               {/* Solid background panel for better readability */}
               <div className="absolute left-0 top-0 bottom-0 w-full pr-28 bg-green-100/95 dark:bg-green-900/95 shadow-lg"></div>
@@ -471,6 +487,8 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                     : 'bg-purple-600 hover:bg-purple-700'
                 } text-white rounded-full shadow-lg hover:scale-105 transition-transform ${buttonOpacity}`}
                 title={showOverlay ? "Hide details" : "Show details"}
+                disabled={!shouldAllowOverlayFade}
+                style={{ opacity: shouldAllowOverlayFade ? 1 : 0.5, cursor: shouldAllowOverlayFade ? 'pointer' : 'not-allowed' }}
               >
                 <Info className="w-6 h-6" />
               </button>
@@ -490,7 +508,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
           </>
         ) : (
           <>
-            {currentExercise?.media && currentExercise.media.length > 0 && (
+            {currentExerciseHasMedia && (
               <div className="absolute inset-0 z-0">
                 <MediaGallery 
                   media={currentExercise.media} 
@@ -503,9 +521,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             
             {/* Overlay with exercise info */}
             <div 
-              className={`absolute inset-0 z-10 flex flex-col justify-center transition-opacity duration-500 ${
-                showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none'
-              }`}
+              className={`absolute inset-0 z-10 flex flex-col justify-center transition-opacity duration-500 ${overlayOpacityClass}`}
             >
               {/* Solid background panel for better readability */}
               <div className="absolute left-0 top-0 bottom-0 w-full pr-28 bg-blue-100/95 dark:bg-blue-900/95 shadow-lg"></div>
@@ -575,6 +591,8 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
                     : 'bg-purple-600 hover:bg-purple-700'
                 } text-white rounded-full shadow-lg hover:scale-105 transition-transform ${buttonOpacity}`}
                 title={showOverlay ? "Hide details" : "Show details"}
+                disabled={!shouldAllowOverlayFade}
+                style={{ opacity: shouldAllowOverlayFade ? 1 : 0.5, cursor: shouldAllowOverlayFade ? 'pointer' : 'not-allowed' }}
               >
                 <Info className="w-6 h-6" />
               </button>
