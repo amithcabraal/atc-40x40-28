@@ -214,12 +214,12 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               >
                 <div className="@container">
                   <h3 className="text-green-800 dark:text-green-200 text-balance font-bold mb-4 vertical-align-top
-                    @sm:text-2xl @md:text-3xl @lg:text-4xl @xl:text-5xl">
+                    text-[51px] leading-[1.1]">
                     Next: {nextExerciseData?.title}
                   </h3>
                   
                   <p className="text-green-700 dark:text-green-300 flex-shrink-0 mb-4
-                    @sm:text-lg @md:text-xl @lg:text-2xl @xl:text-3xl">
+                    text-[34px] leading-[1.2]">
                     {nextExerciseData?.instructions}
                   </p>
                 </div>
@@ -255,12 +255,12 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               >
                 <div className="@container">
                   <h1 className="text-blue-800 dark:text-blue-200 text-balance font-bold mb-4 vertical-align-top
-                    @sm:text-2xl @md:text-3xl @lg:text-4xl @xl:text-5xl">
+                    text-[51px] leading-[1.1]">
                     {currentExercise.title}
                   </h1>
                   
                   <p className="text-blue-700 dark:text-blue-300 flex-shrink-0 mb-4
-                    @sm:text-lg @md:text-xl @lg:text-2xl @xl:text-3xl">
+                    text-[34px] leading-[1.2]">
                     {currentExercise.instructions}
                   </p>
                 </div>
@@ -409,11 +409,11 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               {/* Content */}
               <div className="relative z-20 px-8 py-6 pr-28 @container">
                 <h3 className="text-green-800 dark:text-green-200 font-bold mb-4 vertical-align-top
-                  @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
+                  text-[51px] leading-[1.1]">
                   Next: {nextExerciseData?.title}
                 </h3>
                 <p className="text-green-700 dark:text-green-300 mb-6
-                  @sm:text-base @md:text-lg @lg:text-xl @xl:text-2xl">
+                  text-[34px] leading-[1.2]">
                   {nextExerciseData?.instructions}
                 </p>
                 
@@ -513,11 +513,11 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
               {/* Content */}
               <div className="relative z-20 px-8 py-6 pr-28 @container">
                 <h1 className="text-blue-800 dark:text-blue-200 font-bold mb-4 vertical-align-top
-                  @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl">
+                  text-[51px] leading-[1.1]">
                   {currentExercise.title}
                 </h1>
                 <p className="text-blue-700 dark:text-blue-300 mb-6
-                  @sm:text-base @md:text-lg @lg:text-xl @xl:text-2xl">
+                  text-[34px] leading-[1.2]">
                   {currentExercise.instructions}
                 </p>
                 
