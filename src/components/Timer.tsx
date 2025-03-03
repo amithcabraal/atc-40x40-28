@@ -75,16 +75,23 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
   const totalTime = workout.isIntro ? 20 : (workout.isResting ? 20 : 40);
   const progress = (workout.timeRemaining / totalTime) * 100;
 
+  // Enhanced timer styles for better visual differentiation
+  const timerTextClass = workout.isIntro
+    ? 'text-purple-700 dark:text-purple-300 drop-shadow-md'
+    : workout.isResting
+      ? 'text-green-700 dark:text-green-300 drop-shadow-md'
+      : 'text-blue-700 dark:text-blue-300 drop-shadow-md';
+
+  const timerBgClass = workout.isIntro
+    ? 'bg-purple-500/20 dark:bg-purple-400/20 animate-pulse'
+    : workout.isResting
+      ? 'bg-green-500/30 dark:bg-green-400/30 animate-pulse'
+      : 'bg-blue-500/30 dark:bg-blue-400/30';
+
   // Landscape mode timer (compact)
   if (isLandscape) {
     return (
-      <div className={`text-4xl font-bold tabular-nums ${
-        workout.isIntro
-          ? 'text-purple-700 dark:text-purple-300'
-          : workout.isResting
-            ? 'text-green-700 dark:text-green-300'
-            : 'text-blue-700 dark:text-blue-300'
-      }`}>
+      <div className={`text-4xl font-bold tabular-nums ${timerTextClass}`}>
         {minutes}:{seconds.toString().padStart(2, '0')}
       </div>
     );
@@ -93,31 +100,30 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false }) => {
   // Portrait mode timer (with progress bar) - height reduced by 1/3
   return (
     <div className="w-full h-[13.33vh] relative">
-      {/* Progress bar background */}
-      <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700">
+      {/* Progress bar background with enhanced styling */}
+      <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 overflow-hidden">
         <div
-          className={`h-full transition-all duration-100 ${
-            workout.isIntro
-              ? 'bg-purple-500/20 dark:bg-purple-400/20 animate-pulse'
-              : workout.isResting
-                ? 'bg-green-500/20 dark:bg-green-400/20 animate-pulse'
-                : 'bg-blue-500/20 dark:bg-blue-400/20'
-          }`}
+          className={`h-full transition-all duration-100 ${timerBgClass}`}
           style={{ width: `${progress}%` }}
         />
       </div>
       
-      {/* Timer text */}
+      {/* Timer text with enhanced styling */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className={`text-[10vh] font-bold tabular-nums tracking-tight ${
-          workout.isIntro
-            ? 'text-purple-700 dark:text-purple-300'
-            : workout.isResting
-              ? 'text-green-700 dark:text-green-300'
-              : 'text-blue-700 dark:text-blue-300'
-        }`}>
+        <div className={`text-[10vh] font-bold tabular-nums tracking-tight ${timerTextClass}`}>
           {minutes}:{seconds.toString().padStart(2, '0')}
         </div>
+      </div>
+
+      {/* Mode indicator text */}
+      <div className="absolute bottom-1 right-2">
+        <span className={`text-xs font-bold uppercase ${
+          workout.isResting
+            ? 'text-green-600 dark:text-green-400'
+            : 'text-blue-600 dark:text-blue-400'
+        }`}>
+          {workout.isResting ? 'Rest' : 'Exercise'}
+        </span>
       </div>
     </div>
   );
