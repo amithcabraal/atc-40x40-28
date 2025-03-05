@@ -122,7 +122,7 @@
             "media": [
                 {
                     "type": "video",
-                    "url": "/videos/downward-dog-toe-taps-preview.mp4",
+                    "url": "/videos/downward-dog-toe-taps.mp4",
                     "external_video": null,
                     "thumbnail": "/images/downward-dog-toe-taps-thumb.jpg"
                 }
@@ -174,6 +174,14 @@
                 "Shoulders",
                 "Arms",
                 "Core"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/hand-stand-push-ups.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/fast-feet-video-thumb.jpg"
+                }
             ],
             "primary_categories": [
                 "Strength"
@@ -242,7 +250,7 @@
             "difficulty": 3
         },
         {
-            "id": "jumping-jacks-preview",
+            "id": "jumping-jacks",
             "title": "Jumping Jacks",
             "instructions": "Stand with feet together, jump while spreading arms and legs, then return to start position. Repeat.",
             "categories": [
@@ -258,7 +266,7 @@
             "media": [
                 {
                     "type": "video",
-                    "url": "/videos/jumping-jacks-preview.mp4",
+                    "url": "/videos/jumping-jacks.mp4",
                     "external_video": null,
                     "thumbnail": "/images/jumping-jacks-video-thumb.jpg"
                 }
@@ -741,6 +749,14 @@
                 "Legs",
                 "Core"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/calf-raise-with-knee-raise.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/glute-raises-video-thumb.jpg"
+                },
+            ],
             "primary_categories": [
                 "Yoga",
                 "Strength"
@@ -1019,7 +1035,7 @@
                     "type": "video",
                     "url": "/videos/pistol-squats.mp4",
                     "external_video": null,
-                    "thumbnail": "/images/pistol-sqfuats-video-thumb.jpg"
+                    "thumbnail": "/images/pistol-squats-video-thumb.jpg"
                 },
                 {
                     "type": "images",
