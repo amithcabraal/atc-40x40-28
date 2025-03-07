@@ -1,7 +1,7 @@
 {
     "exercises": [
         {
-            "id": "ab-crunch-twist-preview",
+            "id": "ab-crunch-twist",
             "title": "Ab Crunch Twist",
             "instructions": "Lie on your back, lift shoulders off the ground, and twist your torso to alternate sides while engaging your core.",
             "categories": [
@@ -15,7 +15,7 @@
             "media": [
                 {
                     "type": "video",
-                    "url": "/videos/ab-crunch-twist-preview.mp4",
+                    "url": "/videos/ab-crunch-twist.mp4",
                     "external_video": null,
                     "thumbnail": "/images/ab-crunch-twist-thumb.jpg"
                 }
@@ -28,7 +28,7 @@
             "difficulty": 3
         },
         {
-            "id": "alternate-deadbug-preview",
+            "id": "deadbug",
             "title": "Alternate Deadbug",
             "instructions": "Lie on your back with arms extended upward and legs raised with knees bent. Extend one leg and the opposite arm simultaneously while keeping your lower back pressed into the floor.",
             "categories": [
@@ -42,7 +42,7 @@
             "media": [
                 {
                     "type": "video",
-                    "url": "/videos/alternate-deadbug-preview.mp4",
+                    "url": "/videos/deadbug.mp4",
                     "external_video": null,
                     "thumbnail": "/images/alternate-deadbug-thumb.jpg"
                 }
@@ -106,7 +106,7 @@
             "difficulty": 3
         },
         {
-            "id": "downward-dog-toe-taps-preview",
+            "id": "downward-dog-toe-taps",
             "title": "Downward-dog Toe Taps",
             "instructions": "Start in a downward-facing dog position, then alternate tapping each hand with the opposite foot, keeping your core engaged.",
             "categories": [
@@ -1511,47 +1511,8 @@
             "intensity": 4,
             "difficulty": 5
         },
-        {
-            "id": "human-flag-progressions",
-            "title": "Human Flag Progressions",
-            "instructions": "Work toward holding body horizontally while gripping a vertical pole",
-            "categories": [
-                "Strength",
-                "Core"
-            ],
-            "body_part_focus": [
-                "Core",
-                "Shoulders",
-                "Arms"
-            ],
-            "primary_categories": [
-                "Strength"
-            ],
-            "equipment": [],
-            "intensity": 4,
-            "difficulty": 5
-        },
-        {
-            "id": "skin-the-cat",
-            "title": "Skin the Cat",
-            "instructions": "Using rings or bar, rotate body in a complete circle with straight arms",
-            "categories": [
-                "Strength",
-                "Gymnastics",
-                "Upper body"
-            ],
-            "body_part_focus": [
-                "Shoulders",
-                "Arms",
-                "Core"
-            ],
-            "primary_categories": [
-                "Strength"
-            ],
-            "equipment": [],
-            "intensity": 4,
-            "difficulty": 5
-        },
+
+      
         {
             "id": "shrimp-squats",
             "title": "Shrimp Squats",
@@ -1621,6 +1582,14 @@
                 "Yoga",
                 "Strength"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/hindu-push-ups.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/hindu-push-ups.jpg"
+                }
+            ],
             "equipment": [],
             "intensity": 4,
             "difficulty": 4
@@ -1646,27 +1615,7 @@
             "intensity": 4,
             "difficulty": 3
         },
-        {
-            "id": "wall-walks",
-            "title": "Wall Walks",
-            "instructions": "Begin in push-up position with feet against wall, walk feet up wall and hands closer",
-            "categories": [
-                "Strength",
-                "Upper body",
-                "Core"
-            ],
-            "body_part_focus": [
-                "Shoulders",
-                "Arms",
-                "Core"
-            ],
-            "primary_categories": [
-                "Strength"
-            ],
-            "equipment": [],
-            "intensity": 4,
-            "difficulty": 3
-        },
+
         {
             "id": "reverse-hyperextensions",
             "title": "Reverse Hyperextensions",
@@ -1681,6 +1630,14 @@
                 "Glutes",
                 "Hamstrings"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/reverse-hyperextensions.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/reverse-hyperextensions.jpg"
+                }
+            ],
             "primary_categories": [
                 "Strength"
             ],
@@ -1688,28 +1645,7 @@
             "intensity": 4,
             "difficulty": 3
         },
-        {
-            "id": "front-lever-progressions",
-            "title": "Front Lever Progressions",
-            "instructions": "Work toward holding body in straight horizontal line from bar",
-            "categories": [
-                "Strength",
-                "Gymnastics",
-                "Core"
-            ],
-            "body_part_focus": [
-                "Back",
-                "Core",
-                "Shoulders",
-                "Arms"
-            ],
-            "primary_categories": [
-                "Strength"
-            ],
-            "equipment": [],
-            "intensity": 4,
-            "difficulty": 4
-        },
+        
         {
             "id": "plyo-push-ups",
             "title": "Plyo Push-Ups",
@@ -1826,6 +1762,14 @@
             ],
             "primary_categories": [
                 "Strength"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/crab-walks.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/crab-walks.jpg"
+                }
             ],
             "equipment": [],
             "intensity": 4,
@@ -2133,6 +2077,15 @@
             "primary_categories": [
                 "Strength"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/reverse-lunges.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/reverse-lunges.jpg"
+                }
+            ],
+
             "equipment": [],
             "intensity": 4,
             "difficulty": 4
@@ -2651,6 +2604,14 @@
                 "Yoga",
                 "Strength"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/cossack-squats.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/cossack-squats.jpg"
+                }
+            ],
             "equipment": [],
             "intensity": 4,
             "difficulty": 4
@@ -2936,6 +2897,37 @@
             "intensity": 4,
             "difficulty": 3
         },
+
+
+
+        {
+            "id": "broad-jumps",
+            "title": "Broad Jumps",
+            "instructions": "Standing long jump",
+            "categories": [
+                "Cardio",
+                "Core"
+            ],
+            "body_part_focus": [
+                "Core",
+                "Legs"
+            ],
+            "primary_categories": [
+                "Cardio",
+                "Strength"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/broad-jumps.mp4",
+                    "external_video": null
+                }
+            ],
+            "equipment": [],
+            "intensity": 5,
+            "difficulty": 4
+        },
+
         {
             "id": "plank-jacks",
             "title": "Plank Jacks",
@@ -3859,7 +3851,7 @@
             "media": [
                 {
                     "type": "video",
-                    "url": "/videos/plank-preview.mp4",
+                    "url": "/videos/plank.mp4",
                     "external_video": null,
                     "thumbnail": "/images/plank-video-thumb.jpg"
                 },
