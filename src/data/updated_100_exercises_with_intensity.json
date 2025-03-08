@@ -2352,6 +2352,34 @@
             "difficulty": 1
         },
         {
+            "id": "butt-kicks",
+            "title": "Butt Kicks",
+            "instructions": "Run on the spot and try to kick heels to your butt.",
+            "categories": [
+                "Cardio",
+                "Warm-up",
+                "Cool-down"
+            ],
+            "body_part_focus": [
+                "Knees",
+                "Full Body"
+            ],
+            "primary_categories": [
+                "Cardio"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/butt-kicks.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/butt-kicks.jpg"
+                }
+            ],
+            "equipment": [],
+            "intensity": 2,
+            "difficulty": 1
+        },
+        {
             "id": "seated-forward-fold",
             "title": "Seated Forward Fold",
             "instructions": "Sit with legs extended, reach forward towards your toes.",
