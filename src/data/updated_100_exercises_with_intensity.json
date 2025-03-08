@@ -1608,6 +1608,14 @@
                 "Glutes",
                 "Core"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/videos/duck-walks.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/duck-walks.jpg"
+                }
+            ],
             "primary_categories": [
                 "Strength"
             ],
