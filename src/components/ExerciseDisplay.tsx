@@ -27,6 +27,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   
   const [showOverlay, setShowOverlay] = useState(true);
   const [isLandscape, setIsLandscape] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
   const overlayTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   const currentExercise = workout.exercises[workout.currentExercise];
@@ -91,24 +92,23 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
   const handleSkip = () => {
     if (workout.currentExercise >= workout.exercises.length - 1) {
-      const endTime = Date.now();
-      const totalDuration = Math.floor((endTime - workout.startTime!) / 1000);
-
-      const stats: WorkoutStats = {
-        totalDuration,
-        skippedExercises: workout.skippedExercises,
-        totalExerciseTime: workout.totalExerciseTime,
-        workoutType: workout.workoutType,
-        selectedDuration: workout.selectedDuration
-      };
-
-      handleComplete(workout.exercises);
-    } else {
-      incrementSkippedExercises();
+      // On last exercise
       if (workout.isResting) {
-        nextExercise();
+        // If in rest mode of last exercise, show summary
+        setShowSummary(true);
       } else {
+        // If in exercise mode of last exercise, go to final rest
         toggleRest();
+      }
+    } else {
+      // Not on last exercise
+      if (workout.isResting) {
+        // If in rest mode, go to exercise mode (same exercise)
+        toggleRest();
+      } else {
+        // If in exercise mode, increment counter and go to rest mode (next exercise)
+        incrementSkippedExercises();
+        nextExercise();
       }
     }
   };
@@ -136,6 +136,22 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
   if (workout.isIntro) {
     return <IntroView onComplete={completeIntro} isResuming={workout.isResuming} />;
+  }
+
+  if (showSummary) {
+    return (
+      <SummaryScreen 
+        exercises={workout.exercises}
+        stats={{
+          totalDuration: Math.floor((Date.now() - workout.startTime!) / 1000),
+          skippedExercises: workout.skippedExercises,
+          totalExerciseTime: workout.totalExerciseTime,
+          workoutType: workout.workoutType,
+          selectedDuration: workout.selectedDuration
+        }}
+        onComplete={handleComplete}
+      />
+    );
   }
 
   if (!workout.isActive) return null;
