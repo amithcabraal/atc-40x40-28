@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import { Exercise } from '../types';
-import { Dumbbell, Zap, Cog as Yoga, Shuffle, Clock } from 'lucide-react';
+import { Dumbbell, Zap, Cog as Yoga, Shuffle, Clock, X } from 'lucide-react';
 
 interface WorkoutSelectionProps {
-  onStartWorkout: (exercises: Exercise[], duration: number) => void;
+  onStartWorkout: (exercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number) => void;
   exercises: Exercise[];
+  onClose: () => void;
 }
 
-export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorkout, exercises }) => {
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorkout, exercises, onClose }) => {
+  const [selectedType, setSelectedType] = useState<'cardio' | 'strength' | 'yoga' | 'mix' | null>(null);
   const [selectedDuration, setSelectedDuration] = useState<number>(30);
   
   const handleStartWorkout = () => {
-    // Calculate how many exercises we need based on duration
-    // Each exercise is 40s + 20s rest = 1 minute
-    const exercisesNeeded = selectedDuration;
+    if (!selectedType) return;
     
-    // Filter exercises by category if a specific type is selected
+    const exercisesNeeded = selectedDuration;
     let filteredExercises: Exercise[] = [];
     
     if (selectedType === 'cardio') {
@@ -41,14 +40,11 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
         )
       );
     } else {
-      // Mix - use all exercises
       filteredExercises = [...exercises];
     }
     
-    // Shuffle the filtered exercises
     let shuffled = [...filteredExercises].sort(() => Math.random() - 0.5);
     
-    // If we don't have enough exercises for the selected category, add random ones
     if (shuffled.length < exercisesNeeded) {
       const remainingNeeded = exercisesNeeded - shuffled.length;
       const otherExercises = exercises.filter(ex => !shuffled.includes(ex))
@@ -58,18 +54,21 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
       shuffled = [...shuffled, ...otherExercises];
     }
     
-    // Take only the number of exercises we need
     const selectedExercises = shuffled.slice(0, exercisesNeeded);
-    
-    // Start the workout
-    onStartWorkout(selectedExercises, selectedDuration);
+    onStartWorkout(selectedExercises, selectedType, selectedDuration);
   };
   
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-md mx-auto">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-md mx-auto relative">
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+      >
+        <X className="w-6 h-6 text-gray-500 dark:text-gray-400" />
+      </button>
+
       <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Choose Your Workout</h2>
       
-      {/* Workout Type Selection */}
       <div className="mb-8">
         <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Workout Type</h3>
         <div className="grid grid-cols-2 gap-4">
@@ -139,7 +138,6 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
         </div>
       </div>
       
-      {/* Duration Selection */}
       <div className="mb-8">
         <h3 className="text-lg font-semibold mb-4 flex items-center text-gray-800 dark:text-gray-200">
           <Clock className="w-5 h-5 mr-2" />
@@ -162,7 +160,6 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
         </div>
       </div>
       
-      {/* Start Button */}
       <button
         onClick={handleStartWorkout}
         disabled={!selectedType}
