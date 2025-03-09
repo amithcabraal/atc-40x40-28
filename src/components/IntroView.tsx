@@ -10,7 +10,7 @@ interface Props {
 export const IntroView: React.FC<Props> = ({ onComplete, isResuming = false }) => {
   return (
     <div className="flex flex-col h-screen bg-purple-50 dark:bg-purple-950">
-      <Timer onComplete={onComplete} />
+      <Timer onComplete={onComplete} phase="intro" />
       
       <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
         <h1 className="text-4xl font-bold text-purple-800 dark:text-purple-200 mb-8">
