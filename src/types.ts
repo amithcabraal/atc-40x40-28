@@ -14,12 +14,21 @@ export interface Exercise {
   media?: Media[];
 }
 
+export interface WorkoutStats {
+  totalDuration: number;
+  skippedExercises: number;
+  totalExerciseTime: number;
+  workoutType: 'cardio' | 'strength' | 'yoga' | 'mix';
+  selectedDuration: number;
+}
+
 export interface Session {
   id: string;
   created_at: string;
   exercises: Exercise[];
   rating?: number;
   notes?: string;
+  stats?: WorkoutStats;
 }
 
 export interface WorkoutState {
@@ -31,11 +40,16 @@ export interface WorkoutState {
   isPaused: boolean;
   isIntro?: boolean;
   isResuming?: boolean;
+  startTime?: number;
+  skippedExercises: number;
+  totalExerciseTime: number;
+  workoutType: 'cardio' | 'strength' | 'yoga' | 'mix';
+  selectedDuration: number;
 }
 
 export interface WorkoutStore {
   workout: WorkoutState;
-  startWorkout: (exercises: Exercise[]) => void;
+  startWorkout: (exercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number) => void;
   resumeSavedWorkout: () => void;
   pauseWorkout: () => void;
   resumeWorkout: () => void;
@@ -45,6 +59,8 @@ export interface WorkoutStore {
   toggleRest: () => void;
   shuffleNextExercise: () => void;
   completeIntro: () => void;
+  incrementSkippedExercises: () => void;
+  updateExerciseTime: (time: number) => void;
 }
 
 export type Theme = 'light' | 'dark' | 'system';
