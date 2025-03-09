@@ -3,7 +3,7 @@ import { Exercise, WorkoutStore } from '../types';
 
 const initialWorkoutState = {
   currentExercise: 0,
-  isResting: true, // Start with rest phase to show first exercise
+  isResting: true, // Start with rest phase to show current exercise
   timeRemaining: 20, // Start with intro countdown
   exercises: [],
   isActive: false,
@@ -63,7 +63,7 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
       ...currentState,
       isIntro: false,
       isResuming: false,
-      isResting: true, // Always start with rest to show first exercise
+      isResting: true,
       timeRemaining: 20,
     };
     set({ workout: newState });
@@ -85,14 +85,38 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
   },
   nextExercise: () => {
     const currentState = get().workout;
-    const newState = {
-      ...currentState,
-      currentExercise: currentState.currentExercise + 1,
-      isResting: true, // Always go to rest phase first
-      timeRemaining: 20,
-    };
-    set({ workout: newState });
-    localStorage.setItem('workoutState', JSON.stringify(newState));
+    
+    // Check if this is the last exercise
+    if (currentState.currentExercise >= currentState.exercises.length - 1) {
+      // If we're in exercise mode of the last exercise, deactivate the workout
+      if (!currentState.isResting) {
+        const newState = {
+          ...currentState,
+          isActive: false
+        };
+        set({ workout: newState });
+        localStorage.setItem('workoutState', JSON.stringify(newState));
+      } else {
+        // If we're in rest mode of the last exercise, go to exercise mode
+        const newState = {
+          ...currentState,
+          isResting: false,
+          timeRemaining: 40
+        };
+        set({ workout: newState });
+        localStorage.setItem('workoutState', JSON.stringify(newState));
+      }
+    } else {
+      // Not the last exercise, proceed normally
+      const newState = {
+        ...currentState,
+        currentExercise: currentState.currentExercise + 1,
+        isResting: true,
+        timeRemaining: 20,
+      };
+      set({ workout: newState });
+      localStorage.setItem('workoutState', JSON.stringify(newState));
+    }
   },
   setTimeRemaining: (time: number) => {
     const newState = { ...get().workout, timeRemaining: time };
@@ -100,10 +124,11 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
     localStorage.setItem('workoutState', JSON.stringify(newState));
   },
   toggleRest: () => {
+    const currentState = get().workout;
     const newState = {
-      ...get().workout,
-      isResting: !get().workout.isResting,
-      timeRemaining: get().workout.isResting ? 40 : 20,
+      ...currentState,
+      isResting: !currentState.isResting,
+      timeRemaining: currentState.isResting ? 40 : 20,
     };
     set({ workout: newState });
     localStorage.setItem('workoutState', JSON.stringify(newState));
@@ -113,8 +138,12 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
     const currentExercises = [...workout.exercises];
     const nextExerciseIndex = workout.currentExercise + 1;
     
+    if (nextExerciseIndex >= currentExercises.length) {
+      return; // Don't shuffle if we're on the last exercise
+    }
+    
     const availableExercises = currentExercises.filter((_, index) => 
-      index !== workout.currentExercise
+      index !== workout.currentExercise && index !== nextExerciseIndex
     );
     
     const currentExerciseSet = new Set(currentExercises.map(ex => ex.title));
