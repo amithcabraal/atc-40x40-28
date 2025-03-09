@@ -82,15 +82,13 @@ function App() {
   };
 
   const startNewWorkout = () => {
-    // Close resume modal if it's open
     setShowResumeModal(false);
-    // Show workout selection screen
     setShowWorkoutSelection(true);
   };
 
-  const handleStartWorkoutWithSelection = (selectedExercises: Exercise[], duration: number) => {
+  const handleStartWorkoutWithSelection = (selectedExercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number) => {
     setShowWorkoutSelection(false);
-    startWorkout(selectedExercises);
+    startWorkout(selectedExercises, workoutType, duration);
   };
 
   const handleResumeWorkout = () => {
@@ -106,7 +104,7 @@ function App() {
   const shareApp = async () => {
     try {
       await navigator.share({
-        title: 'Workout App',
+        title: 'Quick Workout',
         text: 'Check out this awesome workout app!',
         url: window.location.href
       });
@@ -124,7 +122,7 @@ function App() {
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow">
         <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Workout App</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Quick Workout</h1>
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setShowSettings(true)}
@@ -146,7 +144,7 @@ function App() {
       {showWelcome && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md m-4">
-            <h2 className="text-2xl font-bold mb-4 dark:text-white">Welcome to Workout App!</h2>
+            <h2 className="text-2xl font-bold mb-4 dark:text-white">Welcome to Quick Workout!</h2>
             <p className="mb-6 dark:text-gray-300">
               Get ready for an amazing workout experience. This app will help you:
             </p>
@@ -177,12 +175,11 @@ function App() {
       {/* Workout Selection Screen */}
       {showWorkoutSelection && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="max-w-md w-full mx-4">
-            <WorkoutSelection 
-              onStartWorkout={handleStartWorkoutWithSelection}
-              exercises={exerciseData.exercises}
-            />
-          </div>
+          <WorkoutSelection 
+            onStartWorkout={handleStartWorkoutWithSelection}
+            exercises={exerciseData.exercises}
+            onClose={() => setShowWorkoutSelection(false)}
+          />
         </div>
       )}
 
@@ -264,7 +261,7 @@ function App() {
             </div>
             <WorkoutHistory
               sessions={sessions}
-              onRepeat={(session) => startWorkout(session.exercises)}
+              onRepeat={(session) => startWorkout(session.exercises, session.stats?.workoutType || 'mix', session.stats?.selectedDuration || 30)}
             />
           </div>
         </div>
