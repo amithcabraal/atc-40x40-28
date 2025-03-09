@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
-        name: 'Workout Timer',
+        name: 'Quick Workout',
         short_name: 'Workout',
-        description: 'A 40/20 interval workout timer app',
+        description: 'A quick workout app with interval training',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
