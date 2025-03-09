@@ -42,16 +42,20 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
         
         animationFrameId = requestAnimationFrame(updateTimer);
       } else {
-        if (workout.isIntro && onComplete) {
-          onComplete();
+        if (workout.isIntro) {
+          if (onComplete) onComplete();
         } else if (workout.isResting) {
+          // When rest period ends, go to exercise mode for the same exercise
+          toggleRest();
+        } else {
+          // When exercise period ends
           if (workout.currentExercise >= workout.exercises.length - 1) {
+            // If this was the last exercise, call onComplete
             if (onComplete) onComplete();
           } else {
+            // Otherwise, move to next exercise's rest period
             nextExercise();
           }
-        } else {
-          toggleRest();
         }
         lastUpdateRef.current = 0;
         progressRef.current = 0;
