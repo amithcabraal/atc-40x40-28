@@ -135,44 +135,35 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
   },
   shuffleNextExercise: () => {
     const { workout } = get();
+    
+    // Only allow shuffling during rest mode
+    if (!workout.isResting) {
+      return;
+    }
+
     const currentExercises = [...workout.exercises];
-    const nextExerciseIndex = workout.currentExercise + 1;
+    const currentIndex = workout.currentExercise;
     
-    if (nextExerciseIndex >= currentExercises.length) {
-      return; // Don't shuffle if we're on the last exercise
-    }
-    
-    const availableExercises = currentExercises.filter((_, index) => 
-      index !== workout.currentExercise && index !== nextExerciseIndex
+    // Create a pool of exercises to choose from (excluding current exercise)
+    const exercisePool = currentExercises.filter((_, index) => 
+      index !== currentIndex
     );
-    
-    const currentExerciseSet = new Set(currentExercises.map(ex => ex.title));
-    
-    let newExercise = null;
-    let attempts = 0;
-    const maxAttempts = 10;
-    
-    while (!newExercise && attempts < maxAttempts) {
-      const randomIndex = Math.floor(Math.random() * availableExercises.length);
-      const candidateExercise = availableExercises[randomIndex];
-      
-      if (!currentExerciseSet.has(candidateExercise.title) || attempts > 5) {
-        newExercise = candidateExercise;
-      }
-      
-      attempts++;
+
+    if (exercisePool.length === 0) {
+      return; // No exercises available to shuffle with
     }
-    
-    if (!newExercise) {
-      const randomIndex = Math.floor(Math.random() * availableExercises.length);
-      newExercise = availableExercises[randomIndex];
-    }
-    
-    currentExercises[nextExerciseIndex] = newExercise;
-    
+
+    // Pick a random exercise from the pool
+    const randomIndex = Math.floor(Math.random() * exercisePool.length);
+    const newExercise = exercisePool[randomIndex];
+
+    // Replace the current exercise with the randomly selected one
+    currentExercises[currentIndex] = newExercise;
+
     const newState = {
       ...workout,
-      exercises: currentExercises
+      exercises: currentExercises,
+      timeRemaining: 20 // Reset rest timer when shuffling
     };
     
     set({ workout: newState });
