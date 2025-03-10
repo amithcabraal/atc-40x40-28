@@ -1892,6 +1892,14 @@
                 "Glutes",
                 "Core"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/frogs.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/frogs.jpg"
+                }
+            ],
             "primary_categories": [
                 "Cardio",
                 "Strength"
