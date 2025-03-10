@@ -3136,28 +3136,7 @@
             "intensity": 4,
             "difficulty": 3
         },
-        {
-            "id": "sprinter-starts",
-            "title": "Sprinter Starts",
-            "instructions": "Practice explosive starts from a sprinter's starting position",
-            "categories": [
-                "Cardio",
-                "Power",
-                "Lower body"
-            ],
-            "body_part_focus": [
-                "Legs",
-                "Glutes",
-                "Core"
-            ],
-            "primary_categories": [
-                "Cardio",
-                "Strength"
-            ],
-            "equipment": [],
-            "intensity": 5,
-            "difficulty": 3
-        },
+      
         {
             "id": "lateral-plank-walks",
             "title": "Lateral Plank Walks",
