@@ -31,12 +31,12 @@ export const Controls: React.FC<ControlsProps> = ({
   isLandscape
 }) => {
   const buttonClasses = isLandscape
-    ? 'h-12 w-12 flex items-center justify-center rounded-full shadow-lg hover:scale-105 transition-transform'
+    ? 'h-10 w-10 flex items-center justify-center rounded-full shadow-lg hover:scale-105 transition-transform'
     : 'p-4 rounded-full transition-transform hover:scale-105';
 
   return (
     <div className={isLandscape 
-      ? "absolute right-6 top-[25%] transform -translate-y-1/4 z-20 flex flex-col space-y-3"
+      ? "absolute right-4 top-[30%] transform -translate-y-1/4 z-20 flex flex-col space-y-2"
       : "flex justify-center space-x-4"
     }>
       {isPaused ? (
@@ -45,7 +45,7 @@ export const Controls: React.FC<ControlsProps> = ({
           className={`${buttonClasses} bg-green-500 text-white hover:bg-green-600 ${buttonOpacity}`}
           title="Resume"
         >
-          <Play className={isLandscape ? "w-5 h-5" : "w-5 h-5"} />
+          <Play className="w-4 h-4" />
         </button>
       ) : (
         <button
@@ -53,7 +53,7 @@ export const Controls: React.FC<ControlsProps> = ({
           className={`${buttonClasses} bg-yellow-500 text-white hover:bg-yellow-600 ${buttonOpacity}`}
           title="Pause"
         >
-          <Pause className={isLandscape ? "w-5 h-5" : "w-5 h-5"} />
+          <Pause className="w-4 h-4" />
         </button>
       )}
       
@@ -62,7 +62,7 @@ export const Controls: React.FC<ControlsProps> = ({
         className={`${buttonClasses} bg-blue-500 text-white hover:bg-blue-600 ${buttonOpacity}`}
         title="Skip to next"
       >
-        <SkipForward className={isLandscape ? "w-5 h-5" : "w-5 h-5"} />
+        <SkipForward className="w-4 h-4" />
       </button>
       
       <button
@@ -76,7 +76,7 @@ export const Controls: React.FC<ControlsProps> = ({
         disabled={!shouldAllowOverlayFade}
         style={{ opacity: shouldAllowOverlayFade ? 1 : 0.5, cursor: shouldAllowOverlayFade ? 'pointer' : 'not-allowed' }}
       >
-        <Info className={isLandscape ? "w-5 h-5" : "w-5 h-5"} />
+        <Info className="w-4 h-4" />
       </button>
       
       <button
@@ -89,7 +89,7 @@ export const Controls: React.FC<ControlsProps> = ({
         } ${buttonOpacity}`}
         title={isResting ? "Shuffle next exercise" : "Can only shuffle during rest"}
       >
-        <Shuffle className={isLandscape ? "w-5 h-5" : "w-5 h-5"} />
+        <Shuffle className="w-4 h-4" />
       </button>
 
       <button
@@ -97,7 +97,7 @@ export const Controls: React.FC<ControlsProps> = ({
         className={`${buttonClasses} bg-red-500 text-white hover:bg-red-600 ${buttonOpacity}`}
         title="Stop workout"
       >
-        <X className={isLandscape ? "w-5 h-5" : "w-5 h-5"} />
+        <X className="w-4 h-4" />
       </button>
     </div>
   );
