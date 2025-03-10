@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Pause, SkipForward, Info, Shuffle } from 'lucide-react';
+import { Play, Pause, SkipForward, Info, Shuffle, X } from 'lucide-react';
 
 interface ControlsProps {
   isPaused: boolean;
@@ -12,6 +12,7 @@ interface ControlsProps {
   onSkip: () => void;
   onToggleOverlay: () => void;
   onShuffle: () => void;
+  onStop: () => void;
   isLandscape?: boolean;
 }
 
@@ -26,6 +27,7 @@ export const Controls: React.FC<ControlsProps> = ({
   onSkip,
   onToggleOverlay,
   onShuffle,
+  onStop,
   isLandscape
 }) => {
   const buttonClasses = isLandscape
@@ -88,6 +90,14 @@ export const Controls: React.FC<ControlsProps> = ({
         title={isResting ? "Shuffle next exercise" : "Can only shuffle during rest"}
       >
         <Shuffle className={isLandscape ? "w-6 h-6" : "w-5 h-5"} />
+      </button>
+
+      <button
+        onClick={onStop}
+        className={`${buttonClasses} bg-red-500 text-white hover:bg-red-600 ${buttonOpacity}`}
+        title="Stop workout"
+      >
+        <X className={isLandscape ? "w-6 h-6" : "w-5 h-5"} />
       </button>
     </div>
   );

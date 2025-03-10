@@ -9,6 +9,7 @@ interface ExerciseContentProps {
   overlayOpacityClass: string;
   theme: 'blue' | 'green';
   isLandscape?: boolean;
+  isPaused?: boolean;
 }
 
 export const ExerciseContent: React.FC<ExerciseContentProps> = ({
@@ -16,7 +17,8 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
   showOverlay,
   overlayOpacityClass,
   theme,
-  isLandscape
+  isLandscape,
+  isPaused
 }) => {
   const hasMedia = exercise?.media && exercise.media.length > 0;
 
@@ -29,6 +31,7 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
             theme={theme}
             isLandscape={isLandscape}
             hideControls={!showOverlay}
+            isPaused={isPaused}
           />
         </div>
       )}
