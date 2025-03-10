@@ -7,6 +7,7 @@ import { SummaryScreen } from './SummaryScreen';
 import { StatusBar } from './exercise/StatusBar';
 import { Controls } from './exercise/Controls';
 import { ExerciseContent } from './exercise/ExerciseContent';
+import { StopWorkoutModal } from './exercise/StopWorkoutModal';
 
 interface Props {
   onComplete: (exercises: Exercise[], rating?: number, notes?: string) => void;
@@ -29,6 +30,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   const [showOverlay, setShowOverlay] = useState(true);
   const [isLandscape, setIsLandscape] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [showStopConfirmation, setShowStopConfirmation] = useState(false);
   const overlayTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   const currentExercise = workout.exercises[workout.currentExercise];
@@ -89,26 +91,42 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   };
 
   const handleSkip = () => {
-    if (workout.currentExercise >= workout.exercises.length - 1) {
-      // On last exercise
+    const isLastExercise = workout.currentExercise >= workout.exercises.length - 1;
+
+    if (isLastExercise) {
       if (workout.isResting) {
         // If in rest mode of last exercise, show summary
         setShowSummary(true);
       } else {
-        // If in exercise mode of last exercise, go to final rest
-        toggleRest();
+        // If in exercise mode of last exercise, count as skipped and show summary
+        incrementSkippedExercises();
+        setShowSummary(true);
       }
     } else {
-      // Not on last exercise
       if (workout.isResting) {
-        // If in rest mode, go to exercise mode (same exercise)
+        // If in rest mode, go to exercise mode of current exercise
         toggleRest();
       } else {
-        // If in exercise mode, increment counter and go to rest mode (next exercise)
+        // If in exercise mode, count as skipped and go to rest mode of next exercise
         incrementSkippedExercises();
         nextExercise();
       }
     }
+  };
+
+  const handleStop = () => {
+    setShowStopConfirmation(true);
+    pauseWorkout(); // Pause the workout while showing confirmation
+  };
+
+  const handleStopConfirm = () => {
+    setShowStopConfirmation(false);
+    setShowSummary(true);
+  };
+
+  const handleStopCancel = () => {
+    setShowStopConfirmation(false);
+    resumeWorkout(); // Resume the workout if user cancels
   };
 
   const toggleOverlay = () => {
@@ -187,6 +205,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
           overlayOpacityClass={overlayOpacityClass}
           theme={workout.isResting ? 'green' : 'blue'}
           isLandscape={isLandscape}
+          isPaused={workout.isPaused}
         />
       </div>
 
@@ -206,9 +225,17 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
           onSkip={handleSkip}
           onToggleOverlay={toggleOverlay}
           onShuffle={shuffleNextExercise}
+          onStop={handleStop}
           isLandscape={isLandscape}
         />
       </div>
+
+      {showStopConfirmation && (
+        <StopWorkoutModal
+          onConfirm={handleStopConfirm}
+          onCancel={handleStopCancel}
+        />
+      )}
     </div>
   );
 };

@@ -8,6 +8,7 @@ interface Props {
   isLandscape?: boolean;
   hideControls?: boolean;
   autoplay?: boolean;
+  isPaused?: boolean;
 }
 
 export const MediaGallery: React.FC<Props> = ({ 
@@ -15,7 +16,8 @@ export const MediaGallery: React.FC<Props> = ({
   theme = 'blue', 
   isLandscape = false,
   hideControls = false,
-  autoplay = true
+  autoplay = true,
+  isPaused = false
 }) => {
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
   const [thumbnails, setThumbnails] = useState<Record<string, string>>({});
@@ -30,6 +32,20 @@ export const MediaGallery: React.FC<Props> = ({
   // Filter media to separate videos and images
   const videos = media.filter(item => item.type === 'video');
   const images = media.filter(item => item.type === 'image');
+
+  useEffect(() => {
+    // Handle pause/resume
+    if (selectedMedia?.type === 'video') {
+      const videoElement = videoRefs.current[selectedMedia.url];
+      if (videoElement) {
+        if (isPaused) {
+          videoElement.pause();
+        } else {
+          videoElement.play().catch(console.error);
+        }
+      }
+    }
+  }, [isPaused, selectedMedia]);
 
   useEffect(() => {
     // Reset video errors when media changes
@@ -97,7 +113,7 @@ export const MediaGallery: React.FC<Props> = ({
 
   // Effect to autoplay the selected video when it changes
   useEffect(() => {
-    if (selectedMedia?.type === 'video' && !videoErrors[selectedMedia.url] && autoplay) {
+    if (selectedMedia?.type === 'video' && !videoErrors[selectedMedia.url] && autoplay && !isPaused) {
       const videoElement = videoRefs.current[selectedMedia.url];
       if (videoElement) {
         videoElement.play().catch(err => {
@@ -109,7 +125,7 @@ export const MediaGallery: React.FC<Props> = ({
         });
       }
     }
-  }, [selectedMedia, videoErrors, autoplay]);
+  }, [selectedMedia, videoErrors, autoplay, isPaused]);
 
   // Effect to handle image slideshow when video is not available
   useEffect(() => {

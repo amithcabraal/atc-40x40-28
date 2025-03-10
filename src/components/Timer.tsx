@@ -32,7 +32,6 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
           const secondsToSubtract = Math.floor(progressRef.current);
           setTimeRemaining(workout.timeRemaining - secondsToSubtract);
           
-          // Update exercise time if we're in exercise phase
           if (!workout.isResting && !workout.isIntro) {
             updateExerciseTime(secondsToSubtract);
           }
@@ -45,15 +44,11 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
         if (workout.isIntro) {
           if (onComplete) onComplete();
         } else if (workout.isResting) {
-          // When rest period ends, go to exercise mode for the same exercise
           toggleRest();
         } else {
-          // When exercise period ends
           if (workout.currentExercise >= workout.exercises.length - 1) {
-            // If this was the last exercise, call onComplete
             if (onComplete) onComplete();
           } else {
-            // Otherwise, move to next exercise's rest period
             nextExercise();
           }
         }
@@ -73,62 +68,20 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
 
   const minutes = Math.floor(workout.timeRemaining / 60);
   const seconds = workout.timeRemaining % 60;
-  
-  const totalTime = workout.isIntro ? 20 : (workout.isResting ? 20 : 40);
-  const progress = (workout.timeRemaining / totalTime) * 100;
-
-  // Get phase-specific styles
-  const getPhaseStyles = () => {
-    if (workout.isIntro || phase === 'intro') {
-      return {
-        text: 'text-purple-700 dark:text-purple-300',
-        bg: 'bg-purple-500/20 dark:bg-purple-400/20'
-      };
-    }
-    if (workout.isResting || phase === 'rest') {
-      return {
-        text: 'text-green-700 dark:text-green-300',
-        bg: 'bg-green-500/30 dark:bg-green-400/30'
-      };
-    }
-    return {
-      text: 'text-blue-700 dark:text-blue-300',
-      bg: 'bg-blue-500/30 dark:bg-blue-400/30'
-    };
-  };
-
-  const styles = getPhaseStyles();
 
   if (isLandscape) {
     return (
-      <div className={`text-4xl font-bold tabular-nums ${styles.text}`}>
+      <div className="text-4xl font-bold tabular-nums">
         {minutes}:{seconds.toString().padStart(2, '0')}
       </div>
     );
   }
 
   return (
-    <div className="w-full h-[13.33vh] relative">
-      <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 overflow-hidden">
-        <div
-          className={`h-full transition-all duration-100 ${styles.bg} ${
-            (workout.isIntro || workout.isResting) ? 'animate-pulse' : ''
-          }`}
-          style={{ width: `${progress}%` }}
-        />
+    <>
+      <div className="text-3xl font-bold tabular-nums">
+        {minutes}:{seconds.toString().padStart(2, '0')}
       </div>
-      
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className={`text-[10vh] font-bold tabular-nums tracking-tight ${styles.text}`}>
-          {minutes}:{seconds.toString().padStart(2, '0')}
-        </div>
-      </div>
-
-      <div className="absolute bottom-1 right-2">
-        <span className={`text-xs font-bold uppercase ${styles.text}`}>
-          {workout.isIntro ? 'Get Ready' : (workout.isResting ? 'Rest' : 'Exercise')}
-        </span>
-      </div>
-    </div>
+    </>
   );
 };
