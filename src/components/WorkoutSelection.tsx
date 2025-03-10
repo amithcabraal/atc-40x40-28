@@ -59,7 +59,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
   };
   
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-md mx-auto relative">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl mx-auto relative flex flex-col md:flex-row gap-6">
       <button
         onClick={onClose}
         className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -67,10 +67,9 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
         <X className="w-6 h-6 text-gray-500 dark:text-gray-400" />
       </button>
 
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Choose Your Workout</h2>
-      
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Workout Type</h3>
+      {/* Left Column - Workout Types */}
+      <div className="flex-1">
+        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Choose Your Workout</h2>
         <div className="grid grid-cols-2 gap-4">
           <button
             onClick={() => setSelectedType('cardio')}
@@ -137,40 +136,43 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
           </button>
         </div>
       </div>
-      
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-4 flex items-center text-gray-800 dark:text-gray-200">
-          <Clock className="w-5 h-5 mr-2" />
-          Duration (minutes)
-        </h3>
-        <div className="flex justify-between gap-4">
-          {[20, 30, 40].map(duration => (
-            <button
-              key={duration}
-              onClick={() => setSelectedDuration(duration)}
-              className={`flex-1 py-3 rounded-lg font-medium transition-all ${
-                selectedDuration === duration
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-              }`}
-            >
-              {duration}
-            </button>
-          ))}
+
+      {/* Right Column - Duration and Start Button */}
+      <div className="flex-1 flex flex-col justify-between">
+        <div>
+          <h3 className="text-lg font-semibold mb-4 flex items-center text-gray-800 dark:text-gray-200">
+            <Clock className="w-5 h-5 mr-2" />
+            Duration (minutes)
+          </h3>
+          <div className="flex justify-between gap-4">
+            {[20, 30, 40].map(duration => (
+              <button
+                key={duration}
+                onClick={() => setSelectedDuration(duration)}
+                className={`flex-1 py-3 rounded-lg font-medium transition-all ${
+                  selectedDuration === duration
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                }`}
+              >
+                {duration}
+              </button>
+            ))}
+          </div>
         </div>
+
+        <button
+          onClick={handleStartWorkout}
+          disabled={!selectedType}
+          className={`w-full py-4 rounded-lg text-white font-bold text-lg transition-all mt-6 ${
+            selectedType
+              ? 'bg-blue-500 hover:bg-blue-600'
+              : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
+          }`}
+        >
+          {selectedType ? 'Start Workout' : 'Select a workout type'}
+        </button>
       </div>
-      
-      <button
-        onClick={handleStartWorkout}
-        disabled={!selectedType}
-        className={`w-full py-4 rounded-lg text-white font-bold text-lg transition-all ${
-          selectedType
-            ? 'bg-blue-500 hover:bg-blue-600'
-            : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
-        }`}
-      >
-        {selectedType ? 'Start Workout' : 'Select a workout type'}
-      </button>
     </div>
   );
 };
