@@ -17,7 +17,7 @@ export const BodyPartIcons: React.FC<BodyPartIconsProps> = ({ bodyParts, theme =
   // Compact version for landscape mode
   if (isLandscape) {
     return (
-      <div className={`flex items-center gap-1 px-2 py-1 rounded-lg ${
+      <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg ${
         theme === 'green' 
           ? 'bg-green-100/80 dark:bg-green-900/80' 
           : 'bg-blue-100/80 dark:bg-blue-900/80'
