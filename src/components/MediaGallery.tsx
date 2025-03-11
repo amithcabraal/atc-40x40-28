@@ -215,55 +215,57 @@ export const MediaGallery: React.FC<Props> = ({
   // Landscape mode layout for the video
   if (isLandscape) {
     return (
-      <div className="w-full h-full" ref={containerRef}>
-        {selectedMedia && selectedMedia.type === 'video' && !videoErrors[selectedMedia.url] && (
-          <video
-            ref={el => {
-              if (el) videoRefs.current[selectedMedia.url] = el;
-            }}
-            autoPlay={autoplay}
-            muted
-            loop
-            className="w-full h-full object-cover"
-            src={selectedMedia.url}
-            poster={selectedMedia.thumbnail || thumbnails[selectedMedia.url]}
-            onError={() => handleVideoError(selectedMedia.url)}
-          />
-        )}
-        {(selectedMedia && selectedMedia.type === 'image') || hasSelectedVideoError ? (
-          videos.length > 0 && videos.every(video => videoErrors[video.url]) ? renderImageSlideshow() : (
-            <img
-              src={selectedMedia?.url || images[0]?.url}
-              alt={selectedMedia?.title || 'Exercise demonstration'}
-              className="w-full h-full object-cover"
-              onError={(e) => console.error('Error loading image:', e)}
+      <div className="w-full h-full flex items-center justify-center" ref={containerRef}>
+        <div className="relative w-full h-full max-h-[calc(100vh-6rem)] flex items-center justify-center">
+          {selectedMedia && selectedMedia.type === 'video' && !videoErrors[selectedMedia.url] && (
+            <video
+              ref={el => {
+                if (el) videoRefs.current[selectedMedia.url] = el;
+              }}
+              autoPlay={autoplay}
+              muted
+              loop
+              className="max-w-full max-h-full w-auto h-auto object-contain"
+              src={selectedMedia.url}
+              poster={selectedMedia.thumbnail || thumbnails[selectedMedia.url]}
+              onError={() => handleVideoError(selectedMedia.url)}
             />
-          )
-        ) : null}
-        
-        {!hideControls && selectedMedia && (
-          <button
-            onClick={() => {
-              if (selectedMedia.type === 'video' && !videoErrors[selectedMedia.url]) {
-                const videoElement = videoRefs.current[selectedMedia.url];
-                if (videoElement) {
-                  enterFullscreen(videoElement);
+          )}
+          {(selectedMedia && selectedMedia.type === 'image') || hasSelectedVideoError ? (
+            videos.length > 0 && videos.every(video => videoErrors[video.url]) ? renderImageSlideshow() : (
+              <img
+                src={selectedMedia?.url || images[0]?.url}
+                alt={selectedMedia?.title || 'Exercise demonstration'}
+                className="max-w-full max-h-full w-auto h-auto object-contain"
+                onError={(e) => console.error('Error loading image:', e)}
+              />
+            )
+          ) : null}
+          
+          {!hideControls && selectedMedia && (
+            <button
+              onClick={() => {
+                if (selectedMedia.type === 'video' && !videoErrors[selectedMedia.url]) {
+                  const videoElement = videoRefs.current[selectedMedia.url];
+                  if (videoElement) {
+                    enterFullscreen(videoElement);
+                  }
+                } else if (selectedMedia.type === 'image' || hasSelectedVideoError) {
+                  const img = containerRef.current?.querySelector('img');
+                  if (img && img.requestFullscreen) {
+                    img.requestFullscreen().catch(err => {
+                      console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                  }
                 }
-              } else if (selectedMedia.type === 'image' || hasSelectedVideoError) {
-                const img = containerRef.current?.querySelector('img');
-                if (img && img.requestFullscreen) {
-                  img.requestFullscreen().catch(err => {
-                    console.error(`Error attempting to enable fullscreen: ${err.message}`);
-                  });
-                }
-              }
-            }}
-            className="absolute top-2 right-2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-70 transition-opacity z-10"
-            aria-label="Fullscreen"
-          >
-            <Maximize className="w-5 h-5" />
-          </button>
-        )}
+              }}
+              className="absolute top-2 right-2 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-70 transition-opacity z-10"
+              aria-label="Fullscreen"
+            >
+              <Maximize className="w-5 h-5" />
+            </button>
+          )}
+        </div>
       </div>
     );
   }
