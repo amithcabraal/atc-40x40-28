@@ -2144,6 +2144,14 @@
                 "Cardio",
                 "Strength"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/cross-body-mountain-climbers.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/cross-body-mountain-climbers.jpg"
+                }
+            ],
             "equipment": [],
             "intensity": 5,
             "difficulty": 3
@@ -2162,6 +2170,14 @@
             ],
             "primary_categories": [
                 "Strength"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/clock-lunges.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/clock-lunges.jpg"
+                }
             ],
             "equipment": [],
             "intensity": 4,
@@ -2229,6 +2245,14 @@
                 "Spine",
                 "Core"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/cat-cow.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/cat-cow.jpg"
+                }
+            ],
             "primary_categories": [
                 "Yoga"
             ],
@@ -2250,6 +2274,14 @@
                 "Hamstrings",
                 "Calves"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/downward-dog.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/downward-dog.jpg"
+                }
+            ],
             "primary_categories": [
                 "Yoga"
             ],
@@ -2269,6 +2301,14 @@
             "body_part_focus": [
                 "Hips",
                 "Lower back"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/child-pose.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/child-pose.jpg"
+                }
             ],
             "primary_categories": [
                 "Yoga"
@@ -2290,6 +2330,14 @@
                 "Spine",
                 "Chest",
                 "Shoulders"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/cobra-pose.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/cobra-pose.jpg"
+                }
             ],
             "primary_categories": [
                 "Yoga"
@@ -2823,27 +2871,6 @@
             "difficulty": 4
         },
         {
-            "id": "side-lying-leg-lifts",
-            "title": "Side-Lying Leg Lifts",
-            "instructions": "Lie on your side and lift the top leg, keeping it straight",
-            "categories": [
-                "Strength",
-                "Lower body",
-                "Core"
-            ],
-            "body_part_focus": [
-                "Hips",
-                "Glutes",
-                "Outer thighs"
-            ],
-            "primary_categories": [
-                "Strength"
-            ],
-            "equipment": [],
-            "intensity": 4,
-            "difficulty": 3
-        },
-        {
             "id": "superman",
             "title": "Superman",
             "instructions": "Lie on stomach and lift arms and legs simultaneously",
@@ -2983,6 +3010,13 @@
             "body_part_focus": [
                 "Core",
                 "Shoulders"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/plank-jacks.mp4",
+                    "external_video": null
+                }
             ],
             "primary_categories": [
                 "Cardio",
@@ -3341,107 +3375,6 @@
             "equipment": [],
             "intensity": 4,
             "difficulty": 3
-        },
-        {
-            "id": "arm-circles",
-            "title": "Arm Circles",
-            "instructions": "Make small or large circles with your arms, forwards or backwards",
-            "categories": [
-                "Warm-up",
-                "Flexibility"
-            ],
-            "body_part_focus": [
-                "Shoulders"
-            ],
-            "primary_categories": [
-                "Yoga"
-            ],
-            "equipment": [],
-            "intensity": 2,
-            "difficulty": 1
-        },
-        {
-            "id": "wrist-rotations",
-            "title": "Wrist Rotations",
-            "instructions": "Rotate your wrists in a circular motion",
-            "categories": [
-                "Warm-up",
-                "Flexibility"
-            ],
-            "body_part_focus": [
-                "Wrists"
-            ],
-            "primary_categories": [
-                "Yoga"
-            ],
-            "equipment": [],
-            "intensity": 2,
-            "difficulty": 1
-        },
-        {
-            "id": "ankle-rotations",
-            "title": "Ankle Rotations",
-            "instructions": "Rotate your ankles in a circular motion",
-            "categories": [
-                "Warm-up",
-                "Flexibility"
-            ],
-            "body_part_focus": [
-                "Ankles"
-            ],
-            "media": [
-                {
-                    "type": "video",
-                    "url": "/lady-videos/ankle-rotations.mp4",
-                    "external_video": null,
-                    "thumbnail": "/images/ankle-rotations-video-thumb.jpg"
-                },
-                {
-                    "type": "images",
-                    "images": [
-                        {
-                            "alt": "Image 1 of Ankle Rotations",
-                            "url": "/images/ankle-rotations-1.jpg"
-                        },
-                        {
-                            "alt": "Image 2 of Ankle Rotations",
-                            "url": "/images/ankle-rotations-2.jpg"
-                        },
-                        {
-                            "alt": "Image 3 of Ankle Rotations",
-                            "url": "/images/ankle-rotations-3.jpg"
-                        },
-                        {
-                            "alt": "Image 4 of Ankle Rotations",
-                            "url": "/images/ankle-rotations-4.jpg"
-                        }
-                    ]
-                }
-            ],
-            "primary_categories": [
-                "Yoga"
-            ],
-            "equipment": [],
-            "intensity": 2,
-            "difficulty": 1
-        },
-        {
-            "id": "neck-rotations",
-            "title": "Neck Rotations",
-            "instructions": "Gently rotate your neck in a circular motion",
-            "categories": [
-                "Warm-up",
-                "Flexibility"
-            ],
-            "body_part_focus": [
-                "Neck"
-            ],
-            "primary_categories": [
-                "Yoga"
-            ],
-            "equipment": [],
-            "intensity": 2,
-            "difficulty": 1
         },
         {
             "id": "side-lunges",
