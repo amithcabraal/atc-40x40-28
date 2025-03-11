@@ -215,8 +215,8 @@ export const MediaGallery: React.FC<Props> = ({
   // Landscape mode layout for the video
   if (isLandscape) {
     return (
-      <div className="w-full h-full flex items-center justify-center" ref={containerRef}>
-        <div className="relative w-full h-full max-h-[calc(100vh-6rem)] flex items-center justify-center">
+      <div className="w-full h-full flex items-center justify-end" ref={containerRef}>
+        <div className="relative w-full h-full max-h-[calc(100vh-6rem)] flex items-center justify-end">
           {selectedMedia && selectedMedia.type === 'video' && !videoErrors[selectedMedia.url] && (
             <video
               ref={el => {
