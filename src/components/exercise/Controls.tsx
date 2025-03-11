@@ -36,7 +36,7 @@ export const Controls: React.FC<ControlsProps> = ({
 
   return (
     <div className={isLandscape 
-      ? "absolute right-4 top-[30%] transform -translate-y-1/4 z-20 flex flex-col space-y-2"
+      ? "absolute right-4 top-[50%] transform -translate-y-1/2 z-20 flex flex-col space-y-2"
       : "flex justify-center space-x-4"
     }>
       {isPaused ? (
