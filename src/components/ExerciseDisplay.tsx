@@ -36,7 +36,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   const currentExercise = workout.exercises[workout.currentExercise];
   const progress = ((workout.currentExercise + 1) / workout.exercises.length) * 100;
 
-  // Check if the device is in landscape mode
   useEffect(() => {
     const checkOrientation = () => {
       setIsLandscape(window.innerWidth > window.innerHeight);
@@ -50,7 +49,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
     };
   }, []);
 
-  // Set up the overlay fade timer
   useEffect(() => {
     setShowOverlay(true);
     
@@ -95,19 +93,15 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
     if (isLastExercise) {
       if (workout.isResting) {
-        // If in rest mode of last exercise, show summary
         setShowSummary(true);
       } else {
-        // If in exercise mode of last exercise, count as skipped and show summary
         incrementSkippedExercises();
         setShowSummary(true);
       }
     } else {
       if (workout.isResting) {
-        // If in rest mode, go to exercise mode of current exercise
         toggleRest();
       } else {
-        // If in exercise mode, count as skipped and go to rest mode of next exercise
         incrementSkippedExercises();
         nextExercise();
       }
@@ -116,7 +110,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
   const handleStop = () => {
     setShowStopConfirmation(true);
-    pauseWorkout(); // Pause the workout while showing confirmation
+    pauseWorkout();
   };
 
   const handleStopConfirm = () => {
@@ -126,7 +120,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
 
   const handleStopCancel = () => {
     setShowStopConfirmation(false);
-    resumeWorkout(); // Resume the workout if user cancels
+    resumeWorkout();
   };
 
   const toggleOverlay = () => {
@@ -190,23 +184,47 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
         totalExercises={workout.exercises.length}
         progress={progress}
         isLandscape={isLandscape}
-      >
-        <Timer 
-          onComplete={handleSkip} 
-          isLandscape={isLandscape}
-          phase={workout.isResting ? 'rest' : 'exercise'} 
-        />
-      </StatusBar>
+      />
 
-      <div className={`flex-1 flex flex-col px-4 py-2 overflow-hidden relative ${modeBorderStyle}`}>
-        <ExerciseContent
-          exercise={currentExercise}
-          showOverlay={showOverlay}
-          overlayOpacityClass={overlayOpacityClass}
-          theme={workout.isResting ? 'green' : 'blue'}
-          isLandscape={isLandscape}
-          isPaused={workout.isPaused}
-        />
+      <div className={`flex-1 flex ${isLandscape ? 'flex-row-reverse' : 'flex-col'} px-4 py-2 overflow-hidden relative ${modeBorderStyle}`}>
+        {!isLandscape && (
+          <Timer 
+            onComplete={handleSkip}
+            isLandscape={isLandscape}
+            phase={workout.isResting ? 'rest' : 'exercise'}
+          />
+        )}
+        
+        {isLandscape ? (
+          <>
+            <div className="w-2/3">
+              <ExerciseContent
+                exercise={currentExercise}
+                showOverlay={showOverlay}
+                overlayOpacityClass={overlayOpacityClass}
+                theme={workout.isResting ? 'green' : 'blue'}
+                isLandscape={isLandscape}
+                isPaused={workout.isPaused}
+              />
+            </div>
+            <div className="w-1/3 flex items-center justify-center">
+              <Timer 
+                onComplete={handleSkip}
+                isLandscape={isLandscape}
+                phase={workout.isResting ? 'rest' : 'exercise'}
+              />
+            </div>
+          </>
+        ) : (
+          <ExerciseContent
+            exercise={currentExercise}
+            showOverlay={showOverlay}
+            overlayOpacityClass={overlayOpacityClass}
+            theme={workout.isResting ? 'green' : 'blue'}
+            isLandscape={isLandscape}
+            isPaused={workout.isPaused}
+          />
+        )}
       </div>
 
       <div className={`w-full ${
