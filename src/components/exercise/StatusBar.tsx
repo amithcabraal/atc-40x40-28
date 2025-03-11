@@ -14,8 +14,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({
   currentExercise,
   totalExercises,
   progress,
-  isLandscape,
-  children
+  isLandscape
 }) => {
   const statusBarStyle = isResting
     ? 'bg-green-600 dark:bg-green-700 text-white'
@@ -35,8 +34,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({
             Quick Workout
           </h1>
           
-          <div className="flex items-center space-x-2">
-            {children}
+          <div className="flex items-center">
             <p className="text-sm font-medium">
               {currentExercise + 1} / {totalExercises}
             </p>
@@ -73,11 +71,6 @@ export const StatusBar: React.FC<StatusBarProps> = ({
             <div className="font-bold">
               MODE
             </div>
-          </div>
-
-          {/* Timer */}
-          <div className="flex flex-col items-center justify-center">
-            {children}
           </div>
 
           {/* Progress */}
