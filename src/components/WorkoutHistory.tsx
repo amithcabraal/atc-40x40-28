@@ -64,13 +64,13 @@ export const WorkoutHistory: React.FC<Props> = ({ sessions, onRepeat }) => {
                 </div>
                 
                 <div className="flex items-center space-x-4">
-                  {session.rating && session.rating > 0 && (
+                  {typeof session.rating === 'number' && session.rating > 0 ? (
                     <div className="flex">
                       {[...Array(session.rating)].map((_, i) => (
                         <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
                       ))}
                     </div>
-                  )}
+                  ) : null}
                   <button
                     onClick={() => onRepeat(session)}
                     className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
