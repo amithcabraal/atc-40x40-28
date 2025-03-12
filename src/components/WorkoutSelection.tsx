@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Exercise } from '../types';
-import { Dumbbell, Zap, Cog as Yoga, Shuffle, Clock, X } from 'lucide-react';
+import { Dumbbell, Heart, PrayingHands, Shuffle, Clock, X } from 'lucide-react';
 
 interface WorkoutSelectionProps {
   onStartWorkout: (exercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number) => void;
@@ -77,7 +77,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
                 : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
             }`}
           >
-            <Zap className={`w-8 h-8 mb-2 ${
+            <Heart className={`w-8 h-8 mb-2 ${
               selectedType === 'cardio' ? 'text-blue-500' : 'text-gray-500 dark:text-gray-400'
             }`} />
             <span className={`font-medium ${
@@ -109,7 +109,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
                 : 'border-gray-200 dark:border-gray-700 hover:border-green-300 dark:hover:border-green-700'
             }`}
           >
-            <Yoga className={`w-8 h-8 mb-2 ${
+            <PrayingHands className={`w-8 h-8 mb-2 ${
               selectedType === 'yoga' ? 'text-green-500' : 'text-gray-500 dark:text-gray-400'
             }`} />
             <span className={`font-medium ${
@@ -137,7 +137,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
 
       {/* Right Column - Duration and Start Button */}
       <div className="flex-1 flex flex-col justify-between">
-        <div>
+        <div className={`${isLandscape ? 'mt-12' : ''}`}>
           <h3 className="text-lg font-semibold mb-4 flex items-center text-gray-800 dark:text-gray-200">
             <Clock className="w-5 h-5 mr-2" />
             Duration (minutes)
