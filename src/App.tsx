@@ -3,7 +3,7 @@ import { Exercise, Session, Theme } from './types';
 import { useWorkoutStore } from './store/workoutStore';
 import { ExerciseDisplay } from './components/ExerciseDisplay';
 import { WorkoutHistory } from './components/WorkoutHistory';
-import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop, BookOpen } from 'lucide-react';
+import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop, BookOpen, History } from 'lucide-react';
 import exerciseData from './data/updated_100_exercises_with_intensity.json';
 import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 import { ExerciseLibrary } from './components/ExerciseLibrary';
@@ -18,6 +18,7 @@ function App() {
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [showExerciseLibrary, setShowExerciseLibrary] = useState(false);
   const [showWorkoutSelection, setShowWorkoutSelection] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const { workout, startWorkout, resumeSavedWorkout } = useWorkoutStore();
 
   useEffect(() => {
@@ -104,7 +105,7 @@ function App() {
   const shareApp = async () => {
     try {
       await navigator.share({
-        title: 'Quick Workout',
+        title: 'MyFitnessTimer',
         text: 'Check out this awesome workout app!',
         url: window.location.href
       });
@@ -122,7 +123,7 @@ function App() {
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow">
         <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Quick Workout</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">MyFitnessTimer</h1>
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setShowSettings(true)}
@@ -144,7 +145,7 @@ function App() {
       {showWelcome && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md m-4">
-            <h2 className="text-2xl font-bold mb-4 dark:text-white">Welcome to Quick Workout!</h2>
+            <h2 className="text-2xl font-bold mb-4 dark:text-white">Welcome to MyFitnessTimer!</h2>
             <p className="mb-6 dark:text-gray-300">
               Get ready for an amazing workout experience. This app will help you:
             </p>
@@ -246,23 +247,41 @@ function App() {
         />
       )}
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <button
-              onClick={startNewWorkout}
-              className="w-full bg-blue-500 text-white py-4 rounded-lg text-xl font-bold hover:bg-blue-600 transition-colors mb-8"
-            >
-              Start New Workout
-            </button>
-            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-              {exerciseData.exercises.length} exercises available
+      {/* Workout History */}
+      {showHistory && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-4xl w-full m-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold dark:text-white">Workout History</h2>
+              <button
+                onClick={() => setShowHistory(false)}
+                className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                <X className="w-6 h-6 dark:text-white" />
+              </button>
             </div>
             <WorkoutHistory
               sessions={sessions}
-              onRepeat={(session) => startWorkout(session.exercises, session.stats?.workoutType || 'mix', session.stats?.selectedDuration || 30)}
+              onRepeat={(session) => {
+                startWorkout(session.exercises, session.stats?.workoutType || 'mix', session.stats?.selectedDuration || 30);
+                setShowHistory(false);
+              }}
             />
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <div className="flex flex-col items-center justify-center">
+          <button
+            onClick={startNewWorkout}
+            className="w-full max-w-lg bg-blue-500 text-white py-4 rounded-lg text-xl font-bold hover:bg-blue-600 transition-colors mb-8"
+          >
+            Start New Workout
+          </button>
+          <div className="text-sm text-gray-600 dark:text-gray-400">
+            {exerciseData.exercises.length} exercises available
           </div>
         </div>
       </main>
@@ -271,6 +290,16 @@ function App() {
       {showMenu && (
         <div className="fixed inset-y-0 right-0 w-64 bg-white dark:bg-gray-800 shadow-lg p-4 z-50">
           <div className="space-y-4">
+            <button 
+              onClick={() => {
+                setShowHistory(true);
+                setShowMenu(false);
+              }}
+              className="w-full flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded dark:text-white"
+            >
+              <History className="w-5 h-5" />
+              <span>Workout History</span>
+            </button>
             <button 
               onClick={() => {
                 setShowExerciseLibrary(true);
