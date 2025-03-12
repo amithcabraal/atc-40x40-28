@@ -1,4 +1,4 @@
-# Quick Workout
+# MyFitnessTimer
 
 A quick workout app with interval training.
 
@@ -6,7 +6,7 @@ A quick workout app with interval training.
 
 ### 2024-02-18
 
-- Changed app name from "Workout Timer" to "Quick Workout"
+- Changed app name from "Quick Workout" to "MyFitnessTimer"
 - Fixed exercise flow logic to ensure Rest Mode and Exercise Mode show the same exercise
 - Refactored ExerciseDisplay component into smaller components for better maintainability
 - Fixed Summary Screen display after last exercise completion
