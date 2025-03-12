@@ -70,7 +70,7 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
   const seconds = workout.timeRemaining % 60;
 
   const timerClasses = `font-bold tabular-nums leading-none ${
-    isLandscape ? 'text-[120px]' : 'text-[96px] mb-4'
+    isLandscape ? 'text-[120px]' : 'text-[180px] mb-4'
   } ${
     workout.isResting
       ? 'text-green-300 dark:text-green-400'
