@@ -1,16 +1,13 @@
 import React from 'react';
-import { Play, Pause, SkipForward, Info, Shuffle, X } from 'lucide-react';
+import { Play, Pause, SkipForward, Shuffle, X } from 'lucide-react';
 
 interface ControlsProps {
   isPaused: boolean;
   isResting: boolean;
-  showOverlay: boolean;
-  shouldAllowOverlayFade: boolean;
   buttonOpacity: string;
   onResume: () => void;
   onPause: () => void;
   onSkip: () => void;
-  onToggleOverlay: () => void;
   onShuffle: () => void;
   onStop: () => void;
   isLandscape?: boolean;
@@ -19,13 +16,10 @@ interface ControlsProps {
 export const Controls: React.FC<ControlsProps> = ({
   isPaused,
   isResting,
-  showOverlay,
-  shouldAllowOverlayFade,
   buttonOpacity,
   onResume,
   onPause,
   onSkip,
-  onToggleOverlay,
   onShuffle,
   onStop,
   isLandscape
@@ -63,20 +57,6 @@ export const Controls: React.FC<ControlsProps> = ({
         title="Skip to next"
       >
         <SkipForward className="w-4 h-4" />
-      </button>
-      
-      <button
-        onClick={onToggleOverlay}
-        className={`${buttonClasses} ${
-          showOverlay 
-            ? 'bg-purple-500 hover:bg-purple-600' 
-            : 'bg-purple-600 hover:bg-purple-700'
-        } text-white ${buttonOpacity}`}
-        title={showOverlay ? "Hide details" : "Show details"}
-        disabled={!shouldAllowOverlayFade}
-        style={{ opacity: shouldAllowOverlayFade ? 1 : 0.5, cursor: shouldAllowOverlayFade ? 'pointer' : 'not-allowed' }}
-      >
-        <Info className="w-4 h-4" />
       </button>
       
       <button
