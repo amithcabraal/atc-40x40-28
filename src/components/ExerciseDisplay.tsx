@@ -27,11 +27,9 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
     updateExerciseTime 
   } = useWorkoutStore();
   
-  const [showOverlay, setShowOverlay] = useState(true);
   const [isLandscape, setIsLandscape] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [showStopConfirmation, setShowStopConfirmation] = useState(false);
-  const overlayTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   const currentExercise = workout.exercises[workout.currentExercise];
   const progress = ((workout.currentExercise + 1) / workout.exercises.length) * 100;
@@ -48,28 +46,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
       window.removeEventListener('resize', checkOrientation);
     };
   }, []);
-
-  useEffect(() => {
-    setShowOverlay(true);
-    
-    if (overlayTimerRef.current) {
-      clearTimeout(overlayTimerRef.current);
-    }
-    
-    const hasMedia = currentExercise?.media && currentExercise.media.length > 0;
-    
-    if (hasMedia) {
-      overlayTimerRef.current = setTimeout(() => {
-        setShowOverlay(false);
-      }, 5000);
-    }
-    
-    return () => {
-      if (overlayTimerRef.current) {
-        clearTimeout(overlayTimerRef.current);
-      }
-    };
-  }, [workout.currentExercise, workout.isResting, currentExercise]);
 
   const handleComplete = (exercises: Exercise[], rating?: number, notes?: string) => {
     const endTime = Date.now();
@@ -123,25 +99,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
     resumeWorkout();
   };
 
-  const toggleOverlay = () => {
-    setShowOverlay(!showOverlay);
-    
-    if (overlayTimerRef.current) {
-      clearTimeout(overlayTimerRef.current);
-      overlayTimerRef.current = null;
-    }
-    
-    if (!showOverlay) {
-      const hasMedia = currentExercise?.media && currentExercise.media.length > 0;
-      
-      if (hasMedia) {
-        overlayTimerRef.current = setTimeout(() => {
-          setShowOverlay(false);
-        }, 5000);
-      }
-    }
-  };
-
   if (workout.isIntro) {
     return <IntroView onComplete={completeIntro} isResuming={workout.isResuming} />;
   }
@@ -162,12 +119,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
     );
   }
 
-  const currentExerciseHasMedia = currentExercise?.media && currentExercise.media.length > 0;
-  const shouldAllowOverlayFade = currentExerciseHasMedia;
-  const overlayOpacityClass = shouldAllowOverlayFade 
-    ? (showOverlay ? 'opacity-100' : 'opacity-0 pointer-events-none') 
-    : 'opacity-100';
-  const buttonOpacity = showOverlay ? 'opacity-100' : 'opacity-40 hover:opacity-100';
+  const buttonOpacity = 'opacity-100';
   const modeBorderStyle = workout.isResting
     ? 'border-8 border-green-500 dark:border-green-400 animate-pulse-slow'
     : 'border-8 border-blue-500 dark:border-blue-400';
@@ -186,7 +138,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
         isLandscape={isLandscape}
       />
 
-      <div className={`flex-1 flex ${isLandscape ? 'flex-row-reverse' : 'flex-col'} px-4 py-2 overflow-hidden relative ${modeBorderStyle}`}>
+      <div className={`flex-1 flex ${isLandscape ? 'flex-row' : 'flex-col'} px-4 py-2 overflow-hidden relative ${modeBorderStyle}`}>
         {!isLandscape && (
           <Timer 
             onComplete={handleSkip}
@@ -194,58 +146,41 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             phase={workout.isResting ? 'rest' : 'exercise'}
           />
         )}
-        
-        {isLandscape ? (
-          <>
-            <div className="w-2/3">
-              <ExerciseContent
-                exercise={currentExercise}
-                showOverlay={showOverlay}
-                overlayOpacityClass={overlayOpacityClass}
-                theme={workout.isResting ? 'green' : 'blue'}
-                isLandscape={isLandscape}
-                isPaused={workout.isPaused}
-              />
-            </div>
-            <div className="w-1/3 flex items-center justify-center">
+
+        <div className="relative flex-1">
+          <ExerciseContent
+            exercise={currentExercise}
+            showOverlay={false}
+            overlayOpacityClass=""
+            theme={workout.isResting ? 'green' : 'blue'}
+            isLandscape={isLandscape}
+            isPaused={workout.isPaused}
+          />
+
+          {isLandscape && (
+            <div className="absolute left-0 top-0 h-[40%] flex items-center justify-center w-1/3">
               <Timer 
                 onComplete={handleSkip}
                 isLandscape={isLandscape}
                 phase={workout.isResting ? 'rest' : 'exercise'}
               />
             </div>
-          </>
-        ) : (
-          <ExerciseContent
-            exercise={currentExercise}
-            showOverlay={showOverlay}
-            overlayOpacityClass={overlayOpacityClass}
-            theme={workout.isResting ? 'green' : 'blue'}
-            isLandscape={isLandscape}
-            isPaused={workout.isPaused}
-          />
-        )}
-      </div>
+          )}
 
-      <div className={`w-full ${
-        workout.isResting
-          ? 'bg-green-200 dark:bg-green-800'
-          : 'bg-blue-200 dark:bg-blue-800'
-      } p-4 transition-colors duration-300`}>
-        <Controls
-          isPaused={workout.isPaused}
-          isResting={workout.isResting}
-          showOverlay={showOverlay}
-          shouldAllowOverlayFade={shouldAllowOverlayFade}
-          buttonOpacity={buttonOpacity}
-          onResume={resumeWorkout}
-          onPause={pauseWorkout}
-          onSkip={handleSkip}
-          onToggleOverlay={toggleOverlay}
-          onShuffle={shuffleNextExercise}
-          onStop={handleStop}
-          isLandscape={isLandscape}
-        />
+          <div className={`absolute ${isLandscape ? 'right-0 top-1/2 -translate-y-1/2' : 'bottom-0 left-0 right-0'}`}>
+            <Controls
+              isPaused={workout.isPaused}
+              isResting={workout.isResting}
+              buttonOpacity={buttonOpacity}
+              onResume={resumeWorkout}
+              onPause={pauseWorkout}
+              onSkip={handleSkip}
+              onShuffle={shuffleNextExercise}
+              onStop={handleStop}
+              isLandscape={isLandscape}
+            />
+          </div>
+        </div>
       </div>
 
       {showStopConfirmation && (
