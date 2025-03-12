@@ -3,7 +3,7 @@ import { Exercise, Session, Theme } from './types';
 import { useWorkoutStore } from './store/workoutStore';
 import { ExerciseDisplay } from './components/ExerciseDisplay';
 import { WorkoutHistory } from './components/WorkoutHistory';
-import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop, BookOpen, History } from 'lucide-react';
+import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop, BookOpen, History, X } from 'lucide-react';
 import exerciseData from './data/updated_100_exercises_with_intensity.json';
 import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 import { ExerciseLibrary } from './components/ExerciseLibrary';
