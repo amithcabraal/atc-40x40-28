@@ -23,54 +23,40 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
 
   if (isLandscape) {
     return (
-      <>
-        {hasMedia && (
-          <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
-            <MediaGallery 
-              media={exercise.media}
+      <div className="flex h-full">
+        {/* Left side: Clock and Carousel */}
+        <div className="w-1/3 flex flex-col h-full">
+          <div className="h-[40%] flex items-center justify-center">
+            {/* Clock will be rendered here by parent component */}
+          </div>
+          <div className="h-[60%]">
+            <ExerciseCarousel 
+              exercise={exercise}
               theme={theme}
-              isLandscape={true}
-              hideControls={false}
-              isPaused={isPaused}
+              autoRotate={!isPaused}
             />
           </div>
-        )}
-        
-        <div className="absolute inset-0 z-10 flex flex-col justify-center">
-          <div className={`absolute left-0 top-0 bottom-0 w-full pr-28 bg-gradient-to-r ${
-            theme === 'green'
-              ? 'from-green-200/95 to-green-100/90 dark:from-green-900/95 dark:to-green-800/90'
-              : 'from-blue-200/95 to-blue-100/90 dark:from-blue-900/95 dark:to-blue-800/90'
-          } shadow-lg`}></div>
-          
-          <div className="relative z-20 px-8 py-6 pr-28 @container">
-            <h1 className={`font-bold vertical-align-top text-[51px] leading-[1.1] ${
-              theme === 'green'
-                ? 'text-green-800 dark:text-green-200'
-                : 'text-blue-800 dark:text-blue-200'
-            }`}>
-              {exercise.title}
-            </h1>
-            <p className={`mb-6 text-[34px] leading-[1.2] ${
-              theme === 'green'
-                ? 'text-green-700 dark:text-green-300'
-                : 'text-blue-700 dark:text-blue-300'
-            }`}>
-              {exercise.instructions}
-            </p>
-            
-            {exercise?.body_part_focus && (
-              <div className="mt-auto">
-                <BodyPartIcons 
-                  bodyParts={exercise.body_part_focus} 
-                  theme={theme}
-                  isLandscape={true}
-                />
-              </div>
-            )}
-          </div>
         </div>
-      </>
+
+        {/* Right side: Video */}
+        <div className="w-2/3 relative">
+          {hasMedia ? (
+            <div className="absolute inset-0">
+              <MediaGallery 
+                media={exercise.media}
+                theme={theme}
+                isLandscape={true}
+                hideControls={false}
+                isPaused={isPaused}
+              />
+            </div>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+              <p className="text-gray-400">No media available</p>
+            </div>
+          )}
+        </div>
+      </div>
     );
   }
 
