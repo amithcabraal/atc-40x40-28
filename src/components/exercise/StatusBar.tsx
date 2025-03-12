@@ -59,27 +59,28 @@ export const StatusBar: React.FC<StatusBarProps> = ({
     <>
       <div className={`w-full ${statusBarStyle} shadow-md z-20`}>
         <div className="grid grid-cols-3 gap-4 px-4 py-2">
-          {/* Mode */}
-          <div className="flex flex-col items-start justify-center">
+          {/* Left: Exercise Count */}
+          <div className="flex items-center">
+            <p className="text-sm font-medium">
+              {currentExercise + 1} / {totalExercises}
+            </p>
+          </div>
+
+          {/* Center: App Title */}
+          <div className="flex justify-center">
+            <h1 className="text-lg font-bold">
+              Quick Workout
+            </h1>
+          </div>
+
+          {/* Right: Mode */}
+          <div className="flex justify-end">
             <div className={`text-sm font-medium ${
               isResting
                 ? 'text-green-200'
                 : 'text-blue-200'
             }`}>
               {isResting ? 'REST' : 'EXERCISE'}
-            </div>
-            <div className="font-bold">
-              MODE
-            </div>
-          </div>
-
-          {/* Progress */}
-          <div className="flex flex-col items-end justify-center">
-            <div className="text-sm font-medium">
-              {currentExercise + 1}
-            </div>
-            <div className="font-bold">
-              / {totalExercises}
             </div>
           </div>
         </div>
