@@ -58,35 +58,30 @@ export const StatusBar: React.FC<StatusBarProps> = ({
   return (
     <>
       <div className={`w-full ${statusBarStyle} shadow-md z-20`}>
-        <div className="grid grid-cols-3 gap-4 px-4 py-2">
-          {/* Left: Exercise Count */}
+        <div className="h-12 px-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm font-medium">
+              {currentExercise + 1}/{totalExercises}
+            </span>
+          </div>
+
+          <h1 className="text-base font-bold truncate mx-2">
+            Quick Workout
+          </h1>
+
           <div className="flex items-center">
-            <p className="text-sm font-medium">
-              {currentExercise + 1} / {totalExercises}
-            </p>
-          </div>
-
-          {/* Center: App Title */}
-          <div className="flex justify-center">
-            <h1 className="text-lg font-bold">
-              Quick Workout
-            </h1>
-          </div>
-
-          {/* Right: Mode */}
-          <div className="flex justify-end">
-            <div className={`text-sm font-medium ${
+            <span className={`text-sm font-medium px-2 py-0.5 rounded-full ${
               isResting
-                ? 'text-green-200'
-                : 'text-blue-200'
+                ? 'bg-green-500/20 text-green-100'
+                : 'bg-blue-500/20 text-blue-100'
             }`}>
               {isResting ? 'REST' : 'EXERCISE'}
-            </div>
+            </span>
           </div>
         </div>
       </div>
 
-      <div className="w-full h-2 bg-gray-200 dark:bg-gray-700">
+      <div className="w-full h-1 bg-gray-200 dark:bg-gray-700">
         <div 
           className={`h-full transition-all duration-300 ${
             isResting
