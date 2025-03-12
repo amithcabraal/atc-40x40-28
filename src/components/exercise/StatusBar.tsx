@@ -31,7 +31,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({
           </div>
           
           <h1 className="text-lg font-bold text-white">
-            Quick Workout
+            MyFitnessTimer
           </h1>
           
           <div className="flex items-center">
@@ -41,7 +41,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({
           </div>
         </div>
 
-        <div className="w-full h-2 bg-gray-200 dark:bg-gray-700">
+        <div className="w-full h-1 bg-gray-200 dark:bg-gray-700">
           <div 
             className={`h-full transition-all duration-300 ${
               isResting
@@ -66,7 +66,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({
           </div>
 
           <h1 className="text-base font-bold truncate mx-2">
-            Quick Workout
+            MyFitnessTimer
           </h1>
 
           <div className="flex items-center">
