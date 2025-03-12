@@ -69,13 +69,19 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
   const minutes = Math.floor(workout.timeRemaining / 60);
   const seconds = workout.timeRemaining % 60;
 
+  // Determine the color based on remaining time
+  const getTimerColor = () => {
+    if (workout.timeRemaining <= 5) {
+      return 'text-red-500 dark:text-red-400';
+    }
+    return workout.isResting
+      ? 'text-green-300 dark:text-green-400'
+      : 'text-blue-300 dark:text-blue-400';
+  };
+
   const timerClasses = `font-bold tabular-nums leading-none ${
     isLandscape ? 'text-[120px]' : 'text-[180px] mb-4'
-  } ${
-    workout.isResting
-      ? 'text-green-300 dark:text-green-400'
-      : 'text-blue-300 dark:text-blue-400'
-  }`;
+  } ${getTimerColor()}`;
 
   return (
     <div className={`flex items-center justify-center ${isLandscape ? 'h-full' : ''}`}>
