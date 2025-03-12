@@ -131,3 +131,65 @@
 .dark .bg-rest-gradient {
   background: linear-gradient(135deg, rgba(6, 95, 70, 0.9) 0%, rgba(4, 120, 87, 0.8) 100%);
 }
+
+/* Mode transition animations */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.mode-transition-enter {
+  animation: slideInFromRight 0.5s ease-out forwards;
+}
+
+.mode-transition-exit {
+  animation: slideInFromLeft 0.5s ease-out forwards;
+}
+
+/* Scale animations for interactive elements */
+.scale-hover {
+  transition: transform 0.2s ease-in-out;
+}
+
+.scale-hover:hover {
+  transform: scale(1.05);
+}
+
+/* Timer animations */
+@keyframes timerPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.timer-pulse {
+  animation: timerPulse 1s ease-in-out infinite;
+}
+
+.timer-warning {
+  animation: timerPulse 0.5s ease-in-out infinite;
+  color: theme('colors.red.500');
+}
