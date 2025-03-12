@@ -9,12 +9,10 @@ interface WorkoutSelectionProps {
 }
 
 export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorkout, exercises, onClose }) => {
-  const [selectedType, setSelectedType] = useState<'cardio' | 'strength' | 'yoga' | 'mix' | null>(null);
+  const [selectedType, setSelectedType] = useState<'cardio' | 'strength' | 'yoga' | 'mix'>('cardio');
   const [selectedDuration, setSelectedDuration] = useState<number>(30);
   
   const handleStartWorkout = () => {
-    if (!selectedType) return;
-    
     const exercisesNeeded = selectedDuration;
     let filteredExercises: Exercise[] = [];
     
@@ -75,7 +73,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
             onClick={() => setSelectedType('cardio')}
             className={`flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all ${
               selectedType === 'cardio'
-                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
+                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 scale-105'
                 : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
             }`}
           >
@@ -91,7 +89,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
             onClick={() => setSelectedType('strength')}
             className={`flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all ${
               selectedType === 'strength'
-                ? 'border-red-500 bg-red-50 dark:bg-red-900/30'
+                ? 'border-red-500 bg-red-50 dark:bg-red-900/30 scale-105'
                 : 'border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-700'
             }`}
           >
@@ -107,7 +105,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
             onClick={() => setSelectedType('yoga')}
             className={`flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all ${
               selectedType === 'yoga'
-                ? 'border-green-500 bg-green-50 dark:bg-green-900/30'
+                ? 'border-green-500 bg-green-50 dark:bg-green-900/30 scale-105'
                 : 'border-gray-200 dark:border-gray-700 hover:border-green-300 dark:hover:border-green-700'
             }`}
           >
@@ -123,7 +121,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
             onClick={() => setSelectedType('mix')}
             className={`flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all ${
               selectedType === 'mix'
-                ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30'
+                ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 scale-105'
                 : 'border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-700'
             }`}
           >
@@ -151,7 +149,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
                 onClick={() => setSelectedDuration(duration)}
                 className={`flex-1 py-3 rounded-lg font-medium transition-all ${
                   selectedDuration === duration
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-blue-500 text-white scale-105'
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
@@ -163,14 +161,9 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
 
         <button
           onClick={handleStartWorkout}
-          disabled={!selectedType}
-          className={`w-full py-4 rounded-lg text-white font-bold text-lg transition-all mt-6 ${
-            selectedType
-              ? 'bg-blue-500 hover:bg-blue-600'
-              : 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
-          }`}
+          className="w-full py-4 rounded-lg text-white font-bold text-lg transition-all mt-6 bg-blue-500 hover:bg-blue-600 hover:scale-105"
         >
-          {selectedType ? 'Start Workout' : 'Select a workout type'}
+          Start Workout
         </button>
       </div>
     </div>
