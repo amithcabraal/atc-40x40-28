@@ -4,10 +4,12 @@ import { useWorkoutStore } from './store/workoutStore';
 import { ExerciseDisplay } from './components/ExerciseDisplay';
 import { WorkoutHistory } from './components/WorkoutHistory';
 import { Calendar, HelpCircle, List, Menu, Settings, Share2, Sun, Moon, Laptop, BookOpen, History, X } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import exerciseData from './data/updated_100_exercises_with_intensity.json';
 import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 import { ExerciseLibrary } from './components/ExerciseLibrary';
 import { WorkoutSelection } from './components/WorkoutSelection';
+import { useAudioStore } from './store/audioStore';
 
 function App() {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -20,6 +22,7 @@ function App() {
   const [showWorkoutSelection, setShowWorkoutSelection] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const { workout, startWorkout, resumeSavedWorkout } = useWorkoutStore();
+  const { isMuted, toggleMute } = useAudioStore();
 
   useEffect(() => {
     const welcomeShown = localStorage.getItem('welcomeShown');
@@ -227,6 +230,25 @@ function App() {
                     </span>
                   </button>
                 </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-3 dark:text-gray-200">Sound</h3>
+                <button
+                  onClick={toggleMute}
+                  className={`w-full flex items-center justify-between p-3 rounded ${
+                    isMuted ? 'bg-gray-100 dark:bg-gray-700' : 'bg-blue-500 text-white'
+                  }`}
+                >
+                  <span className="flex items-center">
+                    {isMuted ? (
+                      <VolumeX className="w-5 h-5 mr-2" />
+                    ) : (
+                      <Volume2 className="w-5 h-5 mr-2" />
+                    )}
+                    {isMuted ? 'Sound Off' : 'Sound On'}
+                  </span>
+                </button>
               </div>
             </div>
             <button
