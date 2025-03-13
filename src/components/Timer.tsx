@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useWorkoutStore } from '../store/workoutStore';
+import { useAudioStore } from '../store/audioStore';
 
 interface Props {
   onComplete?: () => void;
@@ -9,8 +10,10 @@ interface Props {
 
 export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase }) => {
   const { workout, setTimeRemaining, toggleRest, nextExercise, updateExerciseTime } = useWorkoutStore();
+  const { playBeep, playLongBeep } = useAudioStore();
   const progressRef = useRef<number>(0);
   const lastUpdateRef = useRef<number>(0);
+  const lastBeepTimeRef = useRef<number>(workout.timeRemaining);
 
   useEffect(() => {
     if (!workout.isActive || workout.isPaused) return;
@@ -20,6 +23,7 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
     const updateTimer = (timestamp: number) => {
       if (!lastUpdateRef.current) {
         lastUpdateRef.current = timestamp;
+        lastBeepTimeRef.current = workout.timeRemaining;
       }
 
       const deltaTime = timestamp - lastUpdateRef.current;
@@ -30,7 +34,21 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
         
         if (progressRef.current >= 1) {
           const secondsToSubtract = Math.floor(progressRef.current);
-          setTimeRemaining(workout.timeRemaining - secondsToSubtract);
+          const newTimeRemaining = workout.timeRemaining - secondsToSubtract;
+          setTimeRemaining(newTimeRemaining);
+          
+          // Check if we've crossed a second boundary for beeps
+          if (lastBeepTimeRef.current > 5 && newTimeRemaining <= 5) {
+            playBeep();
+          } else if (newTimeRemaining <= 5 && newTimeRemaining > 0 && 
+                     Math.floor(lastBeepTimeRef.current) > Math.floor(newTimeRemaining)) {
+            playBeep();
+          } else if (newTimeRemaining <= 1 && 
+                     Math.floor(lastBeepTimeRef.current) > Math.floor(newTimeRemaining)) {
+            playLongBeep();
+          }
+          
+          lastBeepTimeRef.current = newTimeRemaining;
           
           if (!workout.isResting && !workout.isIntro) {
             updateExerciseTime(secondsToSubtract);
@@ -54,6 +72,7 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
         }
         lastUpdateRef.current = 0;
         progressRef.current = 0;
+        lastBeepTimeRef.current = workout.timeRemaining;
       }
     };
 
@@ -69,10 +88,9 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
   const minutes = Math.floor(workout.timeRemaining / 60);
   const seconds = workout.timeRemaining % 60;
 
-  // Determine the color based on remaining time
   const getTimerColor = () => {
     if (workout.timeRemaining <= 5) {
-      return 'text-red-500 dark:text-red-400';
+      return 'text-red-500 dark:text-red-400 timer-warning';
     }
     return workout.isResting
       ? 'text-green-300 dark:text-green-400'
@@ -91,3 +109,5 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
     </div>
   );
 };
+
+export { Timer }
