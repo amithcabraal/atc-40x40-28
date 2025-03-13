@@ -8,7 +8,6 @@ interface ExerciseCarouselProps {
   autoRotate?: boolean;
 }
 
-const SLIDE_HEIGHT = 160;
 const MAX_INSTRUCTION_LENGTH = 45; // Length of "Step backward into lunge position, alternating legs"
 
 export const ExerciseCarousel: React.FC<ExerciseCarouselProps> = ({
@@ -149,8 +148,7 @@ export const ExerciseCarousel: React.FC<ExerciseCarouselProps> = ({
 
   return (
     <div 
-      className="relative w-full"
-      style={{ height: SLIDE_HEIGHT }}
+      className="relative w-full h-full"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
