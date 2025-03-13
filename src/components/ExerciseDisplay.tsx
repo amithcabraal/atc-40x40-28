@@ -130,44 +130,84 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
         ? 'bg-green-50 dark:bg-green-950 bg-gradient-to-b from-green-200 to-green-50 dark:from-green-900 dark:to-green-950' 
         : 'bg-blue-50 dark:bg-blue-950 bg-gradient-to-b from-blue-200 to-blue-50 dark:from-blue-900 dark:to-blue-950'
     } transition-colors duration-300`}>
-      <StatusBar
-        isResting={workout.isResting}
-        currentExercise={workout.currentExercise}
-        totalExercises={workout.exercises.length}
-        progress={progress}
-        isLandscape={isLandscape}
-      />
+      {/* Status Bar - Fixed height */}
+      <div className="h-[52px]">
+        <StatusBar
+          isResting={workout.isResting}
+          currentExercise={workout.currentExercise}
+          totalExercises={workout.exercises.length}
+          progress={progress}
+          isLandscape={isLandscape}
+        />
+      </div>
 
       <div className={`flex-1 flex ${isLandscape ? 'flex-row' : 'flex-col'} px-4 py-2 overflow-hidden relative ${modeBorderStyle}`}>
         {!isLandscape && (
-          <Timer 
-            onComplete={handleSkip}
-            isLandscape={isLandscape}
-            phase={workout.isResting ? 'rest' : 'exercise'}
-          />
+          <div className="h-[180px] flex items-center justify-center">
+            <Timer 
+              onComplete={handleSkip}
+              isLandscape={isLandscape}
+              phase={workout.isResting ? 'rest' : 'exercise'}
+            />
+          </div>
         )}
 
-        <div className="relative flex-1">
-          <ExerciseContent
-            exercise={currentExercise}
-            showOverlay={false}
-            overlayOpacityClass=""
-            theme={workout.isResting ? 'green' : 'blue'}
-            isLandscape={isLandscape}
-            isPaused={workout.isPaused}
-          />
-
-          {isLandscape && (
-            <div className="absolute left-0 top-0 h-[40%] flex items-center justify-center w-1/3">
-              <Timer 
-                onComplete={handleSkip}
+        <div className="relative flex-1 flex flex-col">
+          {!isLandscape && (
+            <div className="h-[200px]">
+              <ExerciseContent
+                exercise={currentExercise}
+                showOverlay={false}
+                overlayOpacityClass=""
+                theme={workout.isResting ? 'green' : 'blue'}
                 isLandscape={isLandscape}
-                phase={workout.isResting ? 'rest' : 'exercise'}
+                isPaused={workout.isPaused}
               />
             </div>
           )}
 
-          <div className={`absolute ${isLandscape ? 'right-0 top-1/2 -translate-y-1/2' : 'bottom-0 left-0 right-0'}`}>
+          {/* Carousel fills remaining space in portrait mode */}
+          {!isLandscape && (
+            <div className="flex-1 min-h-0">
+              <div className="h-full flex flex-col">
+                <div className="flex-1 overflow-hidden">
+                  <ExerciseContent
+                    exercise={currentExercise}
+                    showOverlay={false}
+                    overlayOpacityClass=""
+                    theme={workout.isResting ? 'green' : 'blue'}
+                    isLandscape={isLandscape}
+                    isPaused={workout.isPaused}
+                    carouselOnly={true}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Landscape mode layout remains unchanged */}
+          {isLandscape && (
+            <>
+              <ExerciseContent
+                exercise={currentExercise}
+                showOverlay={false}
+                overlayOpacityClass=""
+                theme={workout.isResting ? 'green' : 'blue'}
+                isLandscape={isLandscape}
+                isPaused={workout.isPaused}
+              />
+              <div className="absolute left-0 top-0 h-[40%] flex items-center justify-center w-1/3">
+                <Timer 
+                  onComplete={handleSkip}
+                  isLandscape={isLandscape}
+                  phase={workout.isResting ? 'rest' : 'exercise'}
+                />
+              </div>
+            </>
+          )}
+
+          {/* Controls Bar - Fixed height */}
+          <div className={`h-[64px] ${isLandscape ? 'absolute right-0 top-1/2 -translate-y-1/2' : 'mt-auto'}`}>
             <Controls
               isPaused={workout.isPaused}
               isResting={workout.isResting}
