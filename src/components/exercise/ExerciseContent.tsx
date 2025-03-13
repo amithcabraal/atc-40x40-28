@@ -11,13 +11,15 @@ interface ExerciseContentProps {
   theme: 'blue' | 'green';
   isLandscape?: boolean;
   isPaused?: boolean;
+  carouselOnly?: boolean;
 }
 
 export const ExerciseContent: React.FC<ExerciseContentProps> = ({
   exercise,
   theme,
   isLandscape,
-  isPaused
+  isPaused,
+  carouselOnly = false
 }) => {
   const hasMedia = exercise?.media && exercise.media.length > 0;
 
@@ -29,10 +31,21 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
     </div>
   );
 
+  if (carouselOnly) {
+    return (
+      <div className="h-full">
+        <ExerciseCarousel 
+          exercise={exercise}
+          theme={theme}
+          autoRotate={!isPaused}
+        />
+      </div>
+    );
+  }
+
   if (isLandscape) {
     return (
       <div className="flex h-full">
-        {/* Left side: Clock and Carousel */}
         <div className="w-1/3 flex flex-col h-full">
           <div className="h-[40%] flex items-center justify-center">
             {/* Clock will be rendered here by parent component */}
@@ -46,7 +59,6 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
           </div>
         </div>
 
-        {/* Right side: Video */}
         <div className="w-2/3 relative">
           {hasMedia ? (
             <div className="absolute inset-0">
@@ -71,9 +83,9 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="h-full relative">
       {hasMedia && (
-        <div className="relative" data="amith">
+        <div className="h-full relative">
           <MediaGallery 
             media={exercise.media}
             theme={theme}
@@ -84,14 +96,6 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
           {theme === 'green' && <RestOverlay />}
         </div>
       )}
-      
-      <div className="h-40 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
-        <ExerciseCarousel 
-          exercise={exercise}
-          theme={theme}
-          autoRotate={!isPaused}
-        />
-      </div>
     </div>
   );
 };
