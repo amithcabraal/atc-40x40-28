@@ -173,22 +173,6 @@ export const ExerciseCarousel: React.FC<ExerciseCarouselProps> = ({
           ))}
         </div>
       </div>
-
-      <div className="absolute inset-x-0 bottom-0 flex justify-center gap-2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            className={`w-2 h-2 rounded-full transition-colors ${
-              index === currentSlide
-                ? theme === 'green'
-                  ? 'bg-green-500 dark:bg-green-400'
-                  : 'bg-blue-500 dark:bg-blue-400'
-                : 'bg-gray-300 dark:bg-gray-600'
-            }`}
-            onClick={() => setCurrentSlide(index)}
-          />
-        ))}
-      </div>
     </div>
   );
 };
