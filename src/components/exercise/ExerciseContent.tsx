@@ -73,7 +73,7 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
   return (
     <div className="flex flex-col h-full">
       {hasMedia && (
-        <div className="flex-1 relative">
+        <div className="relative" data="amith">
           <MediaGallery 
             media={exercise.media}
             theme={theme}
