@@ -62,13 +62,25 @@
 
 /* Fade in/out animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.05);
+  }
 }
 
 .fade-in {
@@ -133,34 +145,12 @@
 }
 
 /* Mode transition animations */
-@keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInFromLeft {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
 .mode-transition-enter {
-  animation: slideInFromRight 0.5s ease-out forwards;
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .mode-transition-exit {
-  animation: slideInFromLeft 0.5s ease-out forwards;
+  animation: fadeOut 0.5s ease-out forwards;
 }
 
 /* Scale animations for interactive elements */
@@ -189,7 +179,18 @@
   animation: timerPulse 1s ease-in-out infinite;
 }
 
+/* Timer warning animation */
+@keyframes timerWarning {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
 .timer-warning {
-  animation: timerPulse 0.5s ease-in-out infinite;
-  color: theme('colors.red.500');
+  animation: timerWarning 0.5s ease-in-out infinite;
 }
