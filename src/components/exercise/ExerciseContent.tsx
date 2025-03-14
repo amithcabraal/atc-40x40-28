@@ -83,19 +83,34 @@ export const ExerciseContent: React.FC<ExerciseContentProps> = ({
   }
 
   return (
-    <div className="h-full relative">
-      {hasMedia && (
-        <div className="h-full relative">
-          <MediaGallery 
-            media={exercise.media}
-            theme={theme}
-            isLandscape={false}
-            hideControls={false}
-            isPaused={isPaused}
-          />
-          {theme === 'green' && <RestOverlay />}
-        </div>
-      )}
+    <div className="flex flex-col h-full">
+      <div className="h-[200px] relative">
+        {hasMedia ? (
+          <div className="h-full relative">
+            <MediaGallery 
+              media={exercise.media}
+              theme={theme}
+              isLandscape={false}
+              hideControls={false}
+              isPaused={isPaused}
+            />
+            {theme === 'green' && <RestOverlay />}
+          </div>
+        ) : (
+          <div className="h-full flex items-center justify-center bg-gray-800">
+            <p className="text-gray-400">No media available</p>
+            {theme === 'green' && <RestOverlay />}
+          </div>
+        )}
+      </div>
+      
+      <div className="flex-1 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+        <ExerciseCarousel 
+          exercise={exercise}
+          theme={theme}
+          autoRotate={!isPaused}
+        />
+      </div>
     </div>
   );
 };
