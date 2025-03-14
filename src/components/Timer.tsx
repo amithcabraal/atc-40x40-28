@@ -109,5 +109,3 @@ export const Timer: React.FC<Props> = ({ onComplete, isLandscape = false, phase 
     </div>
   );
 };
-
-export { Timer }
