@@ -13,7 +13,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
   const [selectedDuration, setSelectedDuration] = useState<number>(30);
   
   const handleStartWorkout = () => {
-    const exercisesNeeded = selectedDuration;
+    const exercisesNeeded = selectedDuration === 7 ? 12 : selectedDuration;
     let filteredExercises: Exercise[] = [];
     
     if (selectedType === 'cardio') {
@@ -54,6 +54,21 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
     
     const selectedExercises = shuffled.slice(0, exercisesNeeded);
     onStartWorkout(selectedExercises, selectedType, selectedDuration);
+  };
+
+  const getDurationHint = (duration: number) => {
+    switch (duration) {
+      case 7:
+        return '7-minute workout: 30s exercise, 10s rest';
+      case 20:
+        return 'Quick workout: 40s exercise, 20s rest';
+      case 30:
+        return 'Standard workout: 40s exercise, 20s rest';
+      case 40:
+        return 'Extended workout: 40s exercise, 20s rest';
+      default:
+        return '';
+    }
   };
   
   return (
@@ -138,12 +153,11 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
       {/* Right Column - Duration and Start Button */}
       <div className="flex-1 flex flex-col justify-between">
         <div className="pt-12">
-          <h3 className="text-lg font-semibold mb-4 flex items-center text-gray-800 dark:text-gray-200">
-            <Clock className="w-5 h-5 mr-2" />
+          <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
             Duration (minutes)
           </h3>
           <div className="flex justify-between gap-4">
-            {[20, 30, 40].map(duration => (
+            {[7, 20, 30, 40].map(duration => (
               <button
                 key={duration}
                 onClick={() => setSelectedDuration(duration)}
@@ -156,6 +170,11 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
                 {duration}
               </button>
             ))}
+          </div>
+          <div className="h-8 mt-2">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {getDurationHint(selectedDuration)}
+            </p>
           </div>
         </div>
 
