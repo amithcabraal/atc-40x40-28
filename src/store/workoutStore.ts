@@ -3,8 +3,8 @@ import { Exercise, WorkoutStore } from '../types';
 
 const initialWorkoutState = {
   currentExercise: 0,
-  isResting: true, // Start with rest phase to show current exercise
-  timeRemaining: 20, // Start with intro countdown
+  isResting: true,
+  timeRemaining: 20,
   exercises: [],
   isActive: false,
   isPaused: false,
@@ -15,12 +15,25 @@ const initialWorkoutState = {
   totalExerciseTime: 0,
   workoutType: 'mix' as const,
   selectedDuration: 30,
+  isTransitioning: false,
+  isSevenMinute: false
+};
+
+const handleTransition = (callback: () => void) => {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      callback();
+      setTimeout(resolve, 600);
+    }, 600);
+  });
 };
 
 export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
   workout: initialWorkoutState,
   startWorkout: (exercises: Exercise[], workoutType, duration) => {
     localStorage.removeItem('workoutState');
+    
+    const isSevenMinute = duration === 7;
     
     const workoutState = { 
       ...initialWorkoutState, 
@@ -32,6 +45,7 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
       startTime: Date.now(),
       workoutType,
       selectedDuration: duration,
+      isSevenMinute
     };
     set({ workout: workoutState });
     localStorage.setItem('workoutState', JSON.stringify(workoutState));
@@ -48,6 +62,7 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
             timeRemaining: 20,
             isPaused: false,
             isResuming: true,
+            isTransitioning: false,
           };
           set({ workout: resumeState });
           localStorage.setItem('workoutState', JSON.stringify(resumeState));
@@ -64,7 +79,7 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
       isIntro: false,
       isResuming: false,
       isResting: true,
-      timeRemaining: 20,
+      timeRemaining: currentState.isSevenMinute ? 10 : 20,
     };
     set({ workout: newState });
     localStorage.setItem('workoutState', JSON.stringify(newState));
@@ -83,91 +98,117 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
     set({ workout: initialWorkoutState });
     localStorage.removeItem('workoutState');
   },
-  nextExercise: () => {
+  nextExercise: async () => {
     const currentState = get().workout;
     
-    // Check if this is the last exercise
-    if (currentState.currentExercise >= currentState.exercises.length - 1) {
-      // If we're in exercise mode of the last exercise, deactivate the workout
-      if (!currentState.isResting) {
-        const newState = {
-          ...currentState,
-          isActive: false
-        };
-        set({ workout: newState });
-        localStorage.setItem('workoutState', JSON.stringify(newState));
+    // Start transition
+    set({ workout: { ...currentState, isTransitioning: true }});
+    
+    await handleTransition(() => {
+      const currentState = get().workout;
+      // Check if this is the last exercise
+      if (currentState.currentExercise >= currentState.exercises.length - 1) {
+        // If we're in exercise mode of the last exercise, deactivate the workout
+        if (!currentState.isResting) {
+          const newState = {
+            ...currentState,
+            isActive: false,
+            isTransitioning: false,
+          };
+          set({ workout: newState });
+          localStorage.setItem('workoutState', JSON.stringify(newState));
+        } else {
+          // If we're in rest mode of the last exercise, go to exercise mode
+          const newState = {
+            ...currentState,
+            isResting: false,
+            timeRemaining: currentState.isSevenMinute ? 30 : 40,
+            isTransitioning: false,
+          };
+          set({ workout: newState });
+          localStorage.setItem('workoutState', JSON.stringify(newState));
+        }
       } else {
-        // If we're in rest mode of the last exercise, go to exercise mode
+        // Not the last exercise, proceed normally
         const newState = {
           ...currentState,
-          isResting: false,
-          timeRemaining: 40
+          currentExercise: currentState.currentExercise + 1,
+          isResting: true,
+          timeRemaining: currentState.isSevenMinute ? 10 : 20,
+          isTransitioning: false,
         };
         set({ workout: newState });
         localStorage.setItem('workoutState', JSON.stringify(newState));
       }
-    } else {
-      // Not the last exercise, proceed normally
-      const newState = {
-        ...currentState,
-        currentExercise: currentState.currentExercise + 1,
-        isResting: true,
-        timeRemaining: 20,
-      };
-      set({ workout: newState });
-      localStorage.setItem('workoutState', JSON.stringify(newState));
-    }
+    });
   },
   setTimeRemaining: (time: number) => {
     const newState = { ...get().workout, timeRemaining: time };
     set({ workout: newState });
     localStorage.setItem('workoutState', JSON.stringify(newState));
   },
-  toggleRest: () => {
+  toggleRest: async () => {
     const currentState = get().workout;
-    const newState = {
-      ...currentState,
-      isResting: !currentState.isResting,
-      timeRemaining: currentState.isResting ? 40 : 20,
-    };
-    set({ workout: newState });
-    localStorage.setItem('workoutState', JSON.stringify(newState));
+    
+    // Start transition
+    set({ workout: { ...currentState, isTransitioning: true }});
+    
+    await handleTransition(() => {
+      const currentState = get().workout;
+      const newState = {
+        ...currentState,
+        isResting: !currentState.isResting,
+        timeRemaining: currentState.isSevenMinute 
+          ? (currentState.isResting ? 30 : 10)
+          : (currentState.isResting ? 40 : 20),
+        isTransitioning: false,
+      };
+      set({ workout: newState });
+      localStorage.setItem('workoutState', JSON.stringify(newState));
+    });
   },
-  shuffleNextExercise: () => {
-    const { workout } = get();
+  shuffleNextExercise: async () => {
+    const currentState = get().workout;
     
     // Only allow shuffling during rest mode
-    if (!workout.isResting) {
+    if (!currentState.isResting) {
       return;
     }
 
-    const currentExercises = [...workout.exercises];
-    const currentIndex = workout.currentExercise;
+    // Start transition
+    set({ workout: { ...currentState, isTransitioning: true }});
     
-    // Create a pool of exercises to choose from (excluding current exercise)
-    const exercisePool = currentExercises.filter((_, index) => 
-      index !== currentIndex
-    );
+    await handleTransition(() => {
+      const currentState = get().workout;
+      const currentExercises = [...currentState.exercises];
+      const currentIndex = currentState.currentExercise;
+      
+      // Create a pool of exercises to choose from (excluding current exercise)
+      const exercisePool = currentExercises.filter((_, index) => 
+        index !== currentIndex
+      );
 
-    if (exercisePool.length === 0) {
-      return; // No exercises available to shuffle with
-    }
+      if (exercisePool.length === 0) {
+        return; // No exercises available to shuffle with
+      }
 
-    // Pick a random exercise from the pool
-    const randomIndex = Math.floor(Math.random() * exercisePool.length);
-    const newExercise = exercisePool[randomIndex];
+      // Pick a random exercise from the pool
+      const randomIndex = Math.floor(Math.random() * exercisePool.length);
+      const newExercise = exercisePool[randomIndex];
 
-    // Replace the current exercise with the randomly selected one
-    currentExercises[currentIndex] = newExercise;
+      // Replace the current exercise with the randomly selected one
+      currentExercises[currentIndex] = newExercise;
 
-    const newState = {
-      ...workout,
-      exercises: currentExercises,
-      timeRemaining: 20 // Reset rest timer when shuffling
-    };
-    
-    set({ workout: newState });
-    localStorage.setItem('workoutState', JSON.stringify(newState));
+      const newState = {
+        ...currentState,
+        exercises: currentExercises,
+        timeRemaining: currentState.isSevenMinute ? 10 : 20,
+        isTransitioning: false,
+      };
+      
+      set({ workout: newState });
+      localStorage.setItem('workoutState', JSON.stringify(newState));
+    });
   },
   incrementSkippedExercises: () => {
     const newState = {
