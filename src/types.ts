@@ -45,6 +45,8 @@ export interface WorkoutState {
   totalExerciseTime: number;
   workoutType: 'cardio' | 'strength' | 'yoga' | 'mix';
   selectedDuration: number;
+  isTransitioning: boolean;
+  isSevenMinute: boolean;
 }
 
 export interface WorkoutStore {
@@ -54,10 +56,10 @@ export interface WorkoutStore {
   pauseWorkout: () => void;
   resumeWorkout: () => void;
   stopWorkout: () => void;
-  nextExercise: () => void;
+  nextExercise: () => Promise<void>;
   setTimeRemaining: (time: number) => void;
-  toggleRest: () => void;
-  shuffleNextExercise: () => void;
+  toggleRest: () => Promise<void>;
+  shuffleNextExercise: () => Promise<void>;
   completeIntro: () => void;
   incrementSkippedExercises: () => void;
   updateExerciseTime: (time: number) => void;
