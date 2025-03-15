@@ -36,7 +36,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   const currentExercise = workout.exercises[workout.currentExercise];
   const progress = ((workout.currentExercise + 1) / workout.exercises.length) * 100;
 
-  // Announce next exercise when entering rest mode
   useEffect(() => {
     if (workout.isResting && !workout.isPaused) {
       speak(`Next up... ${currentExercise.title}`);
@@ -74,7 +73,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   };
 
   const handleSkip = () => {
-    // Cancel any ongoing announcement when skipping
     cancelSpeech();
     
     const isLastExercise = workout.currentExercise >= workout.exercises.length - 1;
@@ -97,7 +95,6 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
   };
 
   const handleShuffle = () => {
-    // Cancel any ongoing announcement when shuffling
     cancelSpeech();
     shuffleNextExercise();
   };
@@ -137,17 +134,22 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
     );
   }
 
-  const buttonOpacity = 'opacity-100';
+  const buttonOpacity = workout.isTransitioning ? 'opacity-0' : 'opacity-100';
   const modeBorderStyle = workout.isResting
     ? 'border-8 border-green-500 dark:border-green-400 animate-pulse-slow'
     : 'border-8 border-blue-500 dark:border-blue-400';
 
+  const getTransitionClass = () => {
+    if (!workout.isTransitioning) return '';
+    return 'shrink-out';
+  };
+
   return (
-    <div className={`flex flex-col h-screen ${
+    <div className={`flex flex-col h-screen mode-bg-transition ${
       workout.isResting 
         ? 'bg-green-50 dark:bg-green-950 bg-gradient-to-b from-green-200 to-green-50 dark:from-green-900 dark:to-green-950' 
         : 'bg-blue-50 dark:bg-blue-950 bg-gradient-to-b from-blue-200 to-blue-50 dark:from-blue-900 dark:to-blue-950'
-    } transition-colors duration-300`}>
+    }`}>
       <StatusBar
         isResting={workout.isResting}
         currentExercise={workout.currentExercise}
@@ -156,7 +158,9 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
         isLandscape={isLandscape}
       />
 
-      <div className={`flex-1 flex ${isLandscape ? 'flex-row' : 'flex-col'} px-4 py-2 overflow-hidden relative ${modeBorderStyle}`}>
+      <div 
+        className={`flex-1 flex ${isLandscape ? 'flex-row' : 'flex-col'} px-4 py-2 overflow-hidden relative ${modeBorderStyle} ${getTransitionClass()}`}
+      >
         {!isLandscape && (
           <Timer 
             onComplete={handleSkip}
@@ -185,7 +189,7 @@ export const ExerciseDisplay: React.FC<Props> = ({ onComplete }) => {
             </div>
           )}
 
-          <div className={`absolute ${isLandscape ? 'right-0 top-1/2 -translate-y-1/2' : 'bottom-0 left-0 right-0'}`}>
+          <div className={`absolute ${isLandscape ? 'right-0 top-1/2 -translate-y-1/2' : 'bottom-0 left-0 right-0'} transition-opacity duration-300 ${buttonOpacity}`}>
             <Controls
               isPaused={workout.isPaused}
               isResting={workout.isResting}
