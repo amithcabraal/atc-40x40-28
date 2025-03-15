@@ -13,6 +13,42 @@
   }
 }
 
+/* Mode transition animations */
+@keyframes shrinkOut {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes growIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.shrink-out {
+  animation: shrinkOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.grow-in {
+  animation: growIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Background transition */
+.mode-bg-transition {
+  transition: background-color 0.8s ease-in-out;
+}
+
 /* Vertical alignment for consistent title positioning */
 .vertical-align-top {
   vertical-align: top;
@@ -32,7 +68,6 @@
     max-width: 30%;
   }
   
-  /* Vertical control buttons */
   .landscape-controls {
     position: absolute;
     right: 16px;
