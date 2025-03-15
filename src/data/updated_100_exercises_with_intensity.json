@@ -2556,6 +2556,14 @@
             "primary_categories": [
                 "Strength"
             ],
+              "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/chair-pose.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/chair-pose.jpg"
+                }
+              ],
             "equipment": [],
             "intensity": 4,
             "difficulty": 3
