@@ -2704,6 +2704,14 @@
                 "Legs",
                 "Glutes"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/curtsy-lunges.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/curtsy-lunges.jpg"
+                }
+            ],
             "primary_categories": [
                 "Strength"
             ],
@@ -3625,26 +3633,6 @@
             ],
             "equipment": [],
             "intensity": 5,
-            "difficulty": 3
-        },
-        {
-            "id": "box-jumps",
-            "title": "Box Jumps",
-            "instructions": "Jump onto a box or elevated platform",
-            "categories": [
-                "Strength",
-                "Power",
-                "Lower body"
-            ],
-            "body_part_focus": [
-                "Legs",
-                "Glutes"
-            ],
-            "primary_categories": [
-                "Strength"
-            ],
-            "equipment": [],
-            "intensity": 4,
             "difficulty": 3
         },
         {
