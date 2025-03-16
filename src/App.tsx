@@ -10,6 +10,7 @@ import { ResumeWorkoutModal } from './components/ResumeWorkoutModal';
 import { ExerciseLibrary } from './components/ExerciseLibrary';
 import { WorkoutSelection } from './components/WorkoutSelection';
 import { useAudioStore } from './store/audioStore';
+import { LocationSettings } from './components/settings/LocationSettings';
 
 function App() {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -21,6 +22,7 @@ function App() {
   const [showExerciseLibrary, setShowExerciseLibrary] = useState(false);
   const [showWorkoutSelection, setShowWorkoutSelection] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [activeSettingsTab, setActiveSettingsTab] = useState<'appearance' | 'sound' | 'locations'>('appearance');
   const { workout, startWorkout, resumeSavedWorkout } = useWorkoutStore();
   const { isMuted, toggleMute } = useAudioStore();
 
@@ -190,73 +192,119 @@ function App() {
       {/* Settings Modal */}
       {showSettings && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md m-4">
-            <h2 className="text-2xl font-bold mb-6 dark:text-white">Settings</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-2xl w-full m-4">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold dark:text-white">Settings</h2>
+              <button
+                onClick={() => setShowSettings(false)}
+                className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                <X className="w-6 h-6 dark:text-white" />
+              </button>
+            </div>
+
+            {/* Settings Tabs */}
+            <div className="flex space-x-4 mb-6 border-b dark:border-gray-700">
+              <button
+                onClick={() => setActiveSettingsTab('appearance')}
+                className={`pb-2 px-4 ${
+                  activeSettingsTab === 'appearance'
+                    ? 'border-b-2 border-blue-500 text-blue-500'
+                    : 'text-gray-600 dark:text-gray-400'
+                }`}
+              >
+                Appearance
+              </button>
+              <button
+                onClick={() => setActiveSettingsTab('sound')}
+                className={`pb-2 px-4 ${
+                  activeSettingsTab === 'sound'
+                    ? 'border-b-2 border-blue-500 text-blue-500'
+                    : 'text-gray-600 dark:text-gray-400'
+                }`}
+              >
+                Sound
+              </button>
+              <button
+                onClick={() => setActiveSettingsTab('locations')}
+                className={`pb-2 px-4 ${
+                  activeSettingsTab === 'locations'
+                    ? 'border-b-2 border-blue-500 text-blue-500'
+                    : 'text-gray-600 dark:text-gray-400'
+                }`}
+              >
+                Locations
+              </button>
+            </div>
+
+            {/* Settings Content */}
             <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold mb-3 dark:text-gray-200">Theme</h3>
-                <div className="space-y-2">
+              {activeSettingsTab === 'appearance' && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 dark:text-gray-200">Theme</h3>
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => changeTheme('light')}
+                      className={`w-full flex items-center justify-between p-3 rounded ${
+                        theme === 'light' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700'
+                      }`}
+                    >
+                      <span className="flex items-center">
+                        <Sun className="w-5 h-5 mr-2" />
+                        Light
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => changeTheme('dark')}
+                      className={`w-full flex items-center justify-between p-3 rounded ${
+                        theme === 'dark' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700'
+                      }`}
+                    >
+                      <span className="flex items-center">
+                        <Moon className="w-5 h-5 mr-2" />
+                        Dark
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => changeTheme('system')}
+                      className={`w-full flex items-center justify-between p-3 rounded ${
+                        theme === 'system' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700'
+                      }`}
+                    >
+                      <span className="flex items-center">
+                        <Laptop className="w-5 h-5 mr-2" />
+                        System
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {activeSettingsTab === 'sound' && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 dark:text-gray-200">Sound</h3>
                   <button
-                    onClick={() => changeTheme('light')}
+                    onClick={toggleMute}
                     className={`w-full flex items-center justify-between p-3 rounded ${
-                      theme === 'light' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700'
+                      isMuted ? 'bg-gray-100 dark:bg-gray-700' : 'bg-blue-500 text-white'
                     }`}
                   >
                     <span className="flex items-center">
-                      <Sun className="w-5 h-5 mr-2" />
-                      Light
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => changeTheme('dark')}
-                    className={`w-full flex items-center justify-between p-3 rounded ${
-                      theme === 'dark' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700'
-                    }`}
-                  >
-                    <span className="flex items-center">
-                      <Moon className="w-5 h-5 mr-2" />
-                      Dark
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => changeTheme('system')}
-                    className={`w-full flex items-center justify-between p-3 rounded ${
-                      theme === 'system' ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-700'
-                    }`}
-                  >
-                    <span className="flex items-center">
-                      <Laptop className="w-5 h-5 mr-2" />
-                      System
+                      {isMuted ? (
+                        <VolumeX className="w-5 h-5 mr-2" />
+                      ) : (
+                        <Volume2 className="w-5 h-5 mr-2" />
+                      )}
+                      {isMuted ? 'Sound Off' : 'Sound On'}
                     </span>
                   </button>
                 </div>
-              </div>
+              )}
 
-              <div>
-                <h3 className="text-lg font-semibold mb-3 dark:text-gray-200">Sound</h3>
-                <button
-                  onClick={toggleMute}
-                  className={`w-full flex items-center justify-between p-3 rounded ${
-                    isMuted ? 'bg-gray-100 dark:bg-gray-700' : 'bg-blue-500 text-white'
-                  }`}
-                >
-                  <span className="flex items-center">
-                    {isMuted ? (
-                      <VolumeX className="w-5 h-5 mr-2" />
-                    ) : (
-                      <Volume2 className="w-5 h-5 mr-2" />
-                    )}
-                    {isMuted ? 'Sound Off' : 'Sound On'}
-                  </span>
-                </button>
-              </div>
+              {activeSettingsTab === 'locations' && (
+                <LocationSettings />
+              )}
             </div>
-            <button
-              onClick={() => setShowSettings(false)}
-              className="w-full mt-6 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            >
-              Close
-            </button>
           </div>
         </div>
       )}
