@@ -2886,56 +2886,7 @@
             "intensity": 4,
             "difficulty": 4
         },
-        {
-            "id": "superman",
-            "title": "Superman",
-            "instructions": "Lie on stomach and lift arms and legs simultaneously",
-            "categories": [
-                "Strength",
-                "Back",
-                "Core"
-            ],
-            "body_part_focus": [
-                "Lower back",
-                "Glutes",
-                "Shoulders"
-            ],
-            "media": [
-                {
-                    "type": "video",
-                    "url": "/lady-videos/superman.mp4",
-                    "external_video": null,
-                    "thumbnail": "/images/superman-video-thumb.jpg"
-                },
-                {
-                    "type": "images",
-                    "images": [
-                        {
-                            "alt": "Image 1 of Superman",
-                            "url": "/images/superman-1.jpg"
-                        },
-                        {
-                            "alt": "Image 2 of Superman",
-                            "url": "/images/superman-2.jpg"
-                        },
-                        {
-                            "alt": "Image 3 of Superman",
-                            "url": "/images/superman-3.jpg"
-                        },
-                        {
-                            "alt": "Image 4 of Superman",
-                            "url": "/images/superman-4.jpg"
-                        }
-                    ]
-                }
-            ],
-            "primary_categories": [
-                "Strength"
-            ],
-            "equipment": [],
-            "intensity": 4,
-            "difficulty": 3
-        },
+    
         {
             "id": "hollow-body-hold",
             "title": "Hollow Body Hold",
