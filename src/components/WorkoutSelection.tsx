@@ -23,6 +23,27 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
     setShowLocationConfirm(true);
   };
 
+  // Helper function to get exercise intensity
+  const getExerciseIntensity = (exercise: Exercise): number => {
+    const intensityMap: Record<string, number> = {
+      'high intensity': 3,
+      'medium intensity': 2,
+      'low intensity': 1
+    };
+
+    // Default to medium intensity if not specified
+    const intensityCategory = exercise.categories.find(cat => 
+      cat.toLowerCase().includes('intensity')
+    );
+    
+    return intensityCategory ? intensityMap[intensityCategory.toLowerCase()] || 2 : 2;
+  };
+
+  // Helper function to sort exercises by intensity
+  const sortByIntensity = (exercises: Exercise[]): Exercise[] => {
+    return [...exercises].sort((a, b) => getExerciseIntensity(a) - getExerciseIntensity(b));
+  };
+
   const handleConfirmLocation = () => {
     if (!selectedLocation) {
       alert('Please select a location to continue.');
@@ -32,6 +53,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
     const exercisesNeeded = selectedDuration === 7 ? 12 : selectedDuration;
     let filteredExercises: Exercise[] = [];
     
+    // Initial filtering by workout type
     if (selectedType === 'cardio') {
       filteredExercises = exercises.filter(ex => 
         ex.categories.some(cat => 
@@ -57,31 +79,74 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
       filteredExercises = [...exercises];
     }
 
-    // Filter out exercises that require equipment not available at the selected location
-    if (selectedLocation) {
-      const availableEquipment = selectedLocation.equipment.map(eq => eq.name.toLowerCase());
-      filteredExercises = filteredExercises.filter(exercise => {
-        if (!exercise.requiredEquipment || exercise.requiredEquipment.length === 0) {
-          return true;
-        }
-        return exercise.requiredEquipment.every(eq => 
-          availableEquipment.includes(eq.toLowerCase())
-        );
-      });
+    // Filter by available equipment
+    const availableEquipment = selectedLocation.equipment.map(eq => eq.name.toLowerCase());
+    filteredExercises = filteredExercises.filter(exercise => {
+      if (!exercise.requiredEquipment || exercise.requiredEquipment.length === 0) {
+        return true;
+      }
+      return exercise.requiredEquipment.every(eq => 
+        availableEquipment.includes(eq.toLowerCase())
+      );
+    });
+
+    // Sort exercises by intensity
+    const sortedExercises = sortByIntensity(filteredExercises);
+    
+    // Create the workout sequence
+    let selectedExercises: Exercise[] = [];
+    const usedExercises = new Set<string>();
+
+    // Add a low intensity exercise for warm-up
+    const warmupExercise = sortedExercises.find(ex => 
+      getExerciseIntensity(ex) === 1 && !usedExercises.has(ex.title)
+    );
+    if (warmupExercise) {
+      selectedExercises.push(warmupExercise);
+      usedExercises.add(warmupExercise.title);
     }
-    
-    let shuffled = [...filteredExercises].sort(() => Math.random() - 0.5);
-    
-    if (shuffled.length < exercisesNeeded) {
-      const remainingNeeded = exercisesNeeded - shuffled.length;
-      const otherExercises = exercises.filter(ex => !shuffled.includes(ex))
-        .sort(() => Math.random() - 0.5)
-        .slice(0, remainingNeeded);
+
+    // Fill the middle with remaining exercises, avoiding repeats
+    while (selectedExercises.length < exercisesNeeded - 1) {
+      const remainingExercises = sortedExercises.filter(ex => !usedExercises.has(ex.title));
       
-      shuffled = [...shuffled, ...otherExercises];
+      if (remainingExercises.length === 0) {
+        // If we run out of unique exercises, reset the used set but avoid immediate repeats
+        usedExercises.clear();
+        const lastExercise = selectedExercises[selectedExercises.length - 1];
+        if (lastExercise) {
+          usedExercises.add(lastExercise.title);
+        }
+        continue;
+      }
+
+      // Randomly select from remaining exercises
+      const randomIndex = Math.floor(Math.random() * remainingExercises.length);
+      const exercise = remainingExercises[randomIndex];
+      selectedExercises.push(exercise);
+      usedExercises.add(exercise.title);
     }
-    
-    const selectedExercises = shuffled.slice(0, exercisesNeeded);
+
+    // Add a low intensity exercise for cool-down
+    const cooldownExercise = sortedExercises.find(ex => 
+      getExerciseIntensity(ex) === 1 && !usedExercises.has(ex.title)
+    );
+    if (cooldownExercise) {
+      selectedExercises.push(cooldownExercise);
+    } else {
+      // If no unique low intensity exercise is available, use any remaining exercise
+      const remainingExercise = sortedExercises.find(ex => !usedExercises.has(ex.title));
+      if (remainingExercise) {
+        selectedExercises.push(remainingExercise);
+      } else {
+        // Last resort: use any low intensity exercise
+        const anyLowIntensity = sortedExercises.find(ex => getExerciseIntensity(ex) === 1);
+        if (anyLowIntensity) {
+          selectedExercises.push(anyLowIntensity);
+        }
+      }
+    }
+
     onStartWorkout(selectedExercises, selectedType, selectedDuration, selectedLocation);
   };
 
