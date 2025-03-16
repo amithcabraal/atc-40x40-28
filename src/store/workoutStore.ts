@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Exercise, WorkoutStore } from '../types';
+import { Exercise, WorkoutStore, Location } from '../types';
 
 const initialWorkoutState = {
   currentExercise: 0,
@@ -16,7 +16,8 @@ const initialWorkoutState = {
   workoutType: 'mix' as const,
   selectedDuration: 30,
   isTransitioning: false,
-  isSevenMinute: false
+  isSevenMinute: false,
+  location: undefined
 };
 
 const handleTransition = (callback: () => void) => {
@@ -30,7 +31,7 @@ const handleTransition = (callback: () => void) => {
 
 export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
   workout: initialWorkoutState,
-  startWorkout: (exercises: Exercise[], workoutType, duration) => {
+  startWorkout: (exercises: Exercise[], workoutType, duration, location) => {
     localStorage.removeItem('workoutState');
     
     const isSevenMinute = duration === 7;
@@ -45,7 +46,8 @@ export const useWorkoutStore = create<WorkoutStore>((set, get) => ({
       startTime: Date.now(),
       workoutType,
       selectedDuration: duration,
-      isSevenMinute
+      isSevenMinute,
+      location
     };
     set({ workout: workoutState });
     localStorage.setItem('workoutState', JSON.stringify(workoutState));
