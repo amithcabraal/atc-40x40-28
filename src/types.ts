@@ -5,6 +5,17 @@ export interface Media {
   title?: string;
 }
 
+export interface Equipment {
+  id: string;
+  name: string;
+}
+
+export interface Location {
+  id: string;
+  name: string;
+  equipment: Equipment[];
+}
+
 export interface Exercise {
   id?: number;
   title: string;
@@ -12,6 +23,7 @@ export interface Exercise {
   categories: string[];
   body_part_focus: string[];
   media?: Media[];
+  requiredEquipment?: string[]; // Equipment names required for this exercise
 }
 
 export interface WorkoutStats {
@@ -20,6 +32,7 @@ export interface WorkoutStats {
   totalExerciseTime: number;
   workoutType: 'cardio' | 'strength' | 'yoga' | 'mix';
   selectedDuration: number;
+  location?: Location;
 }
 
 export interface Session {
@@ -47,11 +60,12 @@ export interface WorkoutState {
   selectedDuration: number;
   isTransitioning: boolean;
   isSevenMinute: boolean;
+  location?: Location;
 }
 
 export interface WorkoutStore {
   workout: WorkoutState;
-  startWorkout: (exercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number) => void;
+  startWorkout: (exercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number, location?: Location) => void;
   resumeSavedWorkout: () => void;
   pauseWorkout: () => void;
   resumeWorkout: () => void;
