@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Exercise } from '../types';
-import { Dumbbell, Heart, PersonStanding, Shuffle, Clock, X } from 'lucide-react';
+import { Exercise, Location } from '../types';
+import { Dumbbell, Heart, PersonStanding, Shuffle, Clock, X, MapPin } from 'lucide-react';
+import { useLocationStore } from '../store/locationStore';
 
 interface WorkoutSelectionProps {
-  onStartWorkout: (exercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number) => void;
+  onStartWorkout: (exercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number, location: Location) => void;
   exercises: Exercise[];
   onClose: () => void;
 }
@@ -11,8 +12,23 @@ interface WorkoutSelectionProps {
 export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorkout, exercises, onClose }) => {
   const [selectedType, setSelectedType] = useState<'cardio' | 'strength' | 'yoga' | 'mix'>('cardio');
   const [selectedDuration, setSelectedDuration] = useState<number>(30);
+  const [showLocationConfirm, setShowLocationConfirm] = useState(false);
+  const { locations, selectedLocation, selectLocation } = useLocationStore();
   
   const handleStartWorkout = () => {
+    if (locations.length === 0) {
+      alert('Please set up at least one location in settings before starting a workout.');
+      return;
+    }
+    setShowLocationConfirm(true);
+  };
+
+  const handleConfirmLocation = () => {
+    if (!selectedLocation) {
+      alert('Please select a location to continue.');
+      return;
+    }
+
     const exercisesNeeded = selectedDuration === 7 ? 12 : selectedDuration;
     let filteredExercises: Exercise[] = [];
     
@@ -40,6 +56,19 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
     } else {
       filteredExercises = [...exercises];
     }
+
+    // Filter out exercises that require equipment not available at the selected location
+    if (selectedLocation) {
+      const availableEquipment = selectedLocation.equipment.map(eq => eq.name.toLowerCase());
+      filteredExercises = filteredExercises.filter(exercise => {
+        if (!exercise.requiredEquipment || exercise.requiredEquipment.length === 0) {
+          return true;
+        }
+        return exercise.requiredEquipment.every(eq => 
+          availableEquipment.includes(eq.toLowerCase())
+        );
+      });
+    }
     
     let shuffled = [...filteredExercises].sort(() => Math.random() - 0.5);
     
@@ -53,7 +82,7 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
     }
     
     const selectedExercises = shuffled.slice(0, exercisesNeeded);
-    onStartWorkout(selectedExercises, selectedType, selectedDuration);
+    onStartWorkout(selectedExercises, selectedType, selectedDuration, selectedLocation);
   };
 
   const getDurationHint = (duration: number) => {
@@ -71,6 +100,82 @@ export const WorkoutSelection: React.FC<WorkoutSelectionProps> = ({ onStartWorko
     }
   };
   
+  if (showLocationConfirm) {
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-md mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold dark:text-white">Select Location</h2>
+          <button
+            onClick={() => setShowLocationConfirm(false)}
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            <X className="w-6 h-6 text-gray-500 dark:text-gray-400" />
+          </button>
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Where are you working out?
+          </label>
+          <select
+            value={selectedLocation?.id || ''}
+            onChange={(e) => {
+              const location = locations.find(loc => loc.id === e.target.value);
+              selectLocation(location);
+            }}
+            className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          >
+            <option value="">Select a location...</option>
+            {locations.map(location => (
+              <option key={location.id} value={location.id}>
+                {location.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {selectedLocation && (
+          <div className="mb-6">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Available Equipment:
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {selectedLocation.equipment.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  No equipment available at this location
+                </p>
+              ) : (
+                selectedLocation.equipment.map(equipment => (
+                  <span
+                    key={equipment.id}
+                    className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
+                  >
+                    {equipment.name}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="flex gap-4">
+          <button
+            onClick={handleConfirmLocation}
+            className="flex-1 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Start Workout
+          </button>
+          <button
+            onClick={() => setShowLocationConfirm(false)}
+            className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl mx-auto relative flex flex-col md:flex-row gap-6">
       <button
