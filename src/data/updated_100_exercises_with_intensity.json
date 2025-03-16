@@ -2071,6 +2071,15 @@
                 "Triceps",
                 "Core"
             ],
+
+                        "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/spider-man-pushups.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/spider-man-pushups.jpg"
+                }
+                        ],
             "primary_categories": [
                 "Strength"
             ],
@@ -2416,6 +2425,14 @@
                 "Inner thighs",
                 "Groin"
             ],
+                        "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/butterfly-stretch.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/butterfly-stretch.jpg"
+                }
+                        ],
             "primary_categories": [
                 "Yoga"
             ],
@@ -2793,7 +2810,7 @@
                     "url": "/lady-videos/commando-push-ups.mp4",
                     "external_video": null,
                     "thumbnail": "/images/commando-push-ups.jpg"
-                },
+                }
              ],
             "primary_categories": [
                 "Strength"
@@ -2865,6 +2882,14 @@
                 "Core",
                 "Shoulders"
             ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/bear-plank-shoulder-taps.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/bear-plank-shoulder-taps.jpg"
+                }
+            ],
             "primary_categories": [
                 "Strength"
             ],
@@ -2886,6 +2911,13 @@
                 "Glutes",
                 "Core"
             ],
+                        "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/single-leg-deadlifts.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/single-leg-deadlifts.jpg"
+                }],
             "primary_categories": [
                 "Yoga",
                 "Strength"
