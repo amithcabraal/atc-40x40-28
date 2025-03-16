@@ -384,6 +384,33 @@
             "difficulty": 3
         },
         {
+            "id": "reverse-ab-crunch",
+            "title": "Reverse Ab Crunch",
+            "instructions": "Lie on your back, push up with your feet as high as possible",
+            "categories": [
+                "Strength",
+                "Core"
+            ],
+            "body_part_focus": [
+                "Core",
+                "Abs"
+            ],
+            "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/reverse-ab-crunch.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/reverse-ab-crunch.jpg"
+                }
+            ],
+            "primary_categories": [
+                "Strength"
+            ],
+            "equipment": [],
+            "intensity": 4,
+            "difficulty": 3
+        },
+        {
             "id": "reverse-ab-push-up",
             "title": "Reverse Ab Push Up",
             "instructions": "Start in a plank position, then lower your hips toward the floor while keeping your upper body stable.",
@@ -401,27 +428,6 @@
                     "url": "/lady-videos/reverse-ab-push-up.mp4",
                     "external_video": null,
                     "thumbnail": "/images/reverse-ab-push-up-video-thumb.jpg"
-                },
-                {
-                    "type": "images",
-                    "images": [
-                        {
-                            "alt": "Image 1 of Reverse Ab Push Up",
-                            "url": "/images/reverse-ab-push-up-1.jpg"
-                        },
-                        {
-                            "alt": "Image 2 of Reverse Ab Push Up",
-                            "url": "/images/reverse-ab-push-up-2.jpg"
-                        },
-                        {
-                            "alt": "Image 3 of Reverse Ab Push Up",
-                            "url": "/images/reverse-ab-push-up-3.jpg"
-                        },
-                        {
-                            "alt": "Image 4 of Reverse Ab Push Up",
-                            "url": "/images/reverse-ab-push-up-4.jpg"
-                        }
-                    ]
                 }
             ],
             "primary_categories": [
