@@ -2787,6 +2787,14 @@
                 "Triceps",
                 "Core"
             ],
+             "media": [
+                {
+                    "type": "video",
+                    "url": "/lady-videos/commando-push-ups.mp4",
+                    "external_video": null,
+                    "thumbnail": "/images/commando-push-ups.jpg"
+                },
+             ],
             "primary_categories": [
                 "Strength"
             ],
