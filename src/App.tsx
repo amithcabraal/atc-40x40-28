@@ -92,9 +92,9 @@ function App() {
     setShowWorkoutSelection(true);
   };
 
-  const handleStartWorkoutWithSelection = (selectedExercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number) => {
+  const handleStartWorkoutWithSelection = (selectedExercises: Exercise[], workoutType: 'cardio' | 'strength' | 'yoga' | 'mix', duration: number, location?: Location) => {
     setShowWorkoutSelection(false);
-    startWorkout(selectedExercises, workoutType, duration);
+    startWorkout(selectedExercises, workoutType, duration, location);
   };
 
   const handleResumeWorkout = () => {
@@ -117,6 +117,7 @@ function App() {
     } catch (error) {
       console.log('Sharing failed', error);
     }
+    setShowMenu(false);
   };
 
   if (workout.isActive) {
@@ -131,7 +132,10 @@ function App() {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">MyFitnessTimer</h1>
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => setShowSettings(true)}
+              onClick={() => {
+                setShowSettings(true);
+                setShowMenu(false);
+              }}
               className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
             >
               <Settings className="w-6 h-6 dark:text-white" />
@@ -313,7 +317,10 @@ function App() {
       {showExerciseLibrary && (
         <ExerciseLibrary 
           exercises={exerciseData.exercises} 
-          onClose={() => setShowExerciseLibrary(false)} 
+          onClose={() => {
+            setShowExerciseLibrary(false);
+            setShowMenu(false);
+          }} 
         />
       )}
 
@@ -324,7 +331,10 @@ function App() {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold dark:text-white">Workout History</h2>
               <button
-                onClick={() => setShowHistory(false)}
+                onClick={() => {
+                  setShowHistory(false);
+                  setShowMenu(false);
+                }}
                 className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 <X className="w-6 h-6 dark:text-white" />
@@ -333,8 +343,14 @@ function App() {
             <WorkoutHistory
               sessions={sessions}
               onRepeat={(session) => {
-                startWorkout(session.exercises, session.stats?.workoutType || 'mix', session.stats?.selectedDuration || 30);
+                startWorkout(
+                  session.exercises, 
+                  session.stats?.workoutType || 'mix', 
+                  session.stats?.selectedDuration || 30,
+                  session.stats?.location
+                );
                 setShowHistory(false);
+                setShowMenu(false);
               }}
             />
           </div>
@@ -359,6 +375,15 @@ function App() {
       {/* Menu */}
       {showMenu && (
         <div className="fixed inset-y-0 right-0 w-64 bg-white dark:bg-gray-800 shadow-lg p-4 z-50">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold dark:text-white">Menu</h2>
+            <button
+              onClick={() => setShowMenu(false)}
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <X className="w-6 h-6 dark:text-white" />
+            </button>
+          </div>
           <div className="space-y-4">
             <button 
               onClick={() => {
@@ -381,28 +406,40 @@ function App() {
               <span>Exercise Library</span>
             </button>
             <button 
-              onClick={() => window.open('/help', '_blank')}
+              onClick={() => {
+                window.open('/help', '_blank');
+                setShowMenu(false);
+              }}
               className="w-full flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded dark:text-white"
             >
               <HelpCircle className="w-5 h-5" />
               <span>Help</span>
             </button>
             <button 
-              onClick={shareApp}
+              onClick={() => {
+                shareApp();
+                setShowMenu(false);
+              }}
               className="w-full flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded dark:text-white"
             >
               <Share2 className="w-5 h-5" />
               <span>Share</span>
             </button>
             <button 
-              onClick={() => window.open('/privacy', '_blank')}
+              onClick={() => {
+                window.open('/privacy', '_blank');
+                setShowMenu(false);
+              }}
               className="w-full flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded dark:text-white"
             >
               <List className="w-5 h-5" />
               <span>Privacy Policy</span>
             </button>
             <button 
-              onClick={() => setShowSettings(true)}
+              onClick={() => {
+                setShowSettings(true);
+                setShowMenu(false);
+              }}
               className="w-full flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded dark:text-white"
             >
               <Settings className="w-5 h-5" />
